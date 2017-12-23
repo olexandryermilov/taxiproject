@@ -1,3 +1,15 @@
+# Intellij #
+.idea/
+out/
+*.iml
+*.iws
+*.ipr
+
+# Gradle #
+build/
+.gradle/
+gradle
+
 *.class
 
 # Mobile Tools for Java (J2ME)
