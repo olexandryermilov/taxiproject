@@ -1,23 +1,46 @@
 package com.taxisystem.domain;
 
 public class ClientType {
-    private int clientTypeId;
-    private String clientTypeName;
+    private int clientTypeId,discount;
+    private String name;
+    private double moneySpent;
 
-    public ClientType(int clientTypeId, String clientTypeName) {
+    public ClientType(int clientTypeId, int discount, String name, double moneySpent) {
         this.clientTypeId = clientTypeId;
-        this.clientTypeName = clientTypeName;
+        this.discount = discount;
+        this.name = name;
+        this.moneySpent = moneySpent;
     }
 
     public int getClientTypeId() {
         return clientTypeId;
     }
 
-    public String getClientTypeName() {
-        return clientTypeName;
+    public void setClientTypeId(int clientTypeId) {
+        this.clientTypeId = clientTypeId;
     }
 
-    public void setClientTypeName(String clientTypeName) {
-        this.clientTypeName = clientTypeName;
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getMoneySpent() {
+        return moneySpent;
+    }
+
+    public void setMoneySpent(double moneySpent) {
+        this.moneySpent = moneySpent;
     }
 }

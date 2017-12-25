@@ -22,7 +22,9 @@ ENGINE = InnoDB
 
 CREATE TABLE IF NOT EXISTS `taxisystemdb`.`clienttype` (
   `clienttypeid` INT NOT NULL AUTO_INCREMENT,
-  `clienttypename` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `discount` INT NULL,
+  `moneyspent` DECIMAL(10) NULL,
   PRIMARY KEY (`clienttypeid`))
 ENGINE = InnoDB
 
