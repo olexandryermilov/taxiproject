@@ -1,6 +1,5 @@
-package com.taxisystem.dao;
+package com.yermilov.dao;
 
-import javax.sql.DataSource;
 import java.sql.Driver;
 import java.util.List;
 

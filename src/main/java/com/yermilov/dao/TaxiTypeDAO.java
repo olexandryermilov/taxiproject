@@ -1,6 +1,6 @@
-package com.taxisystem.dao;
+package com.yermilov.dao;
 
-import com.taxisystem.domain.TaxiType;
+import com.yermilov.domain.TaxiType;
 
 import java.util.List;
 

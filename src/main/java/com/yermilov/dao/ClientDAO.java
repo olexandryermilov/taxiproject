@@ -1,6 +1,6 @@
-package com.taxisystem.dao;
+package com.yermilov.dao;
 
-import com.taxisystem.domain.Client;
+import com.yermilov.domain.Client;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;

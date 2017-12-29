@@ -1,4 +1,4 @@
-package com.taxisystem.domain;
+package com.yermilov.domain;
 
 public class Taxi {
     private int taxiId,driverId,taxiTypeId;

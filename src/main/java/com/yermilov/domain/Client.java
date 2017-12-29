@@ -1,4 +1,4 @@
-package com.taxisystem.domain;
+package com.yermilov.domain;
 
 public class Client {
     private int clientId,userId;

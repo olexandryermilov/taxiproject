@@ -1,17 +1,17 @@
-package com.taxisystem.dao;
+package com.yermilov.dao;
 
-import com.taxisystem.domain.Ride;
+import com.yermilov.domain.User;
 
 import java.util.List;
 
-public class RideDAO extends AbstractDAO<Ride> {
+public class UserDAO extends AbstractDAO<User> {
     @Override
-    public List<Ride> findAll() {
+    public List<User> findAll() {
         return null;
     }
 
     @Override
-    public Ride findById(int id) {
+    public User findById(int id) {
         return null;
     }
 
@@ -21,17 +21,17 @@ public class RideDAO extends AbstractDAO<Ride> {
     }
 
     @Override
-    public boolean delete(Ride entity) {
+    public boolean delete(User entity) {
         return false;
     }
 
     @Override
-    public boolean create(Ride entity) {
+    public boolean create(User entity) {
         return false;
     }
 
     @Override
-    public Ride update(Ride entity) {
+    public User update(User entity) {
         return null;
     }
 }

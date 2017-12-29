@@ -1,17 +1,17 @@
-package com.taxisystem.dao;
+package com.yermilov.dao;
 
-import com.taxisystem.domain.User;
+import com.yermilov.domain.Taxi;
 
 import java.util.List;
 
-public class UserDAO extends AbstractDAO<User> {
+public class TaxiDAO extends AbstractDAO<Taxi> {
     @Override
-    public List<User> findAll() {
+    public List<Taxi> findAll() {
         return null;
     }
 
     @Override
-    public User findById(int id) {
+    public Taxi findById(int id) {
         return null;
     }
 
@@ -21,17 +21,17 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean delete(User entity) {
+    public boolean delete(Taxi entity) {
         return false;
     }
 
     @Override
-    public boolean create(User entity) {
+    public boolean create(Taxi entity) {
         return false;
     }
 
     @Override
-    public User update(User entity) {
+    public Taxi update(Taxi entity) {
         return null;
     }
 }
