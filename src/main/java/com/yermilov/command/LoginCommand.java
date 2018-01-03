@@ -24,7 +24,7 @@ public class LoginCommand implements Command {
             HttpSession session = request.getSession();
             session.setAttribute("login", login);
             try {
-                request.getRequestDispatcher(FactoryCommand.USERS).forward(request, response);
+                request.getRequestDispatcher(CommandFactory.USERS).forward(request, response);
             } catch (ServletException e) {
                 //logger.error(e);
             } catch (IOException e) {
@@ -32,7 +32,7 @@ public class LoginCommand implements Command {
             }
         } else {
             request.setAttribute("errorMessageLogin", "Login incorrect");
-            request.getRequestDispatcher(FactoryCommand.LOGIN).forward(request, response);
+            request.getRequestDispatcher(CommandFactory.LOGIN).forward(request, response);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.yermilov.lesson;
 
 import com.yermilov.command.Command;
-import com.yermilov.command.FactoryCommand;
+import com.yermilov.command.CommandFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +12,15 @@ import java.io.IOException;
 public class ServletDispatcher extends HttpServlet{
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-        FactoryCommand factory = FactoryCommand.getInstance();
+        CommandFactory factory = CommandFactory.getInstance();
         Command command = factory.getCommand((String) request.getAttribute("command"));
-        command.execute(request,response);
+        try {
+            command.execute(request,response);
+        } catch (ServletException e) {
+            //todo:add logger
+        } catch (IOException e) {
+            //todo: add logger
+        }
     }
 
     @Override

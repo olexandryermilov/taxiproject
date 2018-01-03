@@ -3,7 +3,6 @@ package com.yermilov.filters;
 import com.yermilov.authentification.Authentification;
 import com.yermilov.configuration.SecurityConfiguration;
 
-import javax.security.auth.login.Configuration;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,6 +1,6 @@
 package com.yermilov.configuration;
 
-import com.yermilov.command.FactoryCommand;
+import com.yermilov.command.CommandFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +13,10 @@ public class SecurityConfiguration {
         return grant.keySet();
     }
     private SecurityConfiguration(){
-        grant.put(FactoryCommand.LOGIN,"ALL");
-        grant.put(FactoryCommand.REGISTRATION,"ALL");
-        grant.put(FactoryCommand.LOGOUT,"AUTH");
-        grant.put(FactoryCommand.USERS,"AUTH");
+        grant.put(CommandFactory.LOGIN,"ALL");
+        grant.put(CommandFactory.REGISTRATION,"ALL");
+        grant.put(CommandFactory.LOGOUT,"AUTH");
+        grant.put(CommandFactory.USERS,"AUTH");
         grant.put("/*","ALL");
     }
 
