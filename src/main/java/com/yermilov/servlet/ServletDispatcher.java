@@ -1,4 +1,4 @@
-package com.yermilov.lesson;
+package com.yermilov.servlet;
 
 import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;

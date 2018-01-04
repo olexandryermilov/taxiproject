@@ -10,7 +10,7 @@
     </welcome-file-list>
     <servlet>
         <servlet-name>ServletDispatcher</servlet-name>
-        <servlet-class>com.yermilov.lesson.ServletDispatcher</servlet-class>
+        <servlet-class>com.yermilov.servlet.ServletDispatcher</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletDispatcher</servlet-name>
