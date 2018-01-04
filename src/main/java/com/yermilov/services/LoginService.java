@@ -3,6 +3,7 @@ package com.yermilov.services;
 import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.UserDAO;
 import com.yermilov.domain.User;
+import com.yermilov.exceptions.DAOException;
 
 public class LoginService {
     private final static LoginService loginService = new LoginService();
@@ -13,7 +14,7 @@ public class LoginService {
         return loginService;
     }
 
-    public boolean verify(String login, String password){
+    public boolean verify(String login, String password) throws DAOException {
         UserDAO userDAO = DAOFactory.getUserDAO();
         User user = userDAO.findByEmail(login);
         return user!=null&&password.equals(user.getPassword());

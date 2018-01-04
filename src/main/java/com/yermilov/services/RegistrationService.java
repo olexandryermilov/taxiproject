@@ -17,11 +17,11 @@ public class RegistrationService {
     public static RegistrationService getRegistrationService(){
         return registrationService;
     }
-    public void register(String login, String password, String name, String surname) throws RegistrationException, SQLException, TransactionException {
+    public void register(String login, String password, String name, String surname) throws RegistrationException, SQLException, TransactionException, DAOException {
         UserDAO userDAO = DAOFactory.getUserDAO();
         TransactionManager.beginTransaction();
         if(userDAO.findByEmail(login)==null){
-            User user = new User(0,login,password,name,surname);
+            User user = new User(login,password,name,surname);
             try{
                 userDAO.create(user);
             }

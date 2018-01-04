@@ -7,8 +7,7 @@ public class Ride {
     private double cost, distance;
     private LocalDateTime rideStart, rideFinish;
 
-    public Ride(int rideId, int driverId, int clientId, int taxiId, double cost, double distance, LocalDateTime rideStart, LocalDateTime rideFinish) {
-        this.rideId = rideId;
+    public Ride(int driverId, int clientId, int taxiId, double cost, double distance, LocalDateTime rideStart, LocalDateTime rideFinish) {
         this.driverId = driverId;
         this.clientId = clientId;
         this.taxiId = taxiId;

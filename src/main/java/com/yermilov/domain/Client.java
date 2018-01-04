@@ -3,8 +3,7 @@ package com.yermilov.domain;
 public class Client {
     private int clientId,userId;
 
-    public Client(int clientId, int userId) {
-        this.clientId = clientId;
+    public Client(int userId) {
         this.userId = userId;
     }
 

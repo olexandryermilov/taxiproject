@@ -3,8 +3,7 @@ package com.yermilov.domain;
 public class Driver {
     private int driverId, userId;
 
-    public Driver(int driverId, int userId) {
-        this.driverId = driverId;
+    public Driver(int userId) {
         this.userId = userId;
     }
 

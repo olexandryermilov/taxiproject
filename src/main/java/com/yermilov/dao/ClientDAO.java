@@ -13,9 +13,10 @@ public class ClientDAO extends AbstractDAO<Client> {
     private final static String SQL_DELETE_BY_ID = "delete from taxisystemdb.client where clientid=?";
     private static final String SQL_INSERT_CLIENT="insert into taxisystemdb.client(userid) values(?)";
     private BasicDataSource basicDataSource;
-    public ClientDAO(BasicDataSource basicDataSource){
+    ClientDAO(BasicDataSource basicDataSource){
         this.basicDataSource=basicDataSource;
     }
+    ClientDAO(){}
     @Override
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
@@ -25,7 +26,7 @@ public class ClientDAO extends AbstractDAO<Client> {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
             while(resultSet.next()){
-                Client client = new Client(resultSet.getInt("clientid"),resultSet.getInt("userid"));
+                Client client = new Client(resultSet.getInt("userid"));
                 clients.add(client);
             }
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class ClientDAO extends AbstractDAO<Client> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_ID);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
-            Client client = new Client(id,rs.getInt("userid"));
+            Client client = new Client(rs.getInt("userid"));
             return client;
         } catch (SQLException e) {
             //log
@@ -117,4 +118,7 @@ public class ClientDAO extends AbstractDAO<Client> {
         throw new UnsupportedOperationException();
     }
 
+    public void setBasicDataSource(BasicDataSource basicDataSource) {
+        this.basicDataSource = basicDataSource;
+    }
 }

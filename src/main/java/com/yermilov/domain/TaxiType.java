@@ -4,8 +4,7 @@ public class TaxiType {
     private int taxiTypeId;
     private String taxiTypeName;
 
-    public TaxiType(int taxiTypeId, String taxiTypeName) {
-        this.taxiTypeId = taxiTypeId;
+    public TaxiType(String taxiTypeName) {
         this.taxiTypeName = taxiTypeName;
     }
 

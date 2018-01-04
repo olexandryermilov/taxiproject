@@ -5,8 +5,7 @@ public class ClientType {
     private String name;
     private double moneySpent;
 
-    public ClientType(int clientTypeId, int discount, String name, double moneySpent) {
-        this.clientTypeId = clientTypeId;
+    public ClientType(int discount, String name, double moneySpent) {
         this.discount = discount;
         this.name = name;
         this.moneySpent = moneySpent;
