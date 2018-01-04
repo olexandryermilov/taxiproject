@@ -39,7 +39,6 @@ public class SecurityFilter implements Filter {
             }
         }
         httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return;
     }
 
     @Override

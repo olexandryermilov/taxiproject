@@ -1,5 +1,6 @@
 package com.yermilov.command;
 
+import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.LoginService;
 
 import javax.servlet.ServletException;
@@ -20,19 +21,17 @@ public class LoginCommand implements Command {
             request.getRequestDispatcher("error.jsp");
         }
         LoginService loginService = LoginService.getLoginService();
-        if (loginService.verify(login, password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("login", login);
-            try {
+        try {
+            if (loginService.verify(login, password)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("login", login);
                 request.getRequestDispatcher(CommandFactory.USERS).forward(request, response);
-            } catch (ServletException e) {
-                //logger.error(e);
-            } catch (IOException e) {
-                //logger.error(e);
+            } else {
+                request.setAttribute("errorMessageLogin", "Login incorrect");
+                request.getRequestDispatcher(CommandFactory.LOGIN).forward(request, response);
             }
-        } else {
-            request.setAttribute("errorMessageLogin", "Login incorrect");
-            request.getRequestDispatcher(CommandFactory.LOGIN).forward(request, response);
+        } catch (DAOException e) {
+            //todo:log
         }
     }
 }

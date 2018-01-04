@@ -1,12 +1,15 @@
 package com.yermilov.command;
 
+import com.yermilov.exceptions.DAOException;
 import com.yermilov.exceptions.RegistrationException;
+import com.yermilov.exceptions.TransactionException;
 import com.yermilov.services.RegistrationService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class RegistrationCommand implements Command{
     @Override
@@ -27,6 +30,13 @@ public class RegistrationCommand implements Command{
             //todo:log
             req.setAttribute("errorMessage", e.getMessage());
             req.getRequestDispatcher(CommandFactory.REGISTRATION).forward(req, resp);
+        }
+        catch (SQLException e) {
+            //todo:log
+        } catch (TransactionException e) {
+            //todo:log
+        } catch (DAOException e) {
+            //todo:log
         }
 
     }

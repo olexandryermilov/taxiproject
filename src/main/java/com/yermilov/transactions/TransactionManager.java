@@ -4,7 +4,6 @@ import com.yermilov.exceptions.TransactionException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class TransactionManager {
     private static ThreadLocal<ConnectionWrapper> threadLocal = new ThreadLocal<>();
