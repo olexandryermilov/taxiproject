@@ -5,7 +5,6 @@ import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
 import com.yermilov.transactions.TransactionManager;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,22 +30,38 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean delete(User entity) {
+    public boolean delete(User entity) throws DAOException {
         return false;
     }
 
+    private final static String SQL_INSERT ="insert into taxisystemdb.user(email,password,name,surname) values(?,?,?,?)";
     @Override
-    public boolean create(User entity) {
-        return false;
+    public boolean create(User entity)throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_INSERT);
+                statement.setString(1, entity.getEmail());
+                statement.setString(2, entity.getPassword());
+                statement.setString(3, entity.getName());
+                statement.setString(4, entity.getSurname());
+                return statement.execute();
+            } catch (SQLException e) {
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            //todo: add log
+            throw new DAOException(e.getMessage());
+        }
     }
 
+
     @Override
-    public User update(User entity) {
+    public User update(User entity) throws DAOException {
         return null;
     }
     private final static String SQL_SELECT_BY_LOGIN = "select * from taxisystemdb.user where email=?";
     public User findByEmail(String email) throws DAOException {
-        Connection connection = null;
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
             try {
@@ -54,10 +69,9 @@ public class UserDAO extends AbstractDAO<User> {
                 statement.setString(1, email);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    User user = new User(resultSet.getInt("id"),email,
+                    User user = new User(email,
                             resultSet.getString("password"),resultSet.getString("name"),
                             resultSet.getString("surname"));
-   
                     return user;
                 }
             } catch (SQLException e){
@@ -69,7 +83,6 @@ public class UserDAO extends AbstractDAO<User> {
         } catch (SQLException e) {
             //log
         } finally {
-            close(connection);
         }
         return null;
     }
