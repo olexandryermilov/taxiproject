@@ -1,46 +1,3 @@
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`client` (
-  `clientid` INT NOT NULL AUTO_INCREMENT,
-  `userid` INT NULL,
-  `clientstypeid` INT NULL,
-  PRIMARY KEY (`clientid`),
-  UNIQUE INDEX `clientsid_UNIQUE` (`clientid` ASC),
-  INDEX `userid_idx` (`userid` ASC),
-  UNIQUE INDEX `userid_UNIQUE` (`userid` ASC),
-  INDEX `clienttypeid_idx` (`clientstypeid` ASC),
-  UNIQUE INDEX `clientstypeid_UNIQUE` (`clientstypeid` ASC),
-  CONSTRAINT `userid`
-    FOREIGN KEY (`userid`)
-    REFERENCES `taxisystemdb`.`user` (`userid`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `clienttypeid`
-    FOREIGN KEY (`clientstypeid`)
-    REFERENCES `taxisystemdb`.`clienttype` (`clienttypeid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`clienttype` (
-  `clienttypeid` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `discount` INT NULL,
-  `moneyspent` DECIMAL(10) NULL,
-  PRIMARY KEY (`clienttypeid`))
-ENGINE = InnoDB
-
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`driver` (
-  `driverid` INT NOT NULL AUTO_INCREMENT,
-  `userid` INT NULL,
-  PRIMARY KEY (`driverid`),
-  UNIQUE INDEX `userid_UNIQUE` (`userid` ASC),
-  UNIQUE INDEX `driverid_UNIQUE` (`driverid` ASC),
-  CONSTRAINT `userid`
-    FOREIGN KEY (`userid`)
-    REFERENCES `taxisystemdb`.`user` (`userid`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-
 CREATE TABLE IF NOT EXISTS `taxisystemdb`.`ride` (
   `rideid` INT NOT NULL AUTO_INCREMENT,
   `driverid` INT NULL,
@@ -54,66 +11,96 @@ CREATE TABLE IF NOT EXISTS `taxisystemdb`.`ride` (
   INDEX `clientid_idx` (`clientid` ASC),
   INDEX `driverid_idx` (`driverid` ASC),
   INDEX `taxiid_idx` (`taxiid` ASC),
-  CONSTRAINT `clientid`
+  CONSTRAINT `clientsid`
     FOREIGN KEY (`clientid`)
     REFERENCES `taxisystemdb`.`client` (`clientid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `driverid`
+  CONSTRAINT `driversid`
     FOREIGN KEY (`driverid`)
     REFERENCES `taxisystemdb`.`driver` (`driverid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `taxiid`
+  CONSTRAINT `taxisid`
     FOREIGN KEY (`taxiid`)
     REFERENCES `taxisystemdb`.`taxi` (`taxiid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+CREATE TABLE `client` (
+  `clientid` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `clienttypeid` int(11) NOT NULL,
+  PRIMARY KEY (`clientid`),
+  UNIQUE KEY `clientid_UNIQUE` (`clientid`),
+  UNIQUE KEY `userid_UNIQUE` (`userid`),
+  KEY `clienttypeid_idx` (`clienttypeid`),
+  CONSTRAINT `clientstypeid` FOREIGN KEY (`clienttypeid`) REFERENCES `clienttype` (`clienttypeid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usersid` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`taxitype` (
-  `taxitypeid` INT NOT NULL AUTO_INCREMENT,
-  `taxitypename` VARCHAR(45) NULL,
-  PRIMARY KEY (`taxitypeid`))
-ENGINE = InnoDB
+CREATE TABLE `clienttype` (
+  `clienttypeid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `discount` int(11) DEFAULT NULL,
+  `moneyspent` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`clienttypeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`taxi` (
-  `taxiid` INT NOT NULL AUTO_INCREMENT,
-  `taxitypeid` INT NULL,
-  `taximodel` VARCHAR(45) NULL,
-  `driverid` INT NULL,
+CREATE TABLE `driver` (
+  `driverid` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`driverid`),
+  UNIQUE KEY `driverid_UNIQUE` (`driverid`),
+  UNIQUE KEY `userid_UNIQUE` (`userid`),
+  CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ride` (
+  `rideid` int(11) NOT NULL AUTO_INCREMENT,
+  `driverid` int(11) DEFAULT NULL,
+  `clientid` int(11) DEFAULT NULL,
+  `distance` decimal(10,0) DEFAULT NULL,
+  `ridestart` datetime DEFAULT NULL,
+  `ridefinish` datetime DEFAULT NULL,
+  `cost` decimal(10,0) DEFAULT NULL,
+  `taxiid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rideid`),
+  KEY `clientid_idx` (`clientid`),
+  KEY `driverid_idx` (`driverid`),
+  KEY `taxiid_idx` (`taxiid`),
+  CONSTRAINT `clientsid` FOREIGN KEY (`clientid`) REFERENCES `client` (`clientid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `driversid` FOREIGN KEY (`driverid`) REFERENCES `driver` (`driverid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `taxisid` FOREIGN KEY (`taxiid`) REFERENCES `taxi` (`taxiid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `taxi` (
+  `taxiid` int(11) NOT NULL AUTO_INCREMENT,
+  `taxitypeid` int(11) DEFAULT NULL,
+  `taximodel` varchar(45) DEFAULT NULL,
+  `driverid` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiid`),
-  UNIQUE INDEX `taxiid_UNIQUE` (`taxiid` ASC),
-  INDEX `taxitypeid_idx` (`taxitypeid` ASC),
-  INDEX `driverid_idx` (`driverid` ASC),
-  CONSTRAINT `taxitypeid`
-    FOREIGN KEY (`taxitypeid`)
-    REFERENCES `taxisystemdb`.`taxitype` (`taxitypeid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `driverid`
-    FOREIGN KEY (`driverid`)
-    REFERENCES `taxisystemdb`.`driver` (`driverid`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+  UNIQUE KEY `taxiid_UNIQUE` (`taxiid`),
+  KEY `taxitypeid_idx` (`taxitypeid`),
+  KEY `driverid_idx` (`driverid`),
+  CONSTRAINT `driverid` FOREIGN KEY (`driverid`) REFERENCES `driver` (`driverid`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `taxitypeid` FOREIGN KEY (`taxitypeid`) REFERENCES `taxitype` (`taxitypeid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`user` (
-  `userid` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(100) NULL,
-  `password` VARCHAR(100) NULL,
-  `phone` VARCHAR(12) NULL,
-  `name` VARCHAR(45) NULL,
-  `surname` VARCHAR(45) NULL,
+CREATE TABLE `taxitype` (
+  `taxitypeid` int(11) NOT NULL AUTO_INCREMENT,
+  `taxitypename` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`taxitypeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `phone` varchar(12) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `surname` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`userid`),
-  UNIQUE INDEX `idtaxies_UNIQUE` (`userid` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
-ENGINE = InnoDB
-
-
-
-
-
-
-
-
+  UNIQUE KEY `idtaxies_UNIQUE` (`userid`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
