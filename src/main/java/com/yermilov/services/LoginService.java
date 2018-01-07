@@ -14,9 +14,9 @@ public class LoginService {
         return loginService;
     }
 
-    public boolean verify(String login, String password) throws DAOException {
+    public boolean verify(String email, String password) throws DAOException {
         UserDAO userDAO = DAOFactory.getUserDAO();
-        User user = userDAO.findByEmail(login);
+        User user = userDAO.findByEmail(email);
         return user!=null&&password.equals(user.getPassword());
     }
 }

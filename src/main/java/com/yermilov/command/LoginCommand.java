@@ -12,9 +12,9 @@ import java.io.IOException;
 public class LoginCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = request.getParameter("login");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
-        if (login == null) {
+        if (email == null) {
             request.getRequestDispatcher("error.jsp");//todo: add two files
         }
         if (password == null) {
@@ -22,9 +22,9 @@ public class LoginCommand implements Command {
         }
         LoginService loginService = LoginService.getLoginService();
         try {
-            if (loginService.verify(login, password)) {
+            if (loginService.verify(email, password)) {
                 HttpSession session = request.getSession();
-                session.setAttribute("login", login);
+                session.setAttribute("email", email);
                 request.getRequestDispatcher(CommandFactory.USERS).forward(request, response);
             } else {
                 request.setAttribute("errorMessageLogin", "Login incorrect");

@@ -14,7 +14,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletDispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
 
