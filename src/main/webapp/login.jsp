@@ -13,6 +13,7 @@
     <input type="password" name="password" value=""/>
     <br/>
     <input type="submit" value="Log in"/>
+    ${errorMessageLogin}
 </form><hr/>
 </body></html>
 

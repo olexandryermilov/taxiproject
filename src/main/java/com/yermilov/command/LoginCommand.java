@@ -25,10 +25,10 @@ public class LoginCommand implements Command {
             if (loginService.verify(email, password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("email", email);
-                request.getRequestDispatcher(CommandFactory.USERS).forward(request, response);
+                request.getRequestDispatcher("main.jsp").forward(request, response);
             } else {
                 request.setAttribute("errorMessageLogin", "Login incorrect");
-                request.getRequestDispatcher(CommandFactory.LOGIN).forward(request, response);
+                request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
             }
         } catch (DAOException e) {
             //todo:log
