@@ -1,6 +1,8 @@
 package com.yermilov.transactions;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyVetoException;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
     private static ConnectionPool connectionPool = new ConnectionPool();
     private static BasicDataSource dataSource;
 
@@ -24,15 +26,11 @@ public class ConnectionPool {
         dataSource.setMaxOpenPreparedStatements(180);
     }
     public static ConnectionPool getInstance() throws IOException, SQLException, PropertyVetoException {
-        if (connectionPool == null) {
-            connectionPool = new ConnectionPool();
-            return connectionPool;
-        } else {
-            return connectionPool;
-        }
+        return connectionPool;
     }
 
     public static Connection getConnection() throws SQLException {
+        LOGGER.info("Giving a connection");
         return dataSource.getConnection();
     }
 

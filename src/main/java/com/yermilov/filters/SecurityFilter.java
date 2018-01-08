@@ -1,6 +1,5 @@
 package com.yermilov.filters;
 
-import com.yermilov.TempLogger;
 import com.yermilov.authentification.Authentification;
 import com.yermilov.configuration.SecurityConfiguration;
 
@@ -23,7 +22,6 @@ public class SecurityFilter implements Filter {
         HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
         HttpServletResponse httpServletResponse = ((HttpServletResponse)response);
         String command =getStringCommand(((HttpServletRequest) request).getRequestURI(),securityConfiguration.getEndpoints());
-        TempLogger.log(command);
         String role=securityConfiguration.security(command);
         if ("ALL".equals(role)) {
             request.setAttribute("command",command);

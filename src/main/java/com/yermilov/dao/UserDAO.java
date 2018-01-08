@@ -4,6 +4,8 @@ import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
 import com.yermilov.transactions.TransactionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
     UserDAO(){
 
     }
@@ -45,12 +48,14 @@ public class UserDAO extends AbstractDAO<User> {
                 statement.setString(2, entity.getPassword());
                 statement.setString(3, entity.getName());
                 statement.setString(4, entity.getSurname());
+                LOGGER.debug("Statement to execute {}",statement.toString());
                 return statement.execute();
             } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             }
         } catch (SQLException e) {
-            //todo: add log
+            LOGGER.error(e.getMessage());
             throw new DAOException(e.getMessage());
         }
     }
@@ -67,6 +72,7 @@ public class UserDAO extends AbstractDAO<User> {
             try {
                 PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_LOGIN);
                 statement.setString(1, email);
+                LOGGER.debug("Statement to execute {}",statement.toString());
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     User user = new User(email,
@@ -75,13 +81,14 @@ public class UserDAO extends AbstractDAO<User> {
                     return user;
                 }
             } catch (SQLException e){
+                LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
                 con.close();
             }
             return null;
         } catch (SQLException e) {
-            //log
+            LOGGER.error(e.getMessage());
         } finally {
         }
         return null;

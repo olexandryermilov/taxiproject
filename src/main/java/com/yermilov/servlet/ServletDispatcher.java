@@ -1,36 +1,32 @@
 package com.yermilov.servlet;
 
-import com.yermilov.TempLogger;
 import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.logging.Logger;
 
 public class ServletDispatcher extends HttpServlet{
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(ServletDispatcher.class);
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
         CommandFactory factory = CommandFactory.getInstance();
-        Command command = factory.getCommand((String) request.getParameter("command"));
+        Command command = factory.getCommand(request.getParameter("command"));
+        LOGGER.info("Got command {}",command);
         try {
             command.execute(request,response);
         } catch (ServletException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            //todo:add logger
+            LOGGER.error(e.getMessage());
+
         } catch (IOException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            //todo: add logger
-        }
-        catch (Exception e){
-            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            LOGGER.error(e.getMessage());
         }
     }
 
