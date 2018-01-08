@@ -2,28 +2,38 @@ package com.yermilov.transactions;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
-    private static BasicDataSource dataSource;// =... ;
+
+    private static ConnectionPool connectionPool = new ConnectionPool();
+    private static BasicDataSource dataSource;
+
+    private ConnectionPool() {
+        dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/taxisystemdb?autoReconnect=true&useSSL=false&useUnicode=true" +
+                "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        dataSource.setMinIdle(5);
+        dataSource.setMaxIdle(20);
+        dataSource.setMaxOpenPreparedStatements(180);
+    }
+    public static ConnectionPool getInstance() throws IOException, SQLException, PropertyVetoException {
+        if (connectionPool == null) {
+            connectionPool = new ConnectionPool();
+            return connectionPool;
+        } else {
+            return connectionPool;
+        }
+    }
 
     public static Connection getConnection() throws SQLException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            return new DatabaseConnector().getConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return dataSource.getConnection();
     }
+
 }
