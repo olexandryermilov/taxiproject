@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 
 public class LoginService {
     private final static Logger logger = LoggerFactory.getLogger(LoginService.class);
-    {
-        DOMConfigurator.configure("log4j.xml");
-    }
     private final static LoginService loginService = new LoginService();
     private LoginService(){
 
@@ -21,10 +18,11 @@ public class LoginService {
         return loginService;
     }
 
-    public boolean verify(String email, String password) throws DAOException {
+    public User verify(String email, String password) throws DAOException {
         UserDAO userDAO = DAOFactory.getUserDAO();
         User user = userDAO.findByEmail(email);
         logger.info("User "+email+" tried to login.");
-        return user!=null&&password.equals(user.getPassword());
+        return user;
+        //return user!=null&&password.equals(user.getPassword());
     }
 }

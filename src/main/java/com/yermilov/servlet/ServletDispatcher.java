@@ -2,6 +2,7 @@ package com.yermilov.servlet;
 
 import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,11 @@ import java.io.IOException;
 public class ServletDispatcher extends HttpServlet{
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ServletDispatcher.class);
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        DOMConfigurator.configure("log4j.xml");
+    }
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
         CommandFactory factory = CommandFactory.getInstance();
         Command command = factory.getCommand(request.getParameter("command"));

@@ -13,7 +13,11 @@ public class LogoutCommand implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.removeAttribute("email");
+        session.removeAttribute("user");
         request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+    @Override
+    public String toString(){
+        return this.getClass().getName();
     }
 }

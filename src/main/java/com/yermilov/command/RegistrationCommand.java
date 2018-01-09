@@ -30,7 +30,8 @@ public class RegistrationCommand implements Command{
         RegistrationService registrationService = RegistrationService.getRegistrationService();
         try {
             registrationService.register(email, password, name, surname);
-            LOGGER.info("Registered new user: email :{}, pass{} {} {}");
+            LOGGER.info("Registered new user: email :{} {} {}",email,name,surname);
+            req.getRequestDispatcher("registration_success.jsp").forward(req,resp);
         } catch (RegistrationException e) {
             LOGGER.error(e.getMessage());
             req.setAttribute("errorMessage", e.getMessage());
@@ -44,5 +45,9 @@ public class RegistrationCommand implements Command{
             LOGGER.error(e.getMessage());
         }
 
+    }
+    @Override
+    public String toString(){
+        return this.getClass().getName();
     }
 }

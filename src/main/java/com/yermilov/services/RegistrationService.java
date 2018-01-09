@@ -15,9 +15,6 @@ import java.sql.SQLException;
 
 public class RegistrationService {
     private final static Logger logger = LoggerFactory.getLogger(RegistrationService.class);
-    {
-        DOMConfigurator.configure("log4j.xml");
-    }
     private final static RegistrationService registrationService = new RegistrationService();
     private RegistrationService(){
     }

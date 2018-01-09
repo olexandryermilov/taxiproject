@@ -1,5 +1,6 @@
 package com.yermilov.command;
 
+import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.LoginService;
 import org.slf4j.Logger;
@@ -15,6 +16,11 @@ public class LoginCommand implements Command {
     private final static Logger LOGGER = LoggerFactory.getLogger(LoginCommand.class);
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(request.getSession().getAttribute("user")!=null){
+            request.setAttribute("errorMessageLogin", "User already logged in");
+            request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
+            return;
+        }
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (email == null) {
@@ -27,19 +33,24 @@ public class LoginCommand implements Command {
         }
         LoginService loginService = LoginService.getLoginService();
         try {
-            if (loginService.verify(email, password)) {
+            User user = loginService.verify(email,password);
+            if (user!=null) {
                 LOGGER.info("User {} logged in.",email);
                 HttpSession session = request.getSession();
-                session.setAttribute("email", email);
+                session.setAttribute("user", user);
                 request.getRequestDispatcher("main.jsp").forward(request, response);
             } else {
                 LOGGER.info("User {} couldn't log in.",email);
-                request.setAttribute("errorMessageLogin", "Login incorrect");
+                request.setAttribute("errorMessageLogin", "Login or password incorrect");
                 request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
             }
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
         }
+    }
+    @Override
+    public String toString(){
+        return this.getClass().getName();
     }
 }
 
