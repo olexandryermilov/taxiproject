@@ -14,22 +14,4 @@ public abstract class AbstractDAO <T>{
     public abstract boolean delete(T entity)throws DAOException;
     public abstract boolean create(T entity)throws DAOException;
     public abstract T update(T entity)throws DAOException;
-    public void close(Statement statement){
-        try{
-            if(statement!=null){
-                statement.close();
-            }
-        } catch (SQLException e) {
-            //log
-        }
-    }
-    public void close(Connection connection){
-        try{
-            if(connection!=null){
-                connection.close();
-            }
-        } catch (SQLException e) {
-            //log
-        }
-    }
 }
