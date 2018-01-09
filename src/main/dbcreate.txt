@@ -104,3 +104,12 @@ CREATE TABLE `user` (
   UNIQUE KEY `idtaxies_UNIQUE` (`userid`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `taxisystemdb`.`admin` (
+  `adminid` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `surname` VARCHAR(45) NULL,
+  PRIMARY KEY (`adminid`),
+  UNIQUE INDEX `adminid_UNIQUE` (`adminid` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC));

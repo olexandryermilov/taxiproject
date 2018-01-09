@@ -10,4 +10,8 @@ public class DAOFactory {
     public static UserDAO getUserDAO(){
         return userDAO;
     }
+    private final static AdminDAO adminDAO= new AdminDAO();
+    public static AdminDAO getAdminDAO(){
+        return adminDAO;
+    }
 }
