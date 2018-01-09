@@ -33,7 +33,7 @@ public class LoginCommand implements Command {
         }
         LoginService loginService = LoginService.getLoginService();
         try {
-            User user = loginService.verify(email,password);
+            User user = loginService.getUser(email,password);
             if (user!=null) {
                 LOGGER.info("User {} logged in.",email);
                 HttpSession session = request.getSession();

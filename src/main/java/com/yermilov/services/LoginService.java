@@ -18,11 +18,11 @@ public class LoginService {
         return loginService;
     }
 
-    public User verify(String email, String password) throws DAOException {
+    public User getUser(String email, String password) throws DAOException {
         UserDAO userDAO = DAOFactory.getUserDAO();
         User user = userDAO.findByEmail(email);
         logger.info("User "+email+" tried to login.");
-        return user;
+        return (password.equals(user.getPassword()))?user:null;
         //return user!=null&&password.equals(user.getPassword());
     }
 }
