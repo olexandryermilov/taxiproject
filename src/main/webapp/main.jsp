@@ -1,14 +1,20 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="styles/w3.css">
 </head>
-<body>
- Login ok!
- <form name="logoutForm" method="POST" action="controller">
-     <input type="hidden" name="command" value="logout" />
-     <input type="submit" value="Log out"/>
- </form>
+<body class="w3-sand">
+
+<div class="w3-container w3-green w3-opacity ">
+    <form name="logoutForm" method="POST" action="controller" class="w3-right-align" >
+    <input type="hidden" name="command" value="logout" />
+        <label class="w3-left-align"><h1>Taxi system</h1></label>
+    <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-top">Log out</button>
+</form>
+</div>
+
+Hi, ${user.name}
+
 </body>
 </html>
