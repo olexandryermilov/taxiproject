@@ -22,6 +22,7 @@ public class ServletDispatcher extends HttpServlet{
     }
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
         CommandFactory factory = CommandFactory.getInstance();
+
         Command command = factory.getCommand(request.getParameter("command"));
         LOGGER.info("Got command {}",command);
         try {

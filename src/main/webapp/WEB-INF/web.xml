@@ -16,6 +16,10 @@
         <servlet-name>ServletDispatcher</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDispatcher</servlet-name>
+        <url-pattern>/admin/controller</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

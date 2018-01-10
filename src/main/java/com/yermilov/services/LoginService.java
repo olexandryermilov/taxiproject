@@ -23,6 +23,5 @@ public class LoginService {
         User user = userDAO.findByEmail(email);
         logger.info("User "+email+" tried to login.");
         return (password.equals(user.getPassword()))?user:null;
-        //return user!=null&&password.equals(user.getPassword());
     }
 }

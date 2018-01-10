@@ -3,6 +3,7 @@ package com.yermilov.admin.command;
 import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
 import com.yermilov.command.LoginCommand;
+import com.yermilov.domain.Admin;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.admin.service.AdminLoginService;
 import org.slf4j.Logger;
@@ -30,10 +31,11 @@ public class AdminLoginCommand implements Command {
         }
         AdminLoginService loginService = AdminLoginService.getAdminLoginService();
         try {
-            if (loginService.getAdmin(email, password)!=null) {
+            Admin admin = loginService.getAdmin(email,password);
+            if (admin!=null) {
                 LOGGER.info("User {} logged into admin.",email);
                 HttpSession session = request.getSession();
-                session.setAttribute("email", email);
+                session.setAttribute("admin", admin);
                 request.getRequestDispatcher("main.jsp").forward(request, response);
             } else {
                 LOGGER.info("User {} couldn't log into admin.",email);
