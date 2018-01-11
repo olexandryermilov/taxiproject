@@ -4,7 +4,6 @@ import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.UserDAO;
 import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
 package com.yermilov.dao;
 
-import java.sql.Driver;
+import com.yermilov.domain.Driver;
 import java.util.List;
 
 public class DriverDAO extends AbstractDAO<Driver> {

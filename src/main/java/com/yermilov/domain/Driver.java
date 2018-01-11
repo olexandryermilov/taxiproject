@@ -7,6 +7,10 @@ public class Driver {
         this.userId = userId;
     }
 
+    public void setDriverId(int driverId) {
+        this.driverId = driverId;
+    }
+
     public int getDriverId() {
         return driverId;
     }

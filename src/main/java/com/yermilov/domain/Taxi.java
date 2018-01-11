@@ -2,12 +2,16 @@ package com.yermilov.domain;
 
 public class Taxi {
     private int taxiId,driverId,taxiTypeId;
-    private String taxiModel;
+    private String carNumber;
 
-    public Taxi(int driverId, int taxiTypeId, String taxiModel) {
+    public Taxi(int driverId, int taxiTypeId, String carNumber) {
         this.driverId = driverId;
         this.taxiTypeId = taxiTypeId;
-        this.taxiModel = taxiModel;
+        this.carNumber = carNumber;
+    }
+
+    public void setTaxiId(int taxiId) {
+        this.taxiId = taxiId;
     }
 
     public int getTaxiId() {
@@ -30,11 +34,11 @@ public class Taxi {
         this.taxiTypeId = taxiTypeId;
     }
 
-    public String getTaxiModel() {
-        return taxiModel;
+    public String getCarNumber() {
+        return carNumber;
     }
 
-    public void setTaxiModel(String taxiModel) {
-        this.taxiModel = taxiModel;
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
     }
 }

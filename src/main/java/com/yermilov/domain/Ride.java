@@ -1,13 +1,13 @@
 package com.yermilov.domain;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Ride {
     private int rideId,driverId,clientId,taxiId;
     private double cost, distance;
-    private LocalDateTime rideStart, rideFinish;
+    private Date rideStart, rideFinish;
 
-    public Ride(int driverId, int clientId, int taxiId, double cost, double distance, LocalDateTime rideStart, LocalDateTime rideFinish) {
+    public Ride(int driverId, int clientId, int taxiId, double cost, double distance, Date rideStart, Date rideFinish) {
         this.driverId = driverId;
         this.clientId = clientId;
         this.taxiId = taxiId;
@@ -61,19 +61,19 @@ public class Ride {
         this.distance = distance;
     }
 
-    public LocalDateTime getRideStart() {
+    public Date getRideStart() {
         return rideStart;
     }
 
-    public void setRideStart(LocalDateTime rideStart) {
+    public void setRideStart(Date rideStart) {
         this.rideStart = rideStart;
     }
 
-    public LocalDateTime getRideFinish() {
+    public Date getRideFinish() {
         return rideFinish;
     }
 
-    public void setRideFinish(LocalDateTime rideFinish) {
+    public void setRideFinish(Date rideFinish) {
         this.rideFinish = rideFinish;
     }
 }

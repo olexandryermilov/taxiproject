@@ -15,6 +15,7 @@ public class CommandFactory {
     public final static String ADMIN_LOGIN="adminLogin";
     public final static String DELETE = "delete";
     public final static String RIDE = "ride";
+    public final static String CALCULATE_COST = "calculateCost";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -23,6 +24,7 @@ public class CommandFactory {
         commandMap.put(USERS,new UsersCommand());
         commandMap.put(ADMIN_LOGIN,new com.yermilov.admin.command.LoginCommand());
         commandMap.put(DELETE, new DeleteCommand());
+        commandMap.put(CALCULATE_COST,new CostCalculationCommand());
         commandMap.put(RIDE,new RideCommand());
     }
     public static CommandFactory getInstance() {

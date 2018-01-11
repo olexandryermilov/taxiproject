@@ -5,6 +5,9 @@ import com.yermilov.domain.Taxi;
 import java.util.List;
 
 public class TaxiDAO extends AbstractDAO<Taxi> {
+    public Taxi findByCarNumber(String carNumber){
+        return null;
+    }
     @Override
     public List<Taxi> findAll() {
         return null;

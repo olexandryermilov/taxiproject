@@ -27,4 +27,12 @@ public class DAOFactory {
     public static RideDAO getRideDAO(){
         return RIDE_DAO;
     }
+    private final static TaxiDAO TAXI_DAO = new TaxiDAO();
+    public static TaxiDAO getTaxiDAO(){
+        return TAXI_DAO;
+    }
+    private final static DriverDAO DRIVER_DAO = new DriverDAO();
+    public static DriverDAO getDriverDAO(){
+        return DRIVER_DAO;
+    }
 }

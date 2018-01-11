@@ -18,11 +18,6 @@ public class ClientTypeCalculationService {
         return COST_CALCULATION_SERVICE;
     }
 
-    public int getClientsDiscount(int userId) throws DAOException{
-        ClientDAO clientDAO = DAOFactory.getClientDAO();
-        Client client = clientDAO.findClientByUserId(userId);
-        return getClientsDiscount(client);
-    }
     public int getClientsDiscount(Client client) throws DAOException {
         double moneySpent = RideStatisticsService.getRideStatisticsService().getClientsSpentMoney(client);
         ClientTypeDAO clientTypeDAO = DAOFactory.getClientTypeDAO();
