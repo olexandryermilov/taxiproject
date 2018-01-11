@@ -1,13 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Registration | TaxiSystem</title>
-	<link rel="stylesheet" href="styles/w3.css">
-</head>
-<body class="w3-sand">
-<div class="w3-container w3-green w3-opacity ">
-	<h1>Taxi system</h1>
-</div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="header.jsp"/>
 <div class="w3-card-4">
 	<div class="w3-container ">
 	<form name ="RegistrationForm" action="controller" method="POST">

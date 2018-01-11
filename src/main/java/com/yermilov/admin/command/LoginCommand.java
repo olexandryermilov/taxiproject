@@ -35,7 +35,7 @@ public class LoginCommand implements Command {
                 LOGGER.info("User {} logged into admin.",email);
                 HttpSession session = request.getSession();
                 session.setAttribute("admin", admin);
-                request.getRequestDispatcher("main.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
                 LOGGER.info("User {} couldn't log into admin.",email);
                 request.setAttribute("errorMessageLogin", "Login or password incorrect");

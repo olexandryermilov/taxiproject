@@ -31,7 +31,8 @@ public class RegistrationCommand implements Command{
         try {
             registrationService.register(email, password, name, surname);
             LOGGER.info("Registered new user: email :{} {} {}",email,name,surname);
-            req.getRequestDispatcher("registration_success.jsp").forward(req,resp);
+            req.setAttribute("justRegistered",true);
+            req.getRequestDispatcher("index.jsp").forward(req,resp);
         } catch (RegistrationException e) {
             LOGGER.error(e.getMessage());
             req.setAttribute("errorMessage", e.getMessage());
