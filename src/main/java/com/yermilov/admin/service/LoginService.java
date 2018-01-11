@@ -3,18 +3,17 @@ package com.yermilov.admin.service;
 import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.AdminDAO;
 import com.yermilov.domain.Admin;
-import com.yermilov.domain.Admin;
 import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AdminLoginService {
-    private final static Logger logger = LoggerFactory.getLogger(AdminLoginService.class);
-    private final static AdminLoginService loginService = new AdminLoginService();
-    private AdminLoginService(){
+public class LoginService {
+    private final static Logger logger = LoggerFactory.getLogger(LoginService.class);
+    private final static LoginService loginService = new LoginService();
+    private LoginService(){
 
     }
-    public static AdminLoginService getAdminLoginService(){
+    public static LoginService getAdminLoginService(){
         return loginService;
     }
 

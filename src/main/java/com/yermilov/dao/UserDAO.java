@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
@@ -17,9 +19,32 @@ public class UserDAO extends AbstractDAO<User> {
     UserDAO(){
 
     }
+    private final static String SQL_FIND_ALL = "select * from taxisystemdb.user";
     @Override
-    public List<User> findAll() {
-        return null;
+    public List<User> findAll() throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_FIND_ALL);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet rs = statement.executeQuery();
+                List<User> result = new ArrayList<>();
+                while(rs.next()){
+                    User user = new User(rs.getString("email"),null,
+                            rs.getString("name"),
+                            rs.getString("surname"));
+                    user.setUserId(rs.getInt("userid"));
+                    result.add(user);
+                }
+                return result;
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
@@ -78,6 +103,7 @@ public class UserDAO extends AbstractDAO<User> {
                     User user = new User(email,
                             resultSet.getString("password"),resultSet.getString("name"),
                             resultSet.getString("surname"));
+                    user.setUserId(resultSet.getInt("userid"));
                     return user;
                 }
             } catch (SQLException e){

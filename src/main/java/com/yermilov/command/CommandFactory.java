@@ -1,6 +1,7 @@
 package com.yermilov.command;
 
-import com.yermilov.admin.command.AdminLoginCommand;
+import com.yermilov.admin.command.LoginCommand;
+import com.yermilov.admin.command.UsersCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +15,11 @@ public class CommandFactory {
     public final static String ADMIN_LOGIN="adminLogin";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
-        commandMap.put(LOGIN,new LoginCommand());
+        commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
         commandMap.put(REGISTRATION,new RegistrationCommand());
         commandMap.put(LOGOUT, new LogoutCommand());
         commandMap.put(USERS,new UsersCommand());
-        commandMap.put(ADMIN_LOGIN,new AdminLoginCommand());
+        commandMap.put(ADMIN_LOGIN,new LoginCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

@@ -11,6 +11,9 @@ public class User {
         this.surname = surname;
     }
 
+    public void setUserId(int userId){
+        this.userId=userId;
+    }
     public int getUserId() {
         return userId;
     }
