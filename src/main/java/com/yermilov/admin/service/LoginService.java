@@ -13,7 +13,7 @@ public class LoginService {
     private LoginService(){
 
     }
-    public static LoginService getAdminLoginService(){
+    public static LoginService getLoginService(){
         return loginService;
     }
 
@@ -22,6 +22,5 @@ public class LoginService {
         Admin admin = adminDAO.findByEmail(email);
         logger.info(email+" tried to login into admin.");
         return (password.equals(admin.getPassword()))?admin:null;
-        //return admin!=null&&password.equals(admin.getPassword());
     }
 }

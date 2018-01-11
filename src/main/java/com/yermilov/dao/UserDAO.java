@@ -52,9 +52,24 @@ public class UserDAO extends AbstractDAO<User> {
         return null;
     }
 
+    private final static String SQL_DELETE_BY_ID = "delete from taxisystemdb.user where userid=?";
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(int id) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_DELETE_BY_ID);
+                statement.setInt(1,id);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                return statement.execute();
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override

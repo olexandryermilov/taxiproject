@@ -3,7 +3,7 @@ package com.yermilov.admin.command;
 import com.yermilov.command.Command;
 import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
-import com.yermilov.services.UsersService;
+import com.yermilov.admin.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

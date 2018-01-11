@@ -1,5 +1,6 @@
 package com.yermilov.command;
 
+import com.yermilov.admin.command.DeleteCommand;
 import com.yermilov.admin.command.LoginCommand;
 import com.yermilov.admin.command.UsersCommand;
 
@@ -13,6 +14,7 @@ public class CommandFactory {
     public final static String LOGOUT = "logout";
     public final static String USERS = "users";
     public final static String ADMIN_LOGIN="adminLogin";
+    public final static String DELETE = "delete";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -20,6 +22,7 @@ public class CommandFactory {
         commandMap.put(LOGOUT, new LogoutCommand());
         commandMap.put(USERS,new UsersCommand());
         commandMap.put(ADMIN_LOGIN,new LoginCommand());
+        commandMap.put(DELETE, new DeleteCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

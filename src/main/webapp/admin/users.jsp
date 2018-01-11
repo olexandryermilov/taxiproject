@@ -12,7 +12,7 @@
 <div class="w3-container w3-center">
     <div class="w3-bar w3-padding-large w3-padding-24">
         <form action="controller" method="post">
-            <input type="hidden" command="delete"/>
+            <input type="hidden" name="command" value="delete"/>
             <table class="w3-table-all w3-light-green">
                 <tr>
                     <td>To Delete</td>
@@ -24,7 +24,7 @@
                 <jsp:useBean id="users" type="java.util.List<com.yermilov.domain.User>" scope="request"/>
 
                 <c:forEach var="user" items="${users}"><tr>
-                    <td><input type="checkbox" name="toDelete"/></td>
+                    <td><input type="checkbox" name="toDelete" value=${user.userId}></td>
                     <td>${user.userId}</td>
                     <td>${user.name}</td>
                     <td>${user.surname}</td>

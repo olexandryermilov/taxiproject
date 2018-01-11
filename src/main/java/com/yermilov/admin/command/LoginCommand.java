@@ -28,7 +28,7 @@ public class LoginCommand implements Command {
             request.getRequestDispatcher("error.jsp");
             LOGGER.info("Empty password");
         }
-        LoginService loginService = LoginService.getAdminLoginService();
+        LoginService loginService = LoginService.getLoginService();
         try {
             Admin admin = loginService.getAdmin(email,password);
             if (admin!=null) {

@@ -1,4 +1,4 @@
-package com.yermilov.services;
+package com.yermilov.admin.service;
 
 import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.UserDAO;
