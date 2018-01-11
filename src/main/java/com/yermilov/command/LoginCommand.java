@@ -37,7 +37,7 @@ public class LoginCommand implements Command {
             if (user!=null) {
                 LOGGER.info("User {} logged in.",email);
                 HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+                session.setAttribute("currentUser", user);
                 request.getRequestDispatcher("main.jsp").forward(request, response);
             } else {
                 LOGGER.info("User {} couldn't log in.",email);
