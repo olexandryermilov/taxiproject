@@ -130,8 +130,8 @@ public class UserDAO extends AbstractDAO<User> {
             return null;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
         } finally {
         }
-        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.yermilov.dao;
 
+import com.yermilov.domain.Client;
 import com.yermilov.domain.Ride;
 
 import java.util.List;
@@ -33,5 +34,9 @@ public class RideDAO extends AbstractDAO<Ride> {
     @Override
     public Ride update(Ride entity) {
         return null;
+    }
+
+    public double getMoneySpentForClient(Client client){
+        return 0;
     }
 }

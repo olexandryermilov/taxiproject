@@ -11,6 +11,10 @@ public class Client {
         return clientId;
     }
 
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
     public int getUserId() {
         return userId;
     }
