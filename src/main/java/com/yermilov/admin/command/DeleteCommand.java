@@ -8,6 +8,7 @@ import com.yermilov.command.CommandFactory;
 import com.yermilov.command.LoginCommand;
 import com.yermilov.domain.Admin;
 import com.yermilov.exceptions.DAOException;
+import com.yermilov.exceptions.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,8 +39,12 @@ public class DeleteCommand implements Command {
             deleteService.delete(idToDelete);
             LOGGER.info("Successfully deleted");
             request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
-            request.getRequestDispatcher("users.jsp").forward(request,response);
+            request.getRequestDispatcher("users.jsp?command=users").forward(request,response);
         } catch (DAOException e) {
+            LOGGER.error(e.getMessage());
+        } catch (TransactionException e) {
+            LOGGER.error(e.getMessage());
+        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
     }
