@@ -13,7 +13,8 @@ public class TransactionManager {
     public static void beginTransaction() throws SQLException, TransactionException {
         if (threadLocal.get()!=null)
             throw new TransactionException();
-        Connection connection = ConnectionPool.getConnection();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         ConnectionWrapper wrapper = new ConnectionWrapper(connection,true);
         threadLocal.set(wrapper);
     }
@@ -28,7 +29,8 @@ public class TransactionManager {
 
     public static ConnectionWrapper getConnection() throws SQLException {
         if (threadLocal.get()==null){
-            Connection connection = ConnectionPool.getConnection();
+            ConnectionPool connectionPool= ConnectionPool.getInstance();
+            Connection connection = connectionPool.getConnection();
             ConnectionWrapper wrapper = new ConnectionWrapper(connection,false);
             return wrapper;
         } else {return threadLocal.get();}

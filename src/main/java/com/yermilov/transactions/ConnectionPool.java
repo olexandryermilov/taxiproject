@@ -25,11 +25,11 @@ public class ConnectionPool {
         dataSource.setMaxIdle(20);
         dataSource.setMaxOpenPreparedStatements(180);
     }
-    public static ConnectionPool getInstance() throws IOException, SQLException, PropertyVetoException {
+    public static ConnectionPool getInstance() throws SQLException {
         return connectionPool;
     }
 
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         LOGGER.info("Giving a connection");
         return dataSource.getConnection();
     }
