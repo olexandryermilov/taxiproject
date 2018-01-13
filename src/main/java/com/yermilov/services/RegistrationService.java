@@ -1,7 +1,9 @@
 package com.yermilov.services;
 
+import com.yermilov.dao.ClientDAO;
 import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.UserDAO;
+import com.yermilov.domain.Client;
 import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.exceptions.RegistrationException;
@@ -23,12 +25,17 @@ public class RegistrationService {
     }
     public void register(String email, String password, String name, String surname) throws RegistrationException, SQLException, TransactionException, DAOException {
         UserDAO userDAO = DAOFactory.getUserDAO();
+        ClientDAO clientDAO = DAOFactory.getClientDAO();
         TransactionManager.beginTransaction();
         if(userDAO.findByEmail(email)==null){
             User user = new User(email,password,name,surname);
             try{
                 userDAO.create(user);
+                user = userDAO.findByEmail(email);
                 logger.info("Created new user : {}",user);
+                Client client = new Client(user.getUserId());
+                clientDAO.create(client);
+                logger.info("Created new client: {}",client);
             }
             catch(DAOException e){
                 logger.error(e.getMessage());

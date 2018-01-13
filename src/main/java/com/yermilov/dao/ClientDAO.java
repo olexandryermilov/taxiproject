@@ -17,7 +17,7 @@ public class ClientDAO extends AbstractDAO<Client> {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClientDAO.class);
     private static final String SQL_SELECT_ALL = "select * from taxisystemdb.client";
     private final static String SQL_SELECT_BY_ID = "select * from taxisystemdb.client where clientid=?";
-    private final static String SQL_DELETE_BY_ID = "delete from taxisystemdb.client where clientid=?";
+    private final static String SQL_DELETE_BY_USERID = "delete from taxisystemdb.client where userid=?";
     private static final String SQL_INSERT_CLIENT="insert into taxisystemdb.client(userid) values(?)";
     ClientDAO(){}
     private final static String SQL_SELECT_BY_USERID = "select * from taxisystemdb.client where userid=?";
@@ -64,14 +64,45 @@ public class ClientDAO extends AbstractDAO<Client> {
     }
 
     @Override
-    public boolean delete(Client entity) {
-        return false;
+    public boolean delete(Client entity) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_DELETE_BY_USERID);
+                statement.setInt(1,entity.getUserId());
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                return statement.execute();
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
     }
 
-
     @Override
-    public boolean create(Client entity) {
-        return false;
+    public boolean create(Client entity) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_INSERT_CLIENT);
+                statement.setInt(1, entity.getUserId());
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                return statement.execute();
+            } catch (SQLException e){
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        } finally {
+        }
+
     }
 
     @Override
