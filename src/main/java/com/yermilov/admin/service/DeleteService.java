@@ -1,7 +1,6 @@
 package com.yermilov.admin.service;
 
 import com.yermilov.dao.*;
-import com.yermilov.domain.Admin;
 import com.yermilov.domain.Client;
 import com.yermilov.domain.Driver;
 import com.yermilov.exceptions.DAOException;
@@ -16,8 +15,9 @@ import java.util.List;
 public class DeleteService {
     private final static Logger logger = LoggerFactory.getLogger(DeleteService.class);
     private final static DeleteService DELETE_SERVICE = new DeleteService();
+    private IDAOFactory daoFactory;
     private DeleteService(){
-
+        daoFactory= DAOFactory.getInstance();
     }
     public static DeleteService getDeleteService(){
         return DELETE_SERVICE;
@@ -25,9 +25,9 @@ public class DeleteService {
 
     public boolean delete(List<Integer> idToDelete) throws DAOException, SQLException, TransactionException {
 
-        UserDAO userDAO = DAOFactory.getUserDAO();
-        ClientDAO clientDAO = DAOFactory.getClientDAO();
-        DriverDAO driverDAO = DAOFactory.getDriverDAO();
+        UserDAO userDAO = daoFactory.getUserDAO();
+        ClientDAO clientDAO = daoFactory.getClientDAO();
+        DriverDAO driverDAO = daoFactory.getDriverDAO();
         for(Integer i : idToDelete){
             TransactionManager.beginTransaction();
             clientDAO.delete(new Client(i));

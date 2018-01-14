@@ -2,9 +2,6 @@ package com.yermilov.dao;
 
 import com.yermilov.exceptions.DAOException;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public abstract class AbstractDAO <T>{

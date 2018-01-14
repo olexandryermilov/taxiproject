@@ -1,38 +1,38 @@
 package com.yermilov.dao;
 
-public class DAOFactory {
+public class DAOFactory implements IDAOFactory {
     private final static DAOFactory daoFactory = new DAOFactory();
     private DAOFactory(){}
     public static DAOFactory getInstance() {
         return daoFactory;
     }
     private final static ClientDAO CLIENT_DAO = new ClientDAO();
-    public static ClientDAO getClientDAO(){
+    public ClientDAO getClientDAO(){
         return CLIENT_DAO;
     }
     private final static UserDAO userDAO= new UserDAO();
-    public static UserDAO getUserDAO(){
+    public UserDAO getUserDAO(){
         return userDAO;
     }
     private final static AdminDAO adminDAO= new AdminDAO();
-    public static AdminDAO getAdminDAO(){
+    public AdminDAO getAdminDAO(){
         return adminDAO;
     }
 
     private final static ClientTypeDAO CLIENT_TYPE_DAO = new ClientTypeDAO();
-    public static ClientTypeDAO getClientTypeDAO(){
+    public ClientTypeDAO getClientTypeDAO(){
         return CLIENT_TYPE_DAO;
     }
     private final static RideDAO RIDE_DAO = new RideDAO();
-    public static RideDAO getRideDAO(){
+    public RideDAO getRideDAO(){
         return RIDE_DAO;
     }
     private final static TaxiDAO TAXI_DAO = new TaxiDAO();
-    public static TaxiDAO getTaxiDAO(){
+    public TaxiDAO getTaxiDAO(){
         return TAXI_DAO;
     }
     private final static DriverDAO DRIVER_DAO = new DriverDAO();
-    public static DriverDAO getDriverDAO(){
+    public DriverDAO getDriverDAO(){
         return DRIVER_DAO;
     }
 }

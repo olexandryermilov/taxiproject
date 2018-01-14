@@ -1,6 +1,5 @@
 package com.yermilov.dao;
 
-import com.yermilov.domain.Client;
 import com.yermilov.domain.ClientType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;

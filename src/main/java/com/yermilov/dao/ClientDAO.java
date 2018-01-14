@@ -1,16 +1,13 @@
 package com.yermilov.dao;
 
 import com.yermilov.domain.Client;
-import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
 import com.yermilov.transactions.TransactionManager;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDAO extends AbstractDAO<Client> {
