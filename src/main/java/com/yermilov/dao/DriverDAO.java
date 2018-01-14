@@ -51,8 +51,32 @@ public class DriverDAO extends AbstractDAO<Driver> {
         }
         return null;
     }
+    private final static String SQL_SELECT_BY_ID="select * from driver where driverid=?";
     @Override
-    public Driver findById(int id) {
+    public Driver findById(int id) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_ID);
+                statement.setInt(1, id);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    Driver driver = new Driver(resultSet.getInt("userid"));
+                    driver.setDriverId(id);
+                    return driver;
+                }
+            } catch (SQLException e){
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        } finally {
+        }
         return null;
     }
 
