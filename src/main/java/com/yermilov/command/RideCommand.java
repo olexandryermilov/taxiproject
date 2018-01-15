@@ -22,7 +22,7 @@ public class RideCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RideStatisticsService rideStatisticsService =RideStatisticsService.getRideStatisticsService();
-        if("false".equals(request.getAttribute("approved"))){
+        if("false".equals(request.getParameter("approved"))){
             request.getRequestDispatcher("index.jsp").forward(request,response);
             return;
         }
