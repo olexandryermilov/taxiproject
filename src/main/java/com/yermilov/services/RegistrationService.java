@@ -33,11 +33,11 @@ public class RegistrationService {
         if(userDAO.findByEmail(email)==null){
             User user = new User(email,password,name,surname);
             try{
-                if(!userDAO.create(user))throw new RegistrationException("DAO couldn't create a client");
+               userDAO.create(user);
                 user = userDAO.findByEmail(email);
                 logger.info("Created new user : {}",user);
                 Client client = new Client(user.getUserId());
-                if(!clientDAO.create(client))throw new RegistrationException("DAO couldn't create a client");
+                clientDAO.create(client);
                 logger.info("Created new client: {}",client);
                 return true;
             }
