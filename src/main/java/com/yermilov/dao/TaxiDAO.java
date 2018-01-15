@@ -48,9 +48,34 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         return null;
     }
 
+    private final static String SQL_SELECT_BY_TAXIID = "select * from taxi where taxiid=?";
     @Override
-    public Taxi findById(int id) {
-        return null;
+    public Taxi findById(int id) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_TAXIID);
+                statement.setInt(1, id);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    Taxi taxi = new Taxi(resultSet.getInt("driverid"),
+                            resultSet.getInt("taxitypeid"),resultSet.getString("carnumber"));
+                    taxi.setTaxiId(id);
+                    return taxi;
+                }
+            } catch (SQLException e){
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+            return null;
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        } finally {
+        }
     }
 
     @Override

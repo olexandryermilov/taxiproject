@@ -2,11 +2,10 @@ package com.yermilov.command;
 
 import com.yermilov.domain.Client;
 import com.yermilov.domain.Driver;
+import com.yermilov.domain.Taxi;
 import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
-import com.yermilov.services.ClientTypeCalculationService;
-import com.yermilov.services.CostCalculationService;
-import com.yermilov.services.DistanceCalculationService;
+import com.yermilov.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,15 +27,17 @@ public class CostCalculationCommand implements Command {
         try {
             double distance = distanceCalculationService.getDistance(from,to);
             Client client =costCalculationService.getClient(userId);
-            System.out.println(client+"dfgfgdf");
             int discount = ClientTypeCalculationService.getCostCalculationService().getClientsDiscount(client);
             double cost = costCalculationService.getDriveCost(distance,discount);
             request.setAttribute("cost",cost);
             request.getSession().setAttribute("client",client);
             request.setAttribute("distance",distance);
             request.setAttribute("discount",discount);
-            request.setAttribute("carNumber","AA1111AA");
-            request.setAttribute("driver",new Driver(1));
+            Taxi taxi = GetCarService.getGetCarService().getCar();
+            request.setAttribute("taxi",taxi);
+            Driver driver = TaxiIdentifierService.getTaxiIdentifierService().getDriver(taxi);
+            request.setAttribute("driver",driver);
+            request.setAttribute("arrivalTime",TimeCalculationService.getTimeCalculationService().getTime(from,to));
             request.getRequestDispatcher("ride.jsp").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());

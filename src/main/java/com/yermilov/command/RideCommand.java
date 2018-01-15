@@ -22,8 +22,11 @@ public class RideCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RideStatisticsService rideStatisticsService =RideStatisticsService.getRideStatisticsService();
+        if("false".equals(request.getAttribute("approved"))){
+            request.getRequestDispatcher("index.jsp").forward(request,response);
+            return;
+        }
         Client client = (Client) request.getSession().getAttribute("client");
-        System.out.println(client);
         double cost = Double.parseDouble((request.getParameter("cost")));
         double distance = Double.parseDouble(request.getParameter("distance"));
         String carNumber = request.getParameter("carNumber");
@@ -39,8 +42,9 @@ public class RideCommand implements Command {
             request.setAttribute("cost",cost);
             request.setAttribute("distance",distance);
             request.setAttribute("discount",request.getParameter("discount"));
-            request.setAttribute("carNumber","AA1111AA");
-            request.setAttribute("driver",new Driver(1));
+            request.setAttribute("taxi",taxi);
+            request.setAttribute("driver",driver);
+            request.setAttribute("arrivalTime",request.getParameter("arrivalTime"));
             request.getRequestDispatcher("ride.jsp").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
