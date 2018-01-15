@@ -1,6 +1,7 @@
 package com.yermilov.command;
 
 import com.yermilov.admin.command.DeleteCommand;
+import com.yermilov.admin.command.RegisterDriverCommand;
 import com.yermilov.admin.command.UsersCommand;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class CommandFactory {
     public final static String DELETE = "delete";
     public final static String RIDE = "ride";
     public final static String CALCULATE_COST = "calculateCost";
+    public final static String REGISTER_DRIVER = "registerDriver";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -26,6 +28,7 @@ public class CommandFactory {
         commandMap.put(DELETE, new DeleteCommand());
         commandMap.put(CALCULATE_COST,new CostCalculationCommand());
         commandMap.put(RIDE,new RideCommand());
+        commandMap.put(REGISTER_DRIVER,new RegisterDriverCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

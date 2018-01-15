@@ -104,10 +104,28 @@ public class DriverDAO extends AbstractDAO<Driver> {
             throw new DAOException(e.getMessage());
         }
     }
-
+    private final static String SQL_INSERT_DRIVER = "insert into driver(userid) values(?)";
     @Override
-    public boolean create(Driver entity) {
-        return false;
+    public boolean create(Driver entity) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_INSERT_DRIVER);
+                statement.setInt(1, entity.getUserId());
+                LOGGER.debug("Statement to execute {}", statement.toString());
+                return statement.execute();
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+        finally {
+        }
     }
 
     @Override

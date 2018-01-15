@@ -88,7 +88,8 @@ public class UserDAO extends AbstractDAO<User> {
                 statement.setString(3, entity.getName());
                 statement.setString(4, entity.getSurname());
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                return statement.execute();
+                statement.execute();
+                return true;
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());

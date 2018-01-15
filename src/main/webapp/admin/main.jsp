@@ -7,9 +7,7 @@ Hi, ${admin.name}
     Watch users list
 </button>
 </form>
-<div class="w3-container w3-green w3-opacity ">
-    <form name="logoutForm" method="POST" action="controller" class="w3-right-align" >
+<form name="logoutForm" method="POST" action="controller" class="w3-right-align" >
         <input type="hidden" name="command" value="logout" />
         <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-top">Log out</button>
-    </form>
-</div>
+</form>
