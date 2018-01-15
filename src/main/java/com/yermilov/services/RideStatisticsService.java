@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
+import java.util.List;
 
 public class RideStatisticsService {
     private final static Logger logger = LoggerFactory.getLogger(RideStatisticsService.class);
@@ -32,14 +33,16 @@ public class RideStatisticsService {
 
     public boolean putRideToDatabase(Client client, Driver driver, Taxi taxi, double cost, double distance,
                                        Date rideStart, Date rideFinish) throws DAOException{
-        System.out.println(driver);
-        System.out.println(client);
-        System.out.println(taxi);
         Ride ride = new Ride(driver.getDriverId(),client.getClientId(),taxi.getTaxiId(),cost,distance,rideStart,rideFinish);
         return putRideToDatabase(ride);
     }
     public boolean putRideToDatabase(Ride ride)throws DAOException{
         RideDAO rideDAO = daoFactory.getRideDAO();
         return rideDAO.create(ride);
+    }
+    public List<Ride> getClientsRides(Client client) throws DAOException {
+        RideDAO rideDAO = daoFactory.getRideDAO();
+        List<Ride> clientRides = rideDAO.findRidesForClient(client);
+        return clientRides;
     }
 }

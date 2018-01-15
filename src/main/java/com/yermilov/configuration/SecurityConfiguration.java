@@ -24,6 +24,7 @@ public class SecurityConfiguration {
         grant.put(CommandFactory.CALCULATE_COST,"AUTH");
         grant.put(CommandFactory.DELETE,"ADMIN");
         grant.put(CommandFactory.ADMIN_LOGIN,"ALL");
+        grant.put(CommandFactory.RIDES_STATISTICS,"AUTH");
         grant.put("/","ALL");
         grant.put("registration.jsp","ALL");
         grant.put("login.jsp","ALL");

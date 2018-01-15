@@ -2,6 +2,8 @@ package com.yermilov.filters;
 
 import com.yermilov.authentification.Authentication;
 import com.yermilov.configuration.SecurityConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 
 public class SecurityFilter implements Filter {
+    private final static Logger LOGGER = LoggerFactory.getLogger(SecurityFilter.class);
     private FilterConfig filterConfig;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,7 +27,6 @@ public class SecurityFilter implements Filter {
         SecurityConfiguration securityConfiguration = SecurityConfiguration.getInstance();
         HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
         HttpServletResponse httpServletResponse = ((HttpServletResponse)response);
-        System.out.println(httpServletRequest.getRequestURL());
         String command =httpServletRequest.getParameter("command");
         if(command==null){
             String url = httpServletRequest.getRequestURL().toString();
@@ -49,9 +51,8 @@ public class SecurityFilter implements Filter {
                 }
             }
         }
-        System.out.println("Command is "+command);
         String role=securityConfiguration.security(command);
-        System.out.println("Role is "+ role);
+        LOGGER.debug("Command is {}, role is {}",command,role);
         if ("ALL".equals(role)) {
             chain.doFilter(request, response);
             return;

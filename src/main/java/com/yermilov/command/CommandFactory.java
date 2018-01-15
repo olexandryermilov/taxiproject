@@ -20,6 +20,7 @@ public class CommandFactory {
     public final static String CALCULATE_COST = "calculateCost";
     public final static String REGISTER_DRIVER = "registerDriver";
     public final static String ADD_CAR="addCar";
+    public final static String RIDES_STATISTICS = "ridesStatistics";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -32,6 +33,7 @@ public class CommandFactory {
         commandMap.put(RIDE,new RideCommand());
         commandMap.put(REGISTER_DRIVER,new RegisterDriverCommand());
         commandMap.put(ADD_CAR, new AddCarCommand());
+        commandMap.put(RIDES_STATISTICS, new RideStatisticsCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

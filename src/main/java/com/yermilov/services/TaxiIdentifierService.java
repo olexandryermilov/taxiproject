@@ -26,4 +26,8 @@ public class TaxiIdentifierService {
         DriverDAO driverDAO = daoFactory.getDriverDAO();
         return driverDAO.findById(taxi.getDriverId());
     }
+    public Taxi getTaxi(int taxiId) throws DAOException{
+        TaxiDAO taxiDAO=daoFactory.getTaxiDAO();
+        return taxiDAO.findById(taxiId);
+    }
 }
