@@ -12,7 +12,8 @@
                     <td>Name</td>
                     <td>Surname</td>
                     <td>Email</td>
-                    <td>Register as Driver</td>
+                    <td>Register as driver</td>
+                    <td>Add car to driver</td>
                 </tr>
                 <jsp:useBean id="users" type="java.util.List<com.yermilov.domain.User>" scope="request"/>
 
@@ -27,6 +28,12 @@
                             <input type="hidden" name="command" value="registerDriver"/>
                             <input type="hidden" name="userid" value=${user.userId} >
                             <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Make a Driver</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="addCar.jsp" method="get">
+                            <input type="hidden" name="userid" value=${user.userId} >
+                            <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Add car</button>
                         </form>
                     </td>
                 </tr></c:forEach>

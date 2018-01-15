@@ -14,12 +14,12 @@
                     <input type="hidden" name="command" value="ride">
                     <input type="hidden" name="discount" value=${discount} />
                     <input type="hidden" name="arrivalTime" value=${arrivalTime} />
-                    <input type="hidden" name="approved" value="true"/>
+                    <input type="hidden" name="approved" value="true" />
                     <button  type="submit" class="w3-btn w3-green w3-round-large">Approve</button>
                 </form>
                 <form action="controller" method="post">
                     <input type="hidden" name="command" value="ride"/>
-                    <input type="hidden" name="approved" value="false"/>
+                    <input type="hidden" name="approved" value="false" />
                     <button  type="submit" class="w3-btn w3-green w3-round-large">Refuse</button>
                 </form>
             </c:when>

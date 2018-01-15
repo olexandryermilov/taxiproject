@@ -88,9 +88,30 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         return false;
     }
 
+    private final static String SQL_INSERT_TAXI = "insert into taxi(carnumber,taxitypeid,driverid) values(?,?,?)";
     @Override
-    public boolean create(Taxi entity) {
-        return false;
+    public boolean create(Taxi entity) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_INSERT_TAXI);
+                statement.setString(1, entity.getCarNumber());
+                statement.setInt(2, entity.getTaxiTypeId());
+                statement.setInt(3, entity.getDriverId());
+                LOGGER.debug("Statement to execute {}", statement.toString());
+                return statement.execute();
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+        finally {
+        }
     }
 
     @Override

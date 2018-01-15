@@ -1,5 +1,6 @@
 package com.yermilov.command;
 
+import com.yermilov.admin.command.AddCarCommand;
 import com.yermilov.admin.command.DeleteCommand;
 import com.yermilov.admin.command.RegisterDriverCommand;
 import com.yermilov.admin.command.UsersCommand;
@@ -18,6 +19,7 @@ public class CommandFactory {
     public final static String RIDE = "ride";
     public final static String CALCULATE_COST = "calculateCost";
     public final static String REGISTER_DRIVER = "registerDriver";
+    public final static String ADD_CAR="addCar";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -29,6 +31,7 @@ public class CommandFactory {
         commandMap.put(CALCULATE_COST,new CostCalculationCommand());
         commandMap.put(RIDE,new RideCommand());
         commandMap.put(REGISTER_DRIVER,new RegisterDriverCommand());
+        commandMap.put(ADD_CAR, new AddCarCommand());
     }
     public static CommandFactory getInstance() {
         return factory;
