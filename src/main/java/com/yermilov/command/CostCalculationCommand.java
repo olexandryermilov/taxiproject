@@ -28,12 +28,12 @@ public class CostCalculationCommand implements Command {
             double distance = distanceCalculationService.getDistance(from,to);
             Client client =costCalculationService.getClient(userId);
             int discount = ClientTypeCalculationService.getCostCalculationService().getClientsDiscount(client);
-            double cost = costCalculationService.getDriveCost(distance,discount);
+            Taxi taxi = GetCarService.getGetCarService().getCar();
+            double cost = costCalculationService.getDriveCost(taxi,distance,discount);
             request.setAttribute("cost",cost);
             request.getSession().setAttribute("client",client);
             request.setAttribute("distance",distance);
             request.setAttribute("discount",discount);
-            Taxi taxi = GetCarService.getGetCarService().getCar();
             request.setAttribute("taxi",taxi);
             Driver driver = TaxiIdentifierService.getTaxiIdentifierService().getDriver(taxi);
             request.setAttribute("driver",driver);

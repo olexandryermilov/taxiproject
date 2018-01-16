@@ -8,4 +8,5 @@ public interface IDAOFactory {
     RideDAO getRideDAO();
     TaxiDAO getTaxiDAO();
     DriverDAO getDriverDAO();
+    TaxiTypeDAO getTaxiTypeDAO();
 }

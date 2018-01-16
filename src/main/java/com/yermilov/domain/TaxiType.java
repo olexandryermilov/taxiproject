@@ -2,10 +2,12 @@ package com.yermilov.domain;
 
 public class TaxiType {
     private int taxiTypeId;
+    private double fare;
     private String taxiTypeName;
 
-    public TaxiType(String taxiTypeName) {
+    public TaxiType(double fare, String taxiTypeName) {
         this.taxiTypeName = taxiTypeName;
+        this.fare=fare;
     }
 
     public int getTaxiTypeId() {
@@ -22,5 +24,13 @@ public class TaxiType {
 
     public void setTaxiTypeName(String taxiTypeName) {
         this.taxiTypeName = taxiTypeName;
+    }
+
+    public double getFare() {
+        return fare;
+    }
+
+    public void setFare(double fare) {
+        this.fare = fare;
     }
 }

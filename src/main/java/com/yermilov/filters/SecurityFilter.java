@@ -34,7 +34,6 @@ public class SecurityFilter implements Filter {
             String uri = ((HttpServletRequest) request).getRequestURI();
             if(uri.endsWith("/"))uri=uri.substring(0,uri.length()-1);
             String page = uri.substring(uri.lastIndexOf("/")+1);
-            System.out.println(page);
             command=page;
         }
 

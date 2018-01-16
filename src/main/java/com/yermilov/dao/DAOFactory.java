@@ -35,4 +35,10 @@ public class DAOFactory implements IDAOFactory {
     public DriverDAO getDriverDAO(){
         return DRIVER_DAO;
     }
+
+    private final static TaxiTypeDAO TAXI_TYPE_DAO = new TaxiTypeDAO();
+
+    public TaxiTypeDAO getTaxiTypeDAO() {
+        return TAXI_TYPE_DAO;
+    }
 }
