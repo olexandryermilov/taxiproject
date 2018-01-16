@@ -31,30 +31,20 @@ public class SecurityFilter implements Filter {
         HttpServletResponse httpServletResponse = ((HttpServletResponse)response);
         String command =httpServletRequest.getParameter("command");
         if(command==null){
-            String url = httpServletRequest.getRequestURL().toString();
-            if(url.endsWith("login.jsp")){
-                command="login.jsp";
-            }else {
-                if(url.endsWith("registration.jsp")){
-                    command="registration.jsp";
-                }
-                else{
-                    if (url.endsWith("taxiproject/") || url.endsWith("index.jsp") || url.endsWith("/admin")
-                            || url.endsWith("styles/w3.css")||url.endsWith("/admin/")) {
-                        command = "/";
-                    }
-                    else {
-                        if (url.contains("/admin/")) {
-                            command = "/admin/";
-                        } else {
-                            command = "auth";
-                        }
-                    }
-                }
-            }
+            String uri = ((HttpServletRequest) request).getRequestURI();
+            if(uri.endsWith("/"))uri=uri.substring(0,uri.length()-1);
+            String page = uri.substring(uri.lastIndexOf("/")+1);
+            System.out.println(page);
+            command=page;
         }
+
         String role=securityConfiguration.security(command);
         LOGGER.debug("Command is {}, role is {}",command,role);
+        if("NO_ACCESS".equals(role)){
+            chain.doFilter(request,response);
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
         if ("ALL".equals(role)) {
             chain.doFilter(request, response);
             return;
