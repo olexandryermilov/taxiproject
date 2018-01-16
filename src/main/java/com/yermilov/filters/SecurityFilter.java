@@ -2,6 +2,7 @@ package com.yermilov.filters;
 
 import com.yermilov.authentification.Authentication;
 import com.yermilov.configuration.SecurityConfiguration;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,7 @@ public class SecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
+        DOMConfigurator.configure("log4j.xml");
     }
 
     @Override
@@ -63,6 +65,7 @@ public class SecurityFilter implements Filter {
                 return;
             } else {
                 httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return;
             }
         }
         if("ADMIN".equals(role)){
@@ -71,6 +74,7 @@ public class SecurityFilter implements Filter {
                 return;
             } else {
                 httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return;
             }
         }
         httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
