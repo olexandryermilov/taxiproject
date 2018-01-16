@@ -1,5 +1,7 @@
 package com.yermilov.configuration;
 
+import com.yermilov.admin.command.AddTaxiTypeCommand;
+import com.yermilov.admin.command.TaxiTypesCommand;
 import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
 
@@ -29,6 +31,8 @@ public class SecurityConfiguration {
         grant.put(CommandFactory.DELETE,"ADMIN");
         grant.put(CommandFactory.ADMIN_LOGIN,ALL);
         grant.put(CommandFactory.RIDES_STATISTICS,AUTH);
+        grant.put(CommandFactory.ADD_TAXITYPE,ADMIN);
+        grant.put(CommandFactory.TAXITYPES, ADMIN);
         grant.put("/",ALL);
         grant.put("registration.jsp",ALL);
         grant.put("login.jsp",ALL);

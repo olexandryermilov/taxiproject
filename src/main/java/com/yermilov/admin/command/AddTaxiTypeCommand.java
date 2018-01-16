@@ -18,7 +18,7 @@ public class AddTaxiTypeCommand implements Command {
     private final static Logger LOGGER = LoggerFactory.getLogger(AddTaxiTypeCommand.class);
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AddTaxiTypeService addTaxiTypeService =AddTaxiTypeService.getAddCarService();
+        AddTaxiTypeService addTaxiTypeService =AddTaxiTypeService.getAddTaxiTypeService();
         try {
             LOGGER.info("Trying to add taxitype");
             String taxiTypeName = request.getParameter("name");

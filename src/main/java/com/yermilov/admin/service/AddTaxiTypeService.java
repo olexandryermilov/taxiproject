@@ -13,13 +13,13 @@ import java.sql.SQLException;
 
 public class AddTaxiTypeService {
     private final static Logger logger = LoggerFactory.getLogger(AddTaxiTypeService.class);
-    private final static AddTaxiTypeService ADD_CAR_SERVICE = new AddTaxiTypeService();
+    private final static AddTaxiTypeService ADD_TAXI_TYPE_SERVICE = new AddTaxiTypeService();
     private IDAOFactory daoFactory;
     private AddTaxiTypeService(){
         daoFactory= DAOFactory.getInstance();
     }
-    public static AddTaxiTypeService getAddCarService(){
-        return ADD_CAR_SERVICE;
+    public static AddTaxiTypeService getAddTaxiTypeService(){
+        return ADD_TAXI_TYPE_SERVICE;
     }
 
     public boolean addTaxiType(TaxiType taxiType)throws DAOException, SQLException, TransactionException{

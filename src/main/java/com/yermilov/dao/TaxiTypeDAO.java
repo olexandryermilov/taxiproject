@@ -1,6 +1,5 @@
 package com.yermilov.dao;
 
-import com.yermilov.domain.Taxi;
 import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
@@ -11,13 +10,35 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
     private final static Logger LOGGER = LoggerFactory.getLogger(TaxiTypeDAO.class);
+    private final static String SQL_FIND_ALL = "select * from taxitype";
     @Override
-    public List<TaxiType> findAll() {
-        return null;
+    public List<TaxiType> findAll() throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_FIND_ALL);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet rs = statement.executeQuery();
+                List<TaxiType> result = new ArrayList<>();
+                while(rs.next()){
+                    TaxiType taxiType = new TaxiType(rs.getDouble("fare"),rs.getString("taxitypename"));
+                    taxiType.setTaxiTypeId(rs.getInt("taxitypeid"));
+                    result.add(taxiType);
+                }
+                return result;
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
     }
 
     private final static String SQL_SELECT_BY_ID = "select * from taxitype where taxitypeid=?";

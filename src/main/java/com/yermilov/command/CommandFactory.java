@@ -36,7 +36,7 @@ public class CommandFactory {
         commandMap.put(ADD_CAR, new AddCarCommand());
         commandMap.put(RIDES_STATISTICS, new RideStatisticsCommand());
         commandMap.put(ADD_TAXITYPE,new AddTaxiTypeCommand());
-        //commandMap.put(TAXITYPES, new TaxiTypesCommand());
+        commandMap.put(TAXITYPES, new TaxiTypesCommand());
         //commandMap.put(DELETE_TAXITYPE, new DeleteTaxiTypeCommand());
         //commandMap.put(UPDATE_TAXITYPE, new UpdateTaxiTypeCommand());
     }
