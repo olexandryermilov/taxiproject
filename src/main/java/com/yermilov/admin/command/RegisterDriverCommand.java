@@ -25,17 +25,12 @@ public class RegisterDriverCommand implements Command {
         try {
             registerDriverService.registerDriver(userId);
             LOGGER.info("Successfully registered user {}",userId);
-            request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
-            request.getRequestDispatcher("users.jsp?command=users").forward(request,response);
+            request.setAttribute("errorMessage","Successfully registered user as driver");
+            request.getRequestDispatcher("controller?command=users").forward(request,response);
         }catch (DriverRegistrationException e){
             LOGGER.error(e.getMessage());
             request.setAttribute("errorMessage",e.getMessage());
-            try {
-                request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
-            } catch (DAOException e1) {
-                LOGGER.error(e1.getMessage());
-            }
-            request.getRequestDispatcher("users.jsp?command=users").forward(request,response);
+            request.getRequestDispatcher("controller?command=users").forward(request,response);
         }
         catch (DAOException e) {
             LOGGER.error(e.getMessage());

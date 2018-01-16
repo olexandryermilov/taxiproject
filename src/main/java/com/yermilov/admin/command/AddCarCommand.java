@@ -26,8 +26,7 @@ public class AddCarCommand implements Command {
             Driver driver = addCarService.findDriverByUserId(userId);
             if(driver==null){
                 request.setAttribute("errorMessage","First make this user a driver");
-                request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
-                request.getRequestDispatcher("users.jsp?command=users").forward(request,response);
+                request.getRequestDispatcher("controller?command=users").forward(request,response);
                 return;
             }
             LOGGER.info("Trying to add car to driver with driverid={}",driver.getDriverId());
@@ -37,7 +36,6 @@ public class AddCarCommand implements Command {
             addCarService.addCar(taxi);
             LOGGER.info("Successfully added taxi");
             request.setAttribute("errorMessage","Car added");
-            //request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
             request.getRequestDispatcher("controller?command=users").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());

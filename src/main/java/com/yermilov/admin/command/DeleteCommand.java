@@ -22,19 +22,13 @@ public class DeleteCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DeleteService deleteService = DeleteService.getDeleteService();
-        List<Integer> idToDelete = Arrays.stream(request.getParameterValues("toDelete"))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
-        StringBuilder idsToDelete = new StringBuilder();
-        for(Integer i: idToDelete){
-            idsToDelete.append(i).append(" ");
-        }
-        LOGGER.info("Trying to delete next ids:{}",idsToDelete.toString());
+        int idToDelete = Integer.parseInt(request.getParameter("userid"));
+        LOGGER.info("Trying to delete next user: userid={}",idToDelete);
         try {
             deleteService.delete(idToDelete);
             LOGGER.info("Successfully deleted");
             request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
-            request.getRequestDispatcher("users.jsp?command=users").forward(request,response);
+            request.getRequestDispatcher("controller?command=users").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
         } catch (TransactionException e) {

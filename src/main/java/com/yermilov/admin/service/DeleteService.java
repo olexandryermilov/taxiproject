@@ -23,22 +23,18 @@ public class DeleteService {
         return DELETE_SERVICE;
     }
 
-    public boolean delete(List<Integer> idToDelete) throws DAOException, SQLException, TransactionException {
-
+    public boolean delete(int idToDelete) throws DAOException, SQLException, TransactionException {
         UserDAO userDAO = daoFactory.getUserDAO();
         ClientDAO clientDAO = daoFactory.getClientDAO();
         DriverDAO driverDAO = daoFactory.getDriverDAO();
-        for(Integer i : idToDelete){
-            TransactionManager.beginTransaction();
-            clientDAO.delete(new Client(i));
-            Driver driver = driverDAO.findByUserId(i);
-            if(driver!=null){
-                driverDAO.delete(driver);
-            }
-            userDAO.delete(i);
-            TransactionManager.endTransaction();
+        TransactionManager.beginTransaction();
+        clientDAO.delete(new Client(idToDelete));
+        Driver driver = driverDAO.findByUserId(idToDelete);
+        if(driver!=null){
+            driverDAO.delete(driver);
         }
-
+        userDAO.delete(idToDelete);
+        TransactionManager.endTransaction();
         return true;
     }
 }

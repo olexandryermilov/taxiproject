@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class GetCarService {
-    private final static Logger logger = LoggerFactory.getLogger(GetCarService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(GetCarService.class);
     private final static GetCarService getCarService = new GetCarService();
     private final static int CAR_NUMBER=1;
     private IDAOFactory daoFactory;
