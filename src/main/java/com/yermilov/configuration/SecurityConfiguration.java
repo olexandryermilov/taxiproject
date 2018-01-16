@@ -37,10 +37,12 @@ public class SecurityConfiguration {
         grant.put("users.jsp",ADMIN);
         grant.put("header.jsp",NO_ACCESS);
         grant.put("main.jsp",NO_ACCESS);
-        grant.put("addCar.jsp",ADMIN);
+        grant.put("addTaxiType.jsp",ADMIN);
         grant.put("rideInformation.jsp",AUTH);
         grant.put("ride.jsp",AUTH);
         grant.put("ridesStatistics.jsp",AUTH);
+        grant.put("taxitypes.jsp",ADMIN);
+        grant.put("addTaxiType.jsp",ADMIN);
     }
 
     public static SecurityConfiguration getInstance() {

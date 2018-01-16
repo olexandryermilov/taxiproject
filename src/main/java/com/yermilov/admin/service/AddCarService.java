@@ -1,17 +1,14 @@
 package com.yermilov.admin.service;
 
 import com.yermilov.dao.*;
-import com.yermilov.domain.Client;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.exceptions.TransactionException;
-import com.yermilov.transactions.TransactionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class AddCarService {
     private final static Logger logger = LoggerFactory.getLogger(AddCarService.class);

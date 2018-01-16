@@ -1,6 +1,5 @@
 package com.yermilov.dao;
 
-import com.yermilov.domain.Client;
 import com.yermilov.domain.Taxi;
 import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
@@ -61,9 +60,29 @@ public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
         return false;
     }
 
+    private final static String SQL_INSERT_TAXITYPE = "insert into taxitype(fare,taxitypename) values (?,?)";
     @Override
-    public boolean create(TaxiType entity) {
-        return false;
+    public boolean create(TaxiType entity) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_INSERT_TAXITYPE);
+                statement.setDouble(1, entity.getFare());
+                statement.setString(2, entity.getTaxiTypeName());
+                LOGGER.debug("Statement to execute {}", statement.toString());
+                return statement.execute();
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+        finally {
+        }
     }
 
     @Override

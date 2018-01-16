@@ -1,7 +1,6 @@
 package com.yermilov.dao;
 
 import com.yermilov.domain.Taxi;
-import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
 import com.yermilov.transactions.TransactionManager;
