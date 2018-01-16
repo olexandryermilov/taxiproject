@@ -17,10 +17,6 @@ public class UsersCommand implements Command {
     private final static Logger LOGGER = LoggerFactory.getLogger(UsersCommand.class);
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getSession().getAttribute("admin")==null){
-            req.getRequestDispatcher("/index.jsp").forward(req,resp);
-            return;
-        }
         try{
             UsersService usersService = UsersService.getUsersService();
             List<User> allUsers = usersService.getAllUsers();
