@@ -24,7 +24,7 @@ public class RegistrationCommand implements Command{
         if (email == null || password == null || name == null || surname == null) {
             LOGGER.info("Tried to register with empty fields.");
             req.setAttribute("errorMessage", "All fields must be filled");
-            req.getRequestDispatcher(CommandFactory.REGISTRATION).forward(req, resp);
+            req.getRequestDispatcher(CommandFactory.REGISTRATION+".jsp").forward(req, resp);
             return;
         }
         RegistrationService registrationService = RegistrationService.getRegistrationService();
@@ -36,7 +36,7 @@ public class RegistrationCommand implements Command{
         } catch (RegistrationException e) {
             LOGGER.error(e.getMessage());
             req.setAttribute("errorMessage", e.getMessage());
-            req.getRequestDispatcher(CommandFactory.REGISTRATION).forward(req, resp);
+            req.getRequestDispatcher(CommandFactory.REGISTRATION+".jsp").forward(req, resp);
         }
         catch (SQLException e) {
             LOGGER.error(e.getMessage());
