@@ -102,8 +102,8 @@ public class UserDAO extends AbstractDAO<User> {
 
 
     @Override
-    public User update(User entity) throws DAOException {
-        return null;
+    public boolean update(User entity) throws DAOException {
+        return false;
     }
     private final static String SQL_SELECT_BY_LOGIN = "select * from taxisystemdb.user where email=?";
     public User findByEmail(String email) throws DAOException {

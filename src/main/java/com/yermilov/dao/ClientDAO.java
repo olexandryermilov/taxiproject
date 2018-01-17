@@ -103,7 +103,7 @@ public class ClientDAO extends AbstractDAO<Client> {
     }
 
     @Override
-    public Client update(Client entity) {
+    public boolean update(Client entity) {
         throw new UnsupportedOperationException();
     }
 

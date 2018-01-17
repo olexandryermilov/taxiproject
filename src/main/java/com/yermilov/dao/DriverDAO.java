@@ -129,7 +129,7 @@ public class DriverDAO extends AbstractDAO<Driver> {
     }
 
     @Override
-    public Driver update(Driver entity) {
-        return null;
+    public boolean update(Driver entity) {
+        return false;
     }
 }

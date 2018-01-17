@@ -64,8 +64,8 @@ public class RideDAO extends AbstractDAO<Ride> {
     }
 
     @Override
-    public Ride update(Ride entity) {
-        return null;
+    public boolean update(Ride entity) {
+        return false;
     }
 
     private final static String SQL_GET_MONEY_FOR_CLIENT = "select sum(cost) from ride where clientid=?";

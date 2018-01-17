@@ -43,8 +43,8 @@ public class AdminDAO extends AbstractDAO<Admin> {
     }
 
     @Override
-    public Admin update(Admin entity) throws DAOException {
-        return null;
+    public boolean update(Admin entity) throws DAOException {
+        return false;
     }
 
     private final static String SQL_SELECT_BY_LOGIN = "select * from taxisystemdb.admin where email=?";

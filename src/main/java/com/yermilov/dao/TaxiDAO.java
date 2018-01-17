@@ -114,7 +114,7 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
     }
 
     @Override
-    public Taxi update(Taxi entity) {
-        return null;
+    public boolean update(Taxi entity) {
+        return false;
     }
 }
