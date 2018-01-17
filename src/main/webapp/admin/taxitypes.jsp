@@ -29,7 +29,7 @@
         <form action="addTaxiType.jsp" method="get">
             <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Add taxitype</button>
         </form>
-        ${errorMessage}
+        <label class="w3-text-red">${errorMessage}</label>
         </form>
 
         <br><br>

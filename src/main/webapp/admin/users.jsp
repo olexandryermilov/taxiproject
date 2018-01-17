@@ -40,7 +40,7 @@
                     </td>
                 </tr></c:forEach>
             </table>
-            ${errorMessage}
+        <label class="w3-text-red">${errorMessage}</label>
         </form>
 
         <br><br>

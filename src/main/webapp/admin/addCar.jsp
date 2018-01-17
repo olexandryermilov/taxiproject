@@ -20,7 +20,7 @@
             <input type="text" name="cartype" value="" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%"/>
             <br/>
             <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Add Car</button>
-            <div class="w3-text-red">${errorMessage}<br/></div>
+            <label class="w3-text-red">${errorMessage}<br/></div>
         </form>
     </div>
 </div>
