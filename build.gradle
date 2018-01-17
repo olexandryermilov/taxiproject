@@ -17,7 +17,7 @@ apply plugin: 'com.bmuschko.tomcat'
 sourceCompatibility = 1.8
 jacoco {
     toolVersion = "0.7.9"
-    reportsDir = file("$buildDir/customJacocoReportDir")
+    reportsDir = file("jacoco/customJacocoReportDir")
 }
 
 repositories {
@@ -27,7 +27,7 @@ jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+        html.destination file("jacoco/jacocoHtml")
     }
 }
 
