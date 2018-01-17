@@ -22,10 +22,10 @@ public class AddTaxiTypeCommand implements Command {
         try {
             LOGGER.info("Trying to add taxitype");
             String taxiTypeName = request.getParameter("name");
-            Double fare = Double.valueOf(request.getParameter("fare"));
+            double fare = Double.parseDouble(request.getParameter("fare"));
             TaxiType taxi = new TaxiType(fare,taxiTypeName);
             addTaxiTypeService.addTaxiType(taxi);
-            LOGGER.info("Successfully added driver");
+            LOGGER.info("Successfully added taxitype");
             request.setAttribute("errorMessage","TaxiType added");
             request.getRequestDispatcher("controller?command=taxitypes").forward(request,response);
         } catch (DAOException e) {

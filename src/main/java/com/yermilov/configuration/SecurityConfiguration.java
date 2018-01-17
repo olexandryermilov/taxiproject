@@ -33,6 +33,7 @@ public class SecurityConfiguration {
         grant.put(CommandFactory.RIDES_STATISTICS,AUTH);
         grant.put(CommandFactory.ADD_TAXITYPE,ADMIN);
         grant.put(CommandFactory.TAXITYPES, ADMIN);
+        grant.put(CommandFactory.UPDATE_TAXITYPE,ADMIN);
         grant.put("/",ALL);
         grant.put("registration.jsp",ALL);
         grant.put("login.jsp",ALL);
@@ -47,6 +48,7 @@ public class SecurityConfiguration {
         grant.put("ridesStatistics.jsp",AUTH);
         grant.put("taxitypes.jsp",ADMIN);
         grant.put("addTaxiType.jsp",ADMIN);
+        grant.put("updateTaxiType.jsp",ADMIN);
     }
 
     public static SecurityConfiguration getInstance() {

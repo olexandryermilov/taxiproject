@@ -106,8 +106,30 @@ public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
         }
     }
 
+    private final static String SQL_UPDATE_TAXITYPE = "update taxitype set fare=?, taxitypename=? where taxitypeid=?";
     @Override
-    public TaxiType update(TaxiType entity) {
-        return null;
+    public TaxiType update(TaxiType entity) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_UPDATE_TAXITYPE);
+                statement.setDouble(1, entity.getFare());
+                statement.setString(2, entity.getTaxiTypeName());
+                statement.setInt(3,entity.getTaxiTypeId());
+                LOGGER.debug("Statement to execute {}", statement.toString());
+                statement.execute();
+                return null;
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+        finally {
+        }
     }
 }

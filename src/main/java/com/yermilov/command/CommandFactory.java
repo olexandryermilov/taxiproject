@@ -37,8 +37,7 @@ public class CommandFactory {
         commandMap.put(RIDES_STATISTICS, new RideStatisticsCommand());
         commandMap.put(ADD_TAXITYPE,new AddTaxiTypeCommand());
         commandMap.put(TAXITYPES, new TaxiTypesCommand());
-        //commandMap.put(DELETE_TAXITYPE, new DeleteTaxiTypeCommand());
-        //commandMap.put(UPDATE_TAXITYPE, new UpdateTaxiTypeCommand());
+        commandMap.put(UPDATE_TAXITYPE, new UpdateTaxiTypeCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

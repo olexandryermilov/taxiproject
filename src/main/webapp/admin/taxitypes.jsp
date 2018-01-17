@@ -8,7 +8,6 @@
                 <td>Id</td>
                 <td>Name</td>
                 <td>Fare</td>
-                <td>To Delete</td>
                 <td>To Edit</td>
             </tr>
             <jsp:useBean id="taxitypes" type="java.util.List<com.yermilov.domain.TaxiType>" scope="request"/>
@@ -17,15 +16,11 @@
                 <td>${taxitype.taxiTypeId}</td>
                 <td>${taxitype.taxiTypeName}</td>
                 <td>${taxitype.fare}</td>
-                <td><form action="controller" method="post">
-                    <input type="hidden" name="command" value="deleteTaxiType" />
-                    <input type="hidden" name="taxitypeid" value=${taxitype.taxiTypeId} >
-                    <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Delete taxitype</button>
-                </form></td>
                 <td>
-                    <form action="controller" method="post">
-                        <input type="hidden" name="command" value="updateTaxiType"/>
-                        <input type="hidden" name="taxitypeid" value=${taxitype.taxiTypeId} >
+                    <form action="updateTaxiType.jsp" method="post">
+                        <input type="hidden" name="taxitypeid" value="${taxitype.taxiTypeId}" >
+                        <input type="hidden" name="taxitypename" value="${taxitype.taxiTypeName}" />
+                        <input type="hidden" name="fare" value="${taxitype.fare}" />
                         <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Edit taxitype</button>
                     </form>
                 </td>
