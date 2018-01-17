@@ -30,7 +30,7 @@ public class UpdateTaxiTypeCommand implements Command {
             taxiType.setTaxiTypeId(taxiTypeId);
             updateTaxiTypeService.updateTaxiType(taxiType);
             LOGGER.info("Successfully updated taxitype {}",taxiTypeId);
-            request.setAttribute("errorMessage","TaxiType added");
+            request.setAttribute("errorMessage","TaxiType edited");
             request.getRequestDispatcher("controller?command=taxitypes").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());

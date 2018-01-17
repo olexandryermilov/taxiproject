@@ -12,15 +12,15 @@
             </tr>
             <jsp:useBean id="taxitypes" type="java.util.List<com.yermilov.domain.TaxiType>" scope="request"/>
 
-            <c:forEach var="taxitype" items="${taxitypes}"><tr>
-                <td>${taxitype.taxiTypeId}</td>
-                <td>${taxitype.taxiTypeName}</td>
-                <td>${taxitype.fare}</td>
+            <c:forEach var="clienttype" items="${taxitypes}"><tr>
+                <td>${clienttype.taxiTypeId}</td>
+                <td>${clienttype.taxiTypeName}</td>
+                <td>${clienttype.fare}</td>
                 <td>
                     <form action="updateTaxiType.jsp" method="post">
-                        <input type="hidden" name="taxitypeid" value="${taxitype.taxiTypeId}" >
-                        <input type="hidden" name="taxitypename" value="${taxitype.taxiTypeName}" />
-                        <input type="hidden" name="fare" value="${taxitype.fare}" />
+                        <input type="hidden" name="taxitypeid" value="${clienttype.taxiTypeId}" >
+                        <input type="hidden" name="taxitypename" value="${clienttype.taxiTypeName}" />
+                        <input type="hidden" name="fare" value="${clienttype.fare}" />
                         <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Edit taxitype</button>
                     </form>
                 </td>

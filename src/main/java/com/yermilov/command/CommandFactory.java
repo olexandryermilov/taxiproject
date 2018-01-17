@@ -20,8 +20,10 @@ public class CommandFactory {
     public final static String RIDES_STATISTICS = "ridesStatistics";
     public final static String ADD_TAXITYPE = "addTaxiType";
     public final static String TAXITYPES = "taxitypes";
-    public final static String DELETE_TAXITYPE = "deleteTaxiType";
     public final static String UPDATE_TAXITYPE = "updateTaxiType";
+    public final static String CLIENTTYPES = "clienttypes";
+    public final static String ADD_CLIENTTYPE = "addClientType";
+    public final static String UPDATE_CLIENTTYPE = "updateClientType";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -38,6 +40,9 @@ public class CommandFactory {
         commandMap.put(ADD_TAXITYPE,new AddTaxiTypeCommand());
         commandMap.put(TAXITYPES, new TaxiTypesCommand());
         commandMap.put(UPDATE_TAXITYPE, new UpdateTaxiTypeCommand());
+        commandMap.put(CLIENTTYPES,new ClientTypesCommand());
+        commandMap.put(ADD_CLIENTTYPE, new AddClientTypeCommand());
+        commandMap.put(UPDATE_CLIENTTYPE, new UpdateClientTypeCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

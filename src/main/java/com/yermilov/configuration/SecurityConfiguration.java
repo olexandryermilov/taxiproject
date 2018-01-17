@@ -28,12 +28,15 @@ public class SecurityConfiguration {
         grant.put(CommandFactory.REGISTER_DRIVER,"ADMIN");
         grant.put(CommandFactory.RIDE,AUTH);
         grant.put(CommandFactory.CALCULATE_COST,AUTH);
-        grant.put(CommandFactory.DELETE,"ADMIN");
+        grant.put(CommandFactory.DELETE,ADMIN);
         grant.put(CommandFactory.ADMIN_LOGIN,ALL);
         grant.put(CommandFactory.RIDES_STATISTICS,AUTH);
         grant.put(CommandFactory.ADD_TAXITYPE,ADMIN);
         grant.put(CommandFactory.TAXITYPES, ADMIN);
         grant.put(CommandFactory.UPDATE_TAXITYPE,ADMIN);
+        grant.put(CommandFactory.CLIENTTYPES,ADMIN);
+        grant.put(CommandFactory.ADD_CLIENTTYPE,ADMIN);
+        grant.put(CommandFactory.UPDATE_CLIENTTYPE,ADMIN);
         grant.put("/",ALL);
         grant.put("registration.jsp",ALL);
         grant.put("login.jsp",ALL);
@@ -49,6 +52,9 @@ public class SecurityConfiguration {
         grant.put("taxitypes.jsp",ADMIN);
         grant.put("addTaxiType.jsp",ADMIN);
         grant.put("updateTaxiType.jsp",ADMIN);
+        grant.put("clienttypes.jsp",ADMIN);
+        grant.put("addClientType.jsp",ADMIN);
+        grant.put("updateClientType.jsp",ADMIN);
     }
 
     public static SecurityConfiguration getInstance() {
