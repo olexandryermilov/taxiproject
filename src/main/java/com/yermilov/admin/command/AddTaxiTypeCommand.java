@@ -2,6 +2,7 @@ package com.yermilov.admin.command;
 
 import com.yermilov.admin.service.AddTaxiTypeService;
 import com.yermilov.command.Command;
+import com.yermilov.command.CommandFactory;
 import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.exceptions.TransactionException;
@@ -19,10 +20,23 @@ public class AddTaxiTypeCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AddTaxiTypeService addTaxiTypeService =AddTaxiTypeService.getAddTaxiTypeService();
+        String taxiTypeName = request.getParameter("name");
+        double fare;
+        try{
+            fare=Double.parseDouble(request.getParameter("fare"));;
+        }
+        catch (NumberFormatException e){
+            request.setAttribute("errorMessage","Fare should be a number");
+            request.getRequestDispatcher(CommandFactory.ADD_TAXITYPE+".jsp").forward(request, response);
+            return;
+        }
+        if(taxiTypeName ==null){
+            request.setAttribute("errorMessage","You should fill all the fields");
+            request.getRequestDispatcher(CommandFactory.ADD_TAXITYPE+".jsp").forward(request, response);
+            return;
+        }
         try {
             LOGGER.info("Trying to add taxitype");
-            String taxiTypeName = request.getParameter("name");
-            double fare = Double.parseDouble(request.getParameter("fare"));
             TaxiType taxi = new TaxiType(fare,taxiTypeName);
             addTaxiTypeService.addTaxiType(taxi);
             LOGGER.info("Successfully added taxitype");

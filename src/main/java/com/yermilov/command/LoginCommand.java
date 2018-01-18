@@ -24,12 +24,16 @@ public class LoginCommand implements Command {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (email == null) {
-            request.getRequestDispatcher("error.jsp");
+            request.setAttribute("errorMessageLogin","You should fill email");
             LOGGER.info("Empty email");
+            request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
+            return;
         }
         if (password == null) {
-            request.getRequestDispatcher("error.jsp");
+            request.setAttribute("errorMessageLogin","You should fill email");
             LOGGER.info("Empty password");
+            request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
+            return;
         }
         LoginService loginService = LoginService.getLoginService();
         try {

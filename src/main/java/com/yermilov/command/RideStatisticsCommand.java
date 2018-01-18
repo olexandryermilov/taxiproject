@@ -23,7 +23,6 @@ public class RideStatisticsCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RideStatisticsService rideStatisticsService =RideStatisticsService.getRideStatisticsService();
         try {
-
             Client client = CostCalculationService.getCostCalculationService().getClient(((User)request.getSession().getAttribute("currentUser")).getUserId());
             List<Ride> rideList;
             rideList=rideStatisticsService.getClientsRides(client);

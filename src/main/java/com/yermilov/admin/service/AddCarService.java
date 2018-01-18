@@ -21,12 +21,12 @@ public class AddCarService {
         return ADD_CAR_SERVICE;
     }
 
-    public Driver findDriverByUserId(int userId) throws DAOException, SQLException, TransactionException{
+    public Driver findDriverByUserId(int userId) throws DAOException{
         DriverDAO driverDAO = daoFactory.getDriverDAO();
         Driver driver = driverDAO.findByUserId(userId);
         return driver;
     }
-    public boolean addCar(Taxi taxi)throws DAOException, SQLException, TransactionException{
+    public boolean addCar(Taxi taxi)throws DAOException{
         TaxiDAO taxiDAO = daoFactory.getTaxiDAO();
         taxiDAO.create(taxi);
         return true;

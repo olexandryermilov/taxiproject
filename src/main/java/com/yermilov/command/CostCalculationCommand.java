@@ -20,10 +20,14 @@ public class CostCalculationCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String from = request.getParameter("from");
         String to = request.getParameter("to");
+        if(from==null||to==null){
+            request.setAttribute("errorMessage","You should fill all the fields");
+            request.getRequestDispatcher(CommandFactory.CALCULATE_COST+".jsp").forward(request, response);
+            return;
+        }
         DistanceCalculationService distanceCalculationService = DistanceCalculationService.getDistanceCalculationService();
         int userId=((User)(request.getSession().getAttribute("currentUser"))).getUserId();
         CostCalculationService costCalculationService = CostCalculationService.getCostCalculationService();
-
         try {
             double distance = distanceCalculationService.getDistance(from,to);
             Client client =costCalculationService.getClient(userId);

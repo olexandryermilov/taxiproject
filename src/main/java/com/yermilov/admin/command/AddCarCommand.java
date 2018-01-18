@@ -2,6 +2,7 @@ package com.yermilov.admin.command;
 
 import com.yermilov.admin.service.AddCarService;
 import com.yermilov.command.Command;
+import com.yermilov.command.CommandFactory;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
 import com.yermilov.exceptions.DAOException;
@@ -21,6 +22,22 @@ public class AddCarCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AddCarService addCarService =AddCarService.getAddCarService();
         int userId = Integer.parseInt(request.getParameter("userid"));
+        String carNumber = request.getParameter("carnumber");
+        int carType=0;
+        try{
+             carType= Integer.parseInt(request.getParameter("cartype"));
+        }catch (NumberFormatException e){
+            LOGGER.error(e.getMessage());
+            request.setAttribute("errorMessage","Car type should be a number");
+            request.getRequestDispatcher(CommandFactory.ADD_CAR+".jsp").forward(request, response);
+            return;
+        }
+        if(carNumber==null){
+            LOGGER.info("Empty password");
+            request.setAttribute("errorMessage","You should fill car number");
+            request.getRequestDispatcher(CommandFactory.ADD_CAR+".jsp").forward(request, response);
+            return;
+        }
         try {
             Driver driver = addCarService.findDriverByUserId(userId);
             if(driver==null){
@@ -29,18 +46,13 @@ public class AddCarCommand implements Command {
                 return;
             }
             LOGGER.info("Trying to add car to driver with driverid={}",driver.getDriverId());
-            String carNumber = request.getParameter("carnumber");
-            int carType = Integer.parseInt(request.getParameter("cartype"));
+
             Taxi taxi = new Taxi(driver.getDriverId(),carType,carNumber);
             addCarService.addCar(taxi);
             LOGGER.info("Successfully added taxi");
             request.setAttribute("errorMessage","Car added");
             request.getRequestDispatcher("controller?command=users").forward(request,response);
         } catch (DAOException e) {
-            LOGGER.error(e.getMessage());
-        } catch (TransactionException e) {
-            LOGGER.error(e.getMessage());
-        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
     }

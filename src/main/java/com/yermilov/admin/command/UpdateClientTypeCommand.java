@@ -3,6 +3,7 @@ package com.yermilov.admin.command;
 import com.yermilov.admin.service.UpdateClientTypeService;
 import com.yermilov.admin.service.UpdateTaxiTypeService;
 import com.yermilov.command.Command;
+import com.yermilov.command.CommandFactory;
 import com.yermilov.domain.ClientType;
 import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
@@ -19,9 +20,23 @@ public class UpdateClientTypeCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int clientTypeId = Integer.parseInt(request.getParameter("clienttypeid"));
-        double moneySpent = Double.parseDouble(request.getParameter("moneyspent"));
         String name = request.getParameter("name");
-        int discount = Integer.parseInt(request.getParameter("discount"));
+        double moneySpent;
+        int discount;
+        try{
+            moneySpent = Double.parseDouble(request.getParameter("moneyspent"));
+            discount = Integer.parseInt(request.getParameter("discount"));
+        }
+        catch (NumberFormatException e){
+            request.setAttribute("errorMessage","Moneyspent and discount should be a number");
+            request.getRequestDispatcher(CommandFactory.UPDATE_CLIENTTYPE+".jsp").forward(request, response);
+            return;
+        }
+        if(name==null){
+            request.setAttribute("errorMessage","You should fill all the fields");
+            request.getRequestDispatcher(CommandFactory.UPDATE_CLIENTTYPE+".jsp").forward(request, response);
+            return;
+        }
         UpdateClientTypeService updateClientTypeService = UpdateClientTypeService.getUpdateClientTypeService();
         try {
             LOGGER.info("Trying to update clienttype {}",clientTypeId);

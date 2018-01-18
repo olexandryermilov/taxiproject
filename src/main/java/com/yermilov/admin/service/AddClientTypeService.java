@@ -24,7 +24,7 @@ public class AddClientTypeService {
         return ADD_CLIENT_TYPE_SERVICE;
     }
 
-    public boolean addClientType(ClientType clientType)throws DAOException, SQLException, TransactionException{
+    public boolean addClientType(ClientType clientType)throws DAOException{
         ClientTypeDAO clientTypeDAO = daoFactory.getClientTypeDAO();
         clientTypeDAO.create(clientType);
         return true;

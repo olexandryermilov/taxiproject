@@ -21,8 +21,21 @@ public class UpdateTaxiTypeCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int taxiTypeId = Integer.parseInt(request.getParameter("taxitypeid"));
-        double fare = Double.parseDouble(request.getParameter("fare"));
         String taxiTypeName = request.getParameter("name");
+        double fare;
+        try{
+            fare=Double.parseDouble(request.getParameter("fare"));;
+        }
+        catch (NumberFormatException e){
+            request.setAttribute("errorMessage","Fare should be a number");
+            request.getRequestDispatcher(CommandFactory.UPDATE_TAXITYPE+".jsp").forward(request, response);
+            return;
+        }
+        if(taxiTypeName ==null){
+            request.setAttribute("errorMessage","You should fill all the fields");
+            request.getRequestDispatcher(CommandFactory.UPDATE_TAXITYPE+".jsp").forward(request, response);
+            return;
+        }
         UpdateTaxiTypeService updateTaxiTypeService = UpdateTaxiTypeService.getTaxiTypeService();
         try {
             LOGGER.info("Trying to update taxitype {}",taxiTypeId);
