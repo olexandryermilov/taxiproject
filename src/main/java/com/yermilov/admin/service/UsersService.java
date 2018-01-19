@@ -20,10 +20,14 @@ public class UsersService {
     public static UsersService getUsersService(){
         return usersService;
     }
-    public List<User> getAllUsers() throws DAOException{
+    public int getTableSize() throws DAOException {
         UserDAO userDAO = daoFactory.getUserDAO();
-        List<User> allUsers = userDAO.findAll();
-        return allUsers;
+        return userDAO.findSize();
+    }
+    public List<User> getUsers(int from, int limit) throws DAOException{
+        UserDAO userDAO = daoFactory.getUserDAO();
+        List<User> users = userDAO.findLimitedAmount(from,limit);
+        return users;
     }
 
     public void setDaoFactory(IDAOFactory daoFactory) {

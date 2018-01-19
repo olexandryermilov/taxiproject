@@ -45,6 +45,56 @@ public class UserDAO extends AbstractDAO<User> {
             throw new DAOException(e.getMessage());
         }
     }
+    private final static String SQL_FIND_SIZE = "select count(*) from user ";
+    public int findSize() throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_FIND_SIZE);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet rs = statement.executeQuery();
+                int size=0;
+                if(rs.next()) {
+                    size = rs.getInt(1);
+                }
+                return size;
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+    }
+    private final static String SQL_FIND_LIMITED_AMOUNT = "select * from user limit ?, ?";
+    public List<User> findLimitedAmount(int from, int limit) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_FIND_LIMITED_AMOUNT);
+                statement.setInt(1,from);
+                statement.setInt(2,limit);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet rs = statement.executeQuery();
+                List<User> result = new ArrayList<>();
+                while(rs.next()){
+                    User user = new User(rs.getString("email"),null,
+                            rs.getString("name"),
+                            rs.getString("surname"));
+                    user.setUserId(rs.getInt("userid"));
+                    result.add(user);
+                }
+                return result;
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+    }
 
     @Override
     public User findById(int id) {

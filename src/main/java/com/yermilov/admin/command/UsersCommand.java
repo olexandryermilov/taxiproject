@@ -17,9 +17,19 @@ public class UsersCommand implements Command {
     private final static Logger LOGGER = LoggerFactory.getLogger(UsersCommand.class);
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UsersService usersService = UsersService.getUsersService();
         try{
-            UsersService usersService = UsersService.getUsersService();
-            List<User> allUsers = usersService.getAllUsers();
+            String pageNumberParam = req.getParameter("pageNumber");
+            String pageSizeParam = req.getParameter("pageSize");
+            if(pageNumberParam==null){
+                pageNumberParam="1";
+            }
+            if(pageSizeParam==null)pageSizeParam="2";
+            int pageNum = Integer.parseInt(pageNumberParam);
+            int pageSize = Integer.parseInt(pageSizeParam);
+
+            List<User> allUsers = usersService.getUsers(pageNum,pageSize);
+            req.setAttribute("pageAmount",usersService.getTableSize()/pageSize);
             req.setAttribute("users",allUsers);
             req.getRequestDispatcher("users.jsp").forward(req,resp);
         } catch (DAOException e) {

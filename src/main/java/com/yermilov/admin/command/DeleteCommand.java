@@ -27,8 +27,7 @@ public class DeleteCommand implements Command {
         try {
             deleteService.delete(idToDelete);
             LOGGER.info("Successfully deleted");
-            request.setAttribute("users", UsersService.getUsersService().getAllUsers());//todo: clear this up somehow
-            request.getRequestDispatcher("controller?command=users").forward(request,response);
+            request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
         } catch (TransactionException e) {

@@ -3,6 +3,7 @@ Hi, ${admin.name}
 <br>
 <form action="controller" method="GET">
     <input type="hidden" name="command" value="users"/>
+    <input type ="hidden" name="pageNumber" value="1"/>
     <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">
     Watch users list
 </button>

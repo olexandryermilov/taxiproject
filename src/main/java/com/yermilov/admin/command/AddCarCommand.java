@@ -42,7 +42,7 @@ public class AddCarCommand implements Command {
             Driver driver = addCarService.findDriverByUserId(userId);
             if(driver==null){
                 request.setAttribute("errorMessage","First make this user a driver");
-                request.getRequestDispatcher("controller?command=users").forward(request,response);
+                request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
                 return;
             }
             LOGGER.info("Trying to add car to driver with driverid={}",driver.getDriverId());
@@ -51,7 +51,7 @@ public class AddCarCommand implements Command {
             addCarService.addCar(taxi);
             LOGGER.info("Successfully added taxi");
             request.setAttribute("errorMessage","Car added");
-            request.getRequestDispatcher("controller?command=users").forward(request,response);
+            request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
         }

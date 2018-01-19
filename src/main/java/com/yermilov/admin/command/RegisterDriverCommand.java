@@ -26,11 +26,11 @@ public class RegisterDriverCommand implements Command {
             registerDriverService.registerDriver(userId);
             LOGGER.info("Successfully registered user {}",userId);
             request.setAttribute("errorMessage","Successfully registered user as driver");
-            request.getRequestDispatcher("controller?command=users").forward(request,response);
+            request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         }catch (DriverRegistrationException e){
             LOGGER.error(e.getMessage());
             request.setAttribute("errorMessage",e.getMessage());
-            request.getRequestDispatcher("controller?command=users").forward(request,response);
+            request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         }
         catch (DAOException e) {
             LOGGER.error(e.getMessage());

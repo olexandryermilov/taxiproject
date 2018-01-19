@@ -7,7 +7,6 @@ import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.RideStatisticsService;
 import com.yermilov.services.TaxiIdentifierService;
 import com.yermilov.services.TimeCalculationService;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,7 @@ public class RideCommand implements Command {
             TaxiIdentifierService taxiIdentifierService=TaxiIdentifierService.getTaxiIdentifierService();
             Taxi taxi = taxiIdentifierService.getTaxi(carNumber);
             Driver driver = taxiIdentifierService.getDriver(taxi);
-            Long timeNow = new DateTime().getMillis();
+            Long timeNow = System.currentTimeMillis();
             Long rideTime = (long)(TimeCalculationService.getTimeCalculationService().getTime(distance)*60000);
             rideStatisticsService.putRideToDatabase(client, driver,taxi,cost,distance,
                     new Date(timeNow), new Date(timeNow+rideTime));
