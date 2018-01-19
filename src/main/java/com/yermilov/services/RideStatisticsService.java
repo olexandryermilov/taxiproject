@@ -1,5 +1,6 @@
 package com.yermilov.services;
 
+import com.yermilov.dao.ClientDAO;
 import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.IDAOFactory;
 import com.yermilov.dao.RideDAO;
@@ -40,9 +41,13 @@ public class RideStatisticsService {
         RideDAO rideDAO = daoFactory.getRideDAO();
         return rideDAO.create(ride);
     }
-    public List<Ride> getClientsRides(Client client) throws DAOException {
+    public List<Ride> getClientsRides(Client client, int from, int limit) throws DAOException {
         RideDAO rideDAO = daoFactory.getRideDAO();
-        List<Ride> clientRides = rideDAO.findRidesForClient(client);
+        List<Ride> clientRides = rideDAO.findRidesForClient(client,from,limit);
         return clientRides;
+    }
+    public int getTableSize(Client client) throws DAOException {
+        RideDAO rideDAO = daoFactory.getRideDAO();
+        return rideDAO.findSize(client);
     }
 }

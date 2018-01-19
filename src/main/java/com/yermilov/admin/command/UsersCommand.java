@@ -28,7 +28,7 @@ public class UsersCommand implements Command {
             int pageNum = Integer.parseInt(pageNumberParam);
             int pageSize = Integer.parseInt(pageSizeParam);
 
-            List<User> allUsers = usersService.getUsers(pageNum,pageSize);
+            List<User> allUsers = usersService.getUsers((pageNum-1)*pageSize+1,pageSize);
             req.setAttribute("pageAmount",usersService.getTableSize()/pageSize);
             req.setAttribute("users",allUsers);
             req.getRequestDispatcher("users.jsp").forward(req,resp);

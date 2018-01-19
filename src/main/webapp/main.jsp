@@ -5,6 +5,7 @@ Hi, ${currentUser.name}
 <button class="w3-btn w3-green w3-round-large w3-margin-bottom" onclick="location.href='/taxiproject/ride.jsp'">Take a ride</button>
 <form name="logoutForm" method="GET" action="controller" >
         <input type="hidden" name="command" value="ridesStatistics" />
+        <input type ="hidden" name="pageNumber" value="1"/>
         <button type="submit" class="w3-btn w3-green w3-round-large ">Statistics</button>
 </form>
 <form name="logoutForm" method="POST" action="controller" class="w3-right-align" >

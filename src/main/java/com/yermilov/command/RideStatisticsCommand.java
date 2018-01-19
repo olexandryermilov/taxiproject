@@ -1,5 +1,6 @@
 package com.yermilov.command;
 
+import com.yermilov.dao.ClientDAO;
 import com.yermilov.domain.Client;
 import com.yermilov.domain.Ride;
 import com.yermilov.domain.User;
@@ -23,9 +24,18 @@ public class RideStatisticsCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RideStatisticsService rideStatisticsService =RideStatisticsService.getRideStatisticsService();
         try {
+            String pageNumberParam = request.getParameter("pageNumber");
+            String pageSizeParam = request.getParameter("pageSize");
+            if(pageNumberParam==null){
+                pageNumberParam="1";
+            }
+            if(pageSizeParam==null)pageSizeParam="2";
+            int pageNum = Integer.parseInt(pageNumberParam);
+            int pageSize = Integer.parseInt(pageSizeParam);
+
             Client client = CostCalculationService.getCostCalculationService().getClient(((User)request.getSession().getAttribute("currentUser")).getUserId());
             List<Ride> rideList;
-            rideList=rideStatisticsService.getClientsRides(client);
+            rideList=rideStatisticsService.getClientsRides(client,(pageNum-1)*pageSize,pageSize);
             List<String>carNumberList = new ArrayList<>();
             for(Ride ride : rideList){
                 String carNumber = TaxiIdentifierService.getTaxiIdentifierService().getTaxi(ride.getTaxiId()).getCarNumber();
@@ -33,11 +43,13 @@ public class RideStatisticsCommand implements Command {
             }
             request.setAttribute("rides",rideList);
             request.setAttribute("carNumbers",carNumberList);
+            request.setAttribute("pageAmount",rideStatisticsService.getTableSize(client)/pageSize);
             request.getRequestDispatcher("ridesStatistics.jsp").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
         }
     }
+
     @Override
     public String toString(){
         return this.getClass().getName();

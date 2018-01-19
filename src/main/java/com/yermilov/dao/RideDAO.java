@@ -93,16 +93,15 @@ public class RideDAO extends AbstractDAO<Ride> {
         } finally {
         }
     }
-    private final static String SQL_SELECT_ALL_CLIENTS_RIDES = "select * from ride where clientid=?";
-    //driverId,clientId,taxiId;
-    //private double cost, distance;
-    //private Date rideStart, rideFinish;
-    public List<Ride> findRidesForClient(Client client) throws DAOException {
+    private final static String SQL_SELECT_ALL_CLIENTS_RIDES = "select * from ride where clientid=? order by rideid limit ?, ?";
+    public List<Ride> findRidesForClient(Client client,int from, int limit) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
             try {
                 PreparedStatement statement = con.preparedStatement(SQL_SELECT_ALL_CLIENTS_RIDES);
                 statement.setInt(1, client.getClientId());
+                statement.setInt(2,from);
+                statement.setInt(3,limit);
                 LOGGER.debug("Statement to execute {}",statement.toString());
                 ResultSet resultSet = statement.executeQuery();
                 List<Ride> rides = new ArrayList<>();
@@ -123,6 +122,30 @@ public class RideDAO extends AbstractDAO<Ride> {
             LOGGER.error(e.getMessage());
             throw new DAOException(e.getMessage());
         } finally {
+        }
+    }
+
+    private final static String SQL_FIND_SIZE = "select count(*) from ride where clientid=? ";
+    public int findSize(Client client) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_FIND_SIZE);
+                statement.setInt(1, client.getClientId());
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet rs = statement.executeQuery();
+                int size=0;
+                if(rs.next()) {
+                    size = rs.getInt(1);
+                }
+                return size;
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
         }
     }
 }

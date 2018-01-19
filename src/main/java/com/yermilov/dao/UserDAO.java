@@ -67,7 +67,7 @@ public class UserDAO extends AbstractDAO<User> {
             throw new DAOException(e.getMessage());
         }
     }
-    private final static String SQL_FIND_LIMITED_AMOUNT = "select * from user limit ?, ?";
+    private final static String SQL_FIND_LIMITED_AMOUNT = "select * from user order by userid limit ?, ?";
     public List<User> findLimitedAmount(int from, int limit) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();

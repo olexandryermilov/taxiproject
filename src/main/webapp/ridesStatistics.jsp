@@ -21,7 +21,11 @@
                     <td>${ride.rideFinish}</td>
                 </tr></c:forEach>
             </table>
+        <c:if test="${param.pageNumber>1}"><a href="controller?command=users&pageNumber=${param.pageNumber-1}">Previous page</a></c:if>
+        <c:if test="${param.pageNumber<pageAmount}"><a href="controller?command=ridesStatistics&pageNumber=${param.pageNumber+1}">Next page</a></c:if>
+
         <label class="w3-text-red">${errorMessage}</label>
+
         </form>
 
         <br><br>
