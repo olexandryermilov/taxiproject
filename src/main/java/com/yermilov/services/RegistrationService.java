@@ -16,16 +16,41 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
+/**
+ * Service for registration and adding user to database
+ * @see com.yermilov.command.RegistrationCommand
+ */
 public class RegistrationService {
-    private final static Logger logger = LoggerFactory.getLogger(RegistrationService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
     private final static RegistrationService registrationService = new RegistrationService();
     private IDAOFactory daoFactory;
     private RegistrationService(){
         daoFactory=DAOFactory.getInstance();
     }
+    /**
+     *
+     * @return Instance of this class
+     */
     public static RegistrationService getRegistrationService(){
         return registrationService;
     }
+
+    /**
+     *
+     * @param email Email that user entered
+     * @param password Password that user entered
+     * @param name Name
+     * @param surname Surname
+     * @return true if registered successfully
+     * @throws RegistrationException If there is already a user with same email and password
+     * @throws SQLException Re-throws SQLException from TransactionManager
+     * @throws TransactionException Re-throws TransactionException from TransactionManager
+     * @throws DAOException Re-throws DAO Exception from UserDAO | ClientDAO
+     * @see TransactionManager
+     * @see UserDAO#findByEmail(String)
+     * @see UserDAO#create(User)
+     * @see ClientDAO#create(Client)
+     */
     public boolean register(String email, String password, String name, String surname) throws RegistrationException, SQLException, TransactionException, DAOException {
         UserDAO userDAO = daoFactory.getUserDAO();
         ClientDAO clientDAO = daoFactory.getClientDAO();
@@ -35,14 +60,14 @@ public class RegistrationService {
             try{
                userDAO.create(user);
                 user = userDAO.findByEmail(email);
-                logger.info("Created new user : {}",user);
+                LOGGER.info("Created new user : {}",user);
                 Client client = new Client(user.getUserId());
                 clientDAO.create(client);
-                logger.info("Created new client: {}",client);
+                LOGGER.info("Created new client: {}",client);
                 return true;
             }
             catch(DAOException e){
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
                 throw new RegistrationException(e);
             }
             finally {

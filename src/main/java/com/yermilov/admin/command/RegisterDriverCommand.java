@@ -34,10 +34,6 @@ public class RegisterDriverCommand implements Command {
         }
         catch (DAOException e) {
             LOGGER.error(e.getMessage());
-        } catch (TransactionException e) {
-            LOGGER.error(e.getMessage());
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
         }
     }
     @Override

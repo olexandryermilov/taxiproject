@@ -30,10 +30,6 @@ public class DeleteCommand implements Command {
             request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
-        } catch (TransactionException e) {
-            LOGGER.error(e.getMessage());
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
         }
     }
     @Override

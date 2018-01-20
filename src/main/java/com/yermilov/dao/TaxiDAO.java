@@ -15,6 +15,30 @@ import java.util.List;
 public class TaxiDAO extends AbstractDAO<Taxi> {
     private final static Logger LOGGER = LoggerFactory.getLogger(TaxiDAO.class);
     private final static String SQL_SELECT_BY_CARNUMBER = "select * from taxi where carnumber=?";
+    private final static String SQL_COUNT_SIZE = "select count(*) from taxi";
+    public int findSize() throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            try {
+                PreparedStatement statement = con.preparedStatement(SQL_COUNT_SIZE);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            } catch (SQLException e){
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        } finally {
+        }
+        return -1;
+    }
     public Taxi findByCarNumber(String carNumber) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();

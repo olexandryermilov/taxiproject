@@ -44,10 +44,6 @@ public class AddTaxiTypeCommand implements Command {
             request.getRequestDispatcher("controller?command=taxitypes").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
-        } catch (TransactionException e) {
-            LOGGER.error(e.getMessage());
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
         }
     }
     @Override

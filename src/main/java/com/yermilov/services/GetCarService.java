@@ -11,20 +11,35 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Service for getting free car for client
+ * @see com.yermilov.command.RideCommand
+ */
 public class GetCarService {
     private final static Logger LOGGER = LoggerFactory.getLogger(GetCarService.class);
     private final static GetCarService getCarService = new GetCarService();
-    private final static int CAR_NUMBER=1;
     private IDAOFactory daoFactory;
     private GetCarService(){
         daoFactory=DAOFactory.getInstance();
     }
+    /**
+     *
+     * @return Instance of this class
+     */
     public static GetCarService getGetCarService(){
         return getCarService;
     }
+
+    /**
+     * Not implemented now, returns one of all of cars in database
+     * @return Taxi record
+     * @throws DAOException Re-throws DAOException from TaxiDAO
+     * @see TaxiDAO#findById(int)
+     */
     public Taxi getCar()throws DAOException{
-        int id = new Random(new Date().getTime()).nextInt(CAR_NUMBER)+1;
         TaxiDAO taxiDAO =daoFactory.getTaxiDAO();
+        int carNumber = taxiDAO.findSize();
+        int id = new Random(new Date().getTime()).nextInt(carNumber)+1;
         Taxi taxi = taxiDAO.findById(id);
         return taxi;
     }
