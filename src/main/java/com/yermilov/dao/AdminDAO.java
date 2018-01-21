@@ -47,7 +47,7 @@ public class AdminDAO extends AbstractDAO<Admin> {
         return false;
     }
 
-    private final static String SQL_SELECT_BY_LOGIN = "select * from taxisystemdb.admin where email=?";
+    private final static String SQL_SELECT_BY_LOGIN = "select * from admin where email=?";
     public Admin findByEmail(String email) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -60,6 +60,7 @@ public class AdminDAO extends AbstractDAO<Admin> {
                     Admin admin = new Admin(email,
                             resultSet.getString("password"),resultSet.getString("name"),
                             resultSet.getString("surname"));
+                    admin.setAdminId(resultSet.getInt("adminid"));
                     return admin;
                 }
             } catch (SQLException e){

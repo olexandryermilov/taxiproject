@@ -16,6 +16,11 @@ import java.util.List;
 
 public class RideDAO extends AbstractDAO<Ride> {
     private final static Logger LOGGER = LoggerFactory.getLogger(RideDAO.class);
+    private final static String SQL_INSERT="insert into ride(driverId,clientId,taxiId,cost,distance,rideStart,rideFinish)" +
+            " values(?,?,?,?,?,?,?)";
+    private final static String SQL_GET_MONEY_FOR_CLIENT = "select sum(cost) from ride where clientid=?";
+    private final static String SQL_SELECT_ALL_CLIENTS_RIDES = "select * from ride where clientid=? order by rideid limit ?, ?";
+    private final static String SQL_FIND_SIZE = "select count(*) from ride where clientid=? ";
     @Override
     public List<Ride> findAll() {
         return null;
@@ -36,8 +41,6 @@ public class RideDAO extends AbstractDAO<Ride> {
         return false;
     }
 
-    private final static String SQL_INSERT="insert into ride(driverId,clientId,taxiId,cost,distance,rideStart,rideFinish)" +
-            " values(?,?,?,?,?,?,?)";
     @Override
     public boolean create(Ride entity) throws DAOException {
         try {
@@ -68,7 +71,6 @@ public class RideDAO extends AbstractDAO<Ride> {
         return false;
     }
 
-    private final static String SQL_GET_MONEY_FOR_CLIENT = "select sum(cost) from ride where clientid=?";
     public double getMoneySpentForClient(Client client) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -93,7 +95,7 @@ public class RideDAO extends AbstractDAO<Ride> {
         } finally {
         }
     }
-    private final static String SQL_SELECT_ALL_CLIENTS_RIDES = "select * from ride where clientid=? order by rideid limit ?, ?";
+
     public List<Ride> findRidesForClient(Client client,int from, int limit) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -125,7 +127,6 @@ public class RideDAO extends AbstractDAO<Ride> {
         }
     }
 
-    private final static String SQL_FIND_SIZE = "select count(*) from ride where clientid=? ";
     public int findSize(Client client) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();

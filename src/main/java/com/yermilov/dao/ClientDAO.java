@@ -12,12 +12,10 @@ import java.util.List;
 
 public class ClientDAO extends AbstractDAO<Client> {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClientDAO.class);
-    private static final String SQL_SELECT_ALL = "select * from taxisystemdb.client";
-    private final static String SQL_SELECT_BY_ID = "select * from taxisystemdb.client where clientid=?";
-    private final static String SQL_DELETE_BY_USERID = "delete from taxisystemdb.client where userid=?";
-    private static final String SQL_INSERT_CLIENT="insert into taxisystemdb.client(userid) values(?)";
+    private final static String SQL_DELETE_BY_USERID = "delete from client where userid=?";
+    private static final String SQL_INSERT_CLIENT="insert into client(userid) values(?)";
+    private final static String SQL_SELECT_BY_USERID = "select * from client where userid=?";
     ClientDAO(){}
-    private final static String SQL_SELECT_BY_USERID = "select * from taxisystemdb.client where userid=?";
     public Client findClientByUserId(int userid) throws DAOException{
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -46,18 +44,18 @@ public class ClientDAO extends AbstractDAO<Client> {
     }
     @Override
     public List<Client> findAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 
     @Override
     public Client findById(int id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override

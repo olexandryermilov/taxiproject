@@ -15,6 +15,10 @@ import java.util.List;
 
 public class DriverDAO extends AbstractDAO<Driver> {
     private final static Logger LOGGER = LoggerFactory.getLogger(DriverDAO.class);
+    private final static String SQL_SELECT_BY_USERID="select * from driver where userid=?";
+    private final static String SQL_SELECT_BY_ID="select * from driver where driverid=?";
+    private final static String SQL_DELETE_BY_USERID = "delete from driver where userid=?";
+    private final static String SQL_INSERT_DRIVER = "insert into driver(userid) values(?)";
     public DriverDAO(){
 
     }
@@ -23,7 +27,7 @@ public class DriverDAO extends AbstractDAO<Driver> {
         return null;
     }
 
-    private final static String SQL_SELECT_BY_USERID="select * from driver where userid=?";
+
 
     public Driver findByUserId(int userid) throws DAOException {
         try {
@@ -51,7 +55,7 @@ public class DriverDAO extends AbstractDAO<Driver> {
         } finally {
         }
     }
-    private final static String SQL_SELECT_BY_ID="select * from driver where driverid=?";
+
     @Override
     public Driver findById(int id) throws DAOException {
         try {
@@ -85,7 +89,7 @@ public class DriverDAO extends AbstractDAO<Driver> {
        return false;
     }
 
-    private final static String SQL_DELETE_BY_USERID = "delete from driver where userid=?";
+
     @Override
     public boolean delete(Driver entity) throws DAOException {
         try {
@@ -104,7 +108,7 @@ public class DriverDAO extends AbstractDAO<Driver> {
             throw new DAOException(e.getMessage());
         }
     }
-    private final static String SQL_INSERT_DRIVER = "insert into driver(userid) values(?)";
+
     @Override
     public boolean create(Driver entity) throws DAOException {
         try {

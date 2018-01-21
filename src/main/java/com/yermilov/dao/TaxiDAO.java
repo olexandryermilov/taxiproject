@@ -16,6 +16,8 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
     private final static Logger LOGGER = LoggerFactory.getLogger(TaxiDAO.class);
     private final static String SQL_SELECT_BY_CARNUMBER = "select * from taxi where carnumber=?";
     private final static String SQL_COUNT_SIZE = "select count(*) from taxi";
+    private final static String SQL_SELECT_BY_TAXIID = "select * from taxi where taxiid=?";
+    private final static String SQL_INSERT_TAXI = "insert into taxi(carnumber,taxitypeid,driverid) values(?,?,?)";
     public int findSize() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -71,7 +73,6 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         return null;
     }
 
-    private final static String SQL_SELECT_BY_TAXIID = "select * from taxi where taxiid=?";
     @Override
     public Taxi findById(int id) throws DAOException {
         try {
@@ -111,7 +112,6 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         return false;
     }
 
-    private final static String SQL_INSERT_TAXI = "insert into taxi(carnumber,taxitypeid,driverid) values(?,?,?)";
     @Override
     public boolean create(Taxi entity) throws DAOException {
         try {

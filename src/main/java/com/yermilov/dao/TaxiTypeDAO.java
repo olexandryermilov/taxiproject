@@ -16,6 +16,9 @@ import java.util.List;
 public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
     private final static Logger LOGGER = LoggerFactory.getLogger(TaxiTypeDAO.class);
     private final static String SQL_FIND_ALL = "select * from taxitype";
+    private final static String SQL_SELECT_BY_ID = "select * from taxitype where taxitypeid=?";
+    private final static String SQL_INSERT_TAXITYPE = "insert into taxitype(fare,taxitypename) values (?,?)";
+    private final static String SQL_UPDATE_TAXITYPE = "update taxitype set fare=?, taxitypename=? where taxitypeid=?";
     @Override
     public List<TaxiType> findAll() throws DAOException {
         try {
@@ -41,7 +44,7 @@ public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
         }
     }
 
-    private final static String SQL_SELECT_BY_ID = "select * from taxitype where taxitypeid=?";
+
     @Override
     public TaxiType findById(int id) throws DAOException {
         try {
@@ -81,7 +84,6 @@ public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
         return false;
     }
 
-    private final static String SQL_INSERT_TAXITYPE = "insert into taxitype(fare,taxitypename) values (?,?)";
     @Override
     public boolean create(TaxiType entity) throws DAOException {
         try {
@@ -106,7 +108,6 @@ public class TaxiTypeDAO extends AbstractDAO<TaxiType> {
         }
     }
 
-    private final static String SQL_UPDATE_TAXITYPE = "update taxitype set fare=?, taxitypename=? where taxitypeid=?";
     @Override
     public boolean update(TaxiType entity) throws DAOException {
         try {

@@ -15,37 +15,19 @@ import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
     private final static Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
-    UserDAO(){
+    private final static String SQL_FIND_SIZE = "select count(*) from user ";
+    private final static String SQL_FIND_LIMITED_AMOUNT = "select * from user order by userid limit ?, ?";
+    private final static String SQL_DELETE_BY_ID = "delete from user where userid=?";
+    private final static String SQL_INSERT ="insert into user(email,password,name,surname) values(?,?,?,?)";
+    private final static String SQL_SELECT_BY_LOGIN = "select * from user where email=?";
 
+    UserDAO(){
     }
-    private final static String SQL_FIND_ALL = "select * from taxisystemdb.user";
     @Override
     public List<User> findAll() throws DAOException {
-        try {
-            ConnectionWrapper con = TransactionManager.getConnection();
-            try {
-                PreparedStatement statement = con.preparedStatement(SQL_FIND_ALL);
-                LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet rs = statement.executeQuery();
-                List<User> result = new ArrayList<>();
-                while(rs.next()){
-                    User user = new User(rs.getString("email"),null,
-                            rs.getString("name"),
-                            rs.getString("surname"));
-                    user.setUserId(rs.getInt("userid"));
-                    result.add(user);
-                }
-                return result;
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-                throw new DAOException(e.getMessage());
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DAOException(e.getMessage());
-        }
+        return null;
     }
-    private final static String SQL_FIND_SIZE = "select count(*) from user ";
+
     public int findSize() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -67,7 +49,7 @@ public class UserDAO extends AbstractDAO<User> {
             throw new DAOException(e.getMessage());
         }
     }
-    private final static String SQL_FIND_LIMITED_AMOUNT = "select * from user order by userid limit ?, ?";
+
     public List<User> findLimitedAmount(int from, int limit) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -79,7 +61,7 @@ public class UserDAO extends AbstractDAO<User> {
                 ResultSet rs = statement.executeQuery();
                 List<User> result = new ArrayList<>();
                 while(rs.next()){
-                    User user = new User(rs.getString("email"),null,
+                    User user = new User(rs.getString("email"),rs.getString("password"),
                             rs.getString("name"),
                             rs.getString("surname"));
                     user.setUserId(rs.getInt("userid"));
@@ -101,7 +83,6 @@ public class UserDAO extends AbstractDAO<User> {
         return null;
     }
 
-    private final static String SQL_DELETE_BY_ID = "delete from taxisystemdb.user where userid=?";
     @Override
     public boolean delete(int id) throws DAOException {
         try {
@@ -125,8 +106,7 @@ public class UserDAO extends AbstractDAO<User> {
     public boolean delete(User entity) throws DAOException {
         return false;
     }
-
-    private final static String SQL_INSERT ="insert into taxisystemdb.user(email,password,name,surname) values(?,?,?,?)";
+    
     @Override
     public boolean create(User entity)throws DAOException {
         try {
@@ -150,12 +130,11 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
-
     @Override
     public boolean update(User entity) throws DAOException {
         return false;
     }
-    private final static String SQL_SELECT_BY_LOGIN = "select * from taxisystemdb.user where email=?";
+
     public User findByEmail(String email) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
