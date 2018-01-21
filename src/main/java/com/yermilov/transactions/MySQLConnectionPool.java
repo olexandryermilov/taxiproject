@@ -1,6 +1,8 @@
 package com.yermilov.transactions;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.*;
+import org.apache.commons.pool2.ObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +12,7 @@ import java.sql.SQLException;
 public class MySQLConnectionPool implements ConnectionPool {
     private final static Logger LOGGER = LoggerFactory.getLogger(MySQLConnectionPool.class);
     private static MySQLConnectionPool connectionPool = new MySQLConnectionPool();
-    private static BasicDataSource dataSource;
+    private static  PoolingDataSource<PoolableConnection> dataSource;
 
     private MySQLConnectionPool() {
         initDataSource();
@@ -19,16 +21,24 @@ public class MySQLConnectionPool implements ConnectionPool {
         return connectionPool;
     }
 
-    private void initDataSource(){
-        dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/taxisystemdb?autoReconnect=true&useSSL=false&useUnicode=true" +
-                "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-        dataSource.setMinIdle(5);
-        dataSource.setMaxIdle(20);
-        dataSource.setMaxOpenPreparedStatements(180);
+    private void initDataSource() {
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        } catch (IllegalAccessException | ClassNotFoundException | InstantiationException e) {
+            e.printStackTrace();
+        }
+        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://localhost:3306/taxisystemdb?autoReconnect=true&useSSL=false&useUnicode=true" +
+                "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","root");
+        PoolableConnectionFactory poolableConnectionFactory =
+                new PoolableConnectionFactory(connectionFactory, null);
+
+        ObjectPool<PoolableConnection> connectionPool =
+                new GenericObjectPool<>(poolableConnectionFactory);
+
+        poolableConnectionFactory.setPool(connectionPool);
+
+        dataSource =
+                new PoolingDataSource<>(connectionPool);
     }
 
     public Connection getConnection() throws SQLException {
