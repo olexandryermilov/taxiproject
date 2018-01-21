@@ -41,4 +41,36 @@ public class Taxi {
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Taxi taxi = (Taxi) o;
+
+        if (taxiId != taxi.taxiId) return false;
+        if (driverId != taxi.driverId) return false;
+        if (taxiTypeId != taxi.taxiTypeId) return false;
+        return carNumber != null ? carNumber.equals(taxi.carNumber) : taxi.carNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = taxiId;
+        result = 31 * result + driverId;
+        result = 31 * result + taxiTypeId;
+        result = 31 * result + (carNumber != null ? carNumber.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Taxi{" +
+                "taxiId=" + taxiId +
+                ", driverId=" + driverId +
+                ", taxiTypeId=" + taxiTypeId +
+                ", carNumber='" + carNumber + '\'' +
+                '}';
+    }
 }

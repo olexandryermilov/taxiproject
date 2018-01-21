@@ -61,4 +61,28 @@ public class Admin {
                 ", surname='" + surname + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Admin admin = (Admin) o;
+
+        if (adminId != admin.adminId) return false;
+        if (email != null ? !email.equals(admin.email) : admin.email != null) return false;
+        if (password != null ? !password.equals(admin.password) : admin.password != null) return false;
+        if (name != null ? !name.equals(admin.name) : admin.name != null) return false;
+        return surname != null ? surname.equals(admin.surname) : admin.surname == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = adminId;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        return result;
+    }
 }
