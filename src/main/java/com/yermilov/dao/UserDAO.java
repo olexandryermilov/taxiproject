@@ -106,7 +106,7 @@ public class UserDAO extends AbstractDAO<User> {
     public boolean delete(User entity) throws DAOException {
         return false;
     }
-    
+
     @Override
     public boolean create(User entity)throws DAOException {
         try {

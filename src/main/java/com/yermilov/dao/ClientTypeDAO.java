@@ -18,9 +18,10 @@ import java.util.List;
 public class ClientTypeDAO extends AbstractDAO<ClientType> {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClientTypeDAO.class);
     private final static String SQL_FIND_ALL = "select * from clienttype";
-    private final static String SQL_SELECT_DISCOUNT_BY_MONEY_SPENT = "select max(discount) from clienttype where moneyspent<?";
+    private final static String SQL_SELECT_DISCOUNT_BY_MONEY_SPENT = "select max(discount) from clienttype where moneyspent<=?";
     private final static String SQL_INSERT_CLIENTTYPE = "insert into clienttype(discount,name,moneyspent) values(?,?,?)";
     private final static String SQL_UPDATE_CLIENTTYPE = "update clienttype set moneyspent=?, name=?, discount=? where clienttypeid=?";
+    //private final static String SQL_FIND_BY_CLIENTTYPEID = "select * from clienttype where clienttypeid=?";
     public int findDiscountByMoneySpent(double moneySpent) throws DAOException{
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -115,6 +116,7 @@ public class ClientTypeDAO extends AbstractDAO<ClientType> {
         }
     }
 
+
     @Override
     public boolean update(ClientType entity) throws DAOException {
         try {
@@ -126,7 +128,7 @@ public class ClientTypeDAO extends AbstractDAO<ClientType> {
                 statement.setInt(3,entity.getDiscount());
                 statement.setInt(4,entity.getClientTypeId());
                 LOGGER.debug("Statement to execute {}", statement.toString());
-                statement.execute();
+                statement.executeUpdate();
                 return true;
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());

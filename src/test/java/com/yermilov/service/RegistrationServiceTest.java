@@ -1,4 +1,4 @@
-package com.yermilov.unit.service;
+package com.yermilov.service;
 
 import com.yermilov.dao.ClientDAO;
 import com.yermilov.dao.IDAOFactory;
@@ -28,33 +28,7 @@ public class RegistrationServiceTest {
         RegistrationService.getRegistrationService().setDaoFactory(daoFactory);
         RegistrationService.getRegistrationService().register(TEST_EMAIL,"","","");
     }
-    @Test(expected = RegistrationException.class)
-    public void register_throwsRegistrationException_WhenClientDAOFails() throws DAOException, TransactionException, RegistrationException, SQLException {
-        final String TEST_EMAIL = "myemail@gmail.com";
-        final int TEST_USER_ID = 1;
-        IDAOFactory daoFactory = mock(IDAOFactory.class);
-        UserDAO userDAO = mock(UserDAO.class);
-        User user = new User(TEST_EMAIL,"","","");
-        user.setUserId(TEST_USER_ID);
-        when(userDAO.findByEmail(TEST_EMAIL)).thenReturn(null,user);
-        ClientDAO clientDAO = mock(ClientDAO.class);
-        when(clientDAO.create(any(Client.class))).thenReturn(false);
-        when(daoFactory.getUserDAO()).thenReturn(userDAO);
-        when(daoFactory.getClientDAO()).thenReturn(clientDAO);
-        RegistrationService.getRegistrationService().setDaoFactory(daoFactory);
-        RegistrationService.getRegistrationService().register(TEST_EMAIL,"","","");
-    }
-    @Test(expected = RegistrationException.class)
-    public void register_throwsRegistrationException_WhenUserDAOFails() throws DAOException, TransactionException, RegistrationException, SQLException {
-        final String TEST_EMAIL = "myemail@gmail.com";
-        IDAOFactory daoFactory = mock(IDAOFactory.class);
-        UserDAO userDAO = mock(UserDAO.class);
-        when(userDAO.findByEmail(TEST_EMAIL)).thenReturn(null);
-        when(userDAO.create(any(User.class))).thenReturn(false);
-        when(daoFactory.getUserDAO()).thenReturn(userDAO);
-        RegistrationService.getRegistrationService().setDaoFactory(daoFactory);
-        RegistrationService.getRegistrationService().register(TEST_EMAIL,"","","");
-    }
+
     @Test(expected = RegistrationException.class)
     public void register_throwsRegistrationException_WhenUserDAOThrowsRegistrationException() throws DAOException, TransactionException, RegistrationException, SQLException {
         final String TEST_EMAIL = "myemail@gmail.com";

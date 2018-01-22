@@ -1,4 +1,4 @@
-package com.yermilov.unit.admin.service;
+package com.yermilov.service;
 
 import com.yermilov.admin.service.UsersService;
 import com.yermilov.dao.IDAOFactory;
@@ -26,21 +26,21 @@ public class UsersServiceTest {
         RIGHT_ANSWER.add(u3);
         IDAOFactory daoFactory = mock(IDAOFactory.class);
         UserDAO userDAO = mock(UserDAO.class);
-        when(userDAO.findAll()).thenReturn(RIGHT_ANSWER);
+        when(userDAO.findLimitedAmount(0,3)).thenReturn(RIGHT_ANSWER);
         when(daoFactory.getUserDAO()).thenReturn(userDAO);
         UsersService usersService = UsersService.getUsersService();
         usersService.setDaoFactory(daoFactory);
-        List<User> answer = usersService.getAllUsers();
+        List<User> answer = usersService.getUsers(0,3);
         assertEquals(RIGHT_ANSWER,answer);
     }
     @Test(expected = DAOException.class)
     public void getAllUsers_throwsDaoException_whenDAOthrowsDAOException() throws DAOException {
         IDAOFactory daoFactory = mock(IDAOFactory.class);
         UserDAO userDAO = mock(UserDAO.class);
-        when(userDAO.findAll()).thenThrow(new DAOException("smth went wrong"));
+        when(userDAO.findLimitedAmount(0,3)).thenThrow(new DAOException("smth went wrong"));
         when(daoFactory.getUserDAO()).thenReturn(userDAO);
         UsersService usersService = UsersService.getUsersService();
         usersService.setDaoFactory(daoFactory);
-        List<User> answer = usersService.getAllUsers();
+        List<User> answer = usersService.getUsers(0,3);
     }
 }

@@ -62,7 +62,7 @@ public class CostCalculationService {
     /**
      *
      * @param taxitypeid Id of taxitype to get fare for
-     * @return Cost of 1 kilometer
+     * @return Cost of 1 kilometer for specific taxitype
      * @throws DAOException Re-throws DAOException from TaxiTypeDAO
      * @see TaxiTypeDAO#findById(int)
      */

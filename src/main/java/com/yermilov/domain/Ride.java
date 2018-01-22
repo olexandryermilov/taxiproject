@@ -90,8 +90,7 @@ public class Ride {
         if (taxiId != ride.taxiId) return false;
         if (Double.compare(ride.cost, cost) != 0) return false;
         if (Double.compare(ride.distance, distance) != 0) return false;
-        if (rideStart != null ? !rideStart.equals(ride.rideStart) : ride.rideStart != null) return false;
-        return rideFinish != null ? rideFinish.equals(ride.rideFinish) : ride.rideFinish == null;
+        return true;
     }
 
     @Override
@@ -123,5 +122,9 @@ public class Ride {
                 ", rideStart=" + rideStart +
                 ", rideFinish=" + rideFinish +
                 '}';
+    }
+
+    public void setRideId(int rideId) {
+        this.rideId = rideId;
     }
 }

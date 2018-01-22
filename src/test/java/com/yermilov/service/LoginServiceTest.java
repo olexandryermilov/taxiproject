@@ -1,4 +1,4 @@
-package com.yermilov.unit.admin.service;
+package com.yermilov.service;
 
 import com.yermilov.admin.service.LoginService;
 import com.yermilov.dao.AdminDAO;
@@ -27,7 +27,7 @@ public class LoginServiceTest {
         assertEquals(RIGHT_ANSWER,answer);
     }
     @Test
-    public void getAdmin_returnsNull_whenBADData() throws DAOException {
+    public void getAdmin_returnsNull_whenBadData() throws DAOException {
         final String TEST_EMAIL="abs@gmail.com",TEST_PASSWORD="qweerty";
         final Admin RIGHT_ANSWER = new Admin(TEST_EMAIL,TEST_PASSWORD,null,null);
         IDAOFactory daoFactory = mock(IDAOFactory.class);

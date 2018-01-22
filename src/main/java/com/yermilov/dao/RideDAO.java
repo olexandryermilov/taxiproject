@@ -108,10 +108,12 @@ public class RideDAO extends AbstractDAO<Ride> {
                 ResultSet resultSet = statement.executeQuery();
                 List<Ride> rides = new ArrayList<>();
                 while (resultSet.next()) {
-                    rides.add(new Ride(resultSet.getInt("driverid"), resultSet.getInt("clientId"),
+                    Ride ride = new Ride(resultSet.getInt("driverid"), resultSet.getInt("clientId"),
                             resultSet.getInt("taxiid"), resultSet.getDouble("cost"),
                             resultSet.getDouble("distance"),resultSet.getDate("ridestart"),
-                            resultSet.getDate("ridefinish")));
+                            resultSet.getDate("ridefinish"));
+                    ride.setRideId(resultSet.getInt("rideid"));
+                    rides.add(ride);
                 }
                 return rides;
             } catch (SQLException e){
