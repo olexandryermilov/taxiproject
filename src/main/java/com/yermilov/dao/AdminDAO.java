@@ -10,43 +10,12 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class AdminDAO extends AbstractDAO<Admin> {
+public class AdminDAO {
     AdminDAO(){
 
     }
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminDAO.class);
-    @Override
-    public List<Admin> findAll() throws DAOException {
-        return null;
-    }
-
-    @Override
-    public Admin findById(int id) throws DAOException {
-        return null;
-    }
-
-    @Override
-    public boolean delete(int id) throws DAOException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Admin entity) throws DAOException {
-        return false;
-    }
-
-    @Override
-    public boolean create(Admin entity) throws DAOException {
-        return false;
-    }
-
-    @Override
-    public boolean update(Admin entity) throws DAOException {
-        return false;
-    }
-
     private final static String SQL_SELECT_BY_LOGIN = "select * from admin where email=?";
     public Admin findByEmail(String email) throws DAOException {
         try {

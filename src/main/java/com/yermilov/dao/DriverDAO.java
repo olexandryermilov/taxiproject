@@ -1,6 +1,5 @@
 package com.yermilov.dao;
 
-import com.yermilov.domain.Client;
 import com.yermilov.domain.Driver;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
@@ -11,9 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class DriverDAO extends AbstractDAO<Driver> {
+public class DriverDAO {
     private final static Logger LOGGER = LoggerFactory.getLogger(DriverDAO.class);
     private final static String SQL_SELECT_BY_USERID="select * from driver where userid=?";
     private final static String SQL_SELECT_BY_ID="select * from driver where driverid=?";
@@ -22,12 +20,6 @@ public class DriverDAO extends AbstractDAO<Driver> {
     public DriverDAO(){
 
     }
-    @Override
-    public List<Driver> findAll() {
-        return null;
-    }
-
-
 
     public Driver findByUserId(int userid) throws DAOException {
         try {
@@ -56,7 +48,6 @@ public class DriverDAO extends AbstractDAO<Driver> {
         }
     }
 
-    @Override
     public Driver findById(int id) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -84,13 +75,6 @@ public class DriverDAO extends AbstractDAO<Driver> {
         return null;
     }
 
-    @Override
-    public boolean delete(int id) throws DAOException {
-       return false;
-    }
-
-
-    @Override
     public boolean delete(Driver entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -109,7 +93,6 @@ public class DriverDAO extends AbstractDAO<Driver> {
         }
     }
 
-    @Override
     public boolean create(Driver entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -130,10 +113,5 @@ public class DriverDAO extends AbstractDAO<Driver> {
         }
         finally {
         }
-    }
-
-    @Override
-    public boolean update(Driver entity) {
-        return false;
     }
 }

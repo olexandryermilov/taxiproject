@@ -7,10 +7,11 @@ import com.yermilov.transactions.TransactionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class ClientDAO extends AbstractDAO<Client> {
+public class ClientDAO {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClientDAO.class);
     private final static String SQL_DELETE_BY_USERID = "delete from client where userid=?";
     private static final String SQL_INSERT_CLIENT="insert into client(userid) values(?)";
@@ -42,23 +43,7 @@ public class ClientDAO extends AbstractDAO<Client> {
         }
         return null;
     }
-    @Override
-    public List<Client> findAll() {
-        throw new UnsupportedOperationException();
-    }
 
-
-    @Override
-    public Client findById(int id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(int id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean delete(Client entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -77,7 +62,6 @@ public class ClientDAO extends AbstractDAO<Client> {
         }
     }
 
-    @Override
     public boolean create(Client entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -98,11 +82,6 @@ public class ClientDAO extends AbstractDAO<Client> {
         } finally {
         }
 
-    }
-
-    @Override
-    public boolean update(Client entity) {
-        throw new UnsupportedOperationException();
     }
 
 }

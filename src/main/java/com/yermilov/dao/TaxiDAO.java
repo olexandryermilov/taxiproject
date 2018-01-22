@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class TaxiDAO extends AbstractDAO<Taxi> {
+public class TaxiDAO{
     private final static Logger LOGGER = LoggerFactory.getLogger(TaxiDAO.class);
     private final static String SQL_SELECT_BY_CARNUMBER = "select * from taxi where carnumber=?";
     private final static String SQL_COUNT_SIZE = "select count(*) from taxi";
@@ -68,12 +68,7 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         } finally {
         }
     }
-    @Override
-    public List<Taxi> findAll() {
-        return null;
-    }
 
-    @Override
     public Taxi findById(int id) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -102,17 +97,6 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         }
     }
 
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Taxi entity) {
-        return false;
-    }
-
-    @Override
     public boolean create(Taxi entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -135,10 +119,5 @@ public class TaxiDAO extends AbstractDAO<Taxi> {
         }
         finally {
         }
-    }
-
-    @Override
-    public boolean update(Taxi entity) {
-        return false;
     }
 }

@@ -14,7 +14,6 @@ public class Authentication
         return Objects.nonNull(session.getAttribute("currentUser"));
     }
     public static boolean isAdminLoggedIn(HttpSession session) {
-        System.out.println(session.getAttribute("admin"));
         return Objects.nonNull(session.getAttribute("admin"));
     }
 }

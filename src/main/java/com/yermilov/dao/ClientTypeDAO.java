@@ -1,21 +1,19 @@
 package com.yermilov.dao;
 
 import com.yermilov.domain.ClientType;
-import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.ConnectionWrapper;
 import com.yermilov.transactions.TransactionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.print.DocFlavor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientTypeDAO extends AbstractDAO<ClientType> {
+public class ClientTypeDAO {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClientTypeDAO.class);
     private final static String SQL_FIND_ALL = "select * from clienttype";
     private final static String SQL_SELECT_DISCOUNT_BY_MONEY_SPENT = "select max(discount) from clienttype where moneyspent<=?";
@@ -48,7 +46,6 @@ public class ClientTypeDAO extends AbstractDAO<ClientType> {
         }
     }
 
-    @Override
     public List<ClientType> findAll() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -75,23 +72,6 @@ public class ClientTypeDAO extends AbstractDAO<ClientType> {
         }
     }
 
-    @Override
-    public ClientType findById(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(ClientType entity) {
-        return false;
-    }
-
-
-    @Override
     public boolean create(ClientType entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -116,8 +96,6 @@ public class ClientTypeDAO extends AbstractDAO<ClientType> {
         }
     }
 
-
-    @Override
     public boolean update(ClientType entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();

@@ -14,34 +14,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RideDAO extends AbstractDAO<Ride> {
+public class RideDAO {
     private final static Logger LOGGER = LoggerFactory.getLogger(RideDAO.class);
     private final static String SQL_INSERT="insert into ride(driverId,clientId,taxiId,cost,distance,rideStart,rideFinish)" +
             " values(?,?,?,?,?,?,?)";
     private final static String SQL_GET_MONEY_FOR_CLIENT = "select sum(cost) from ride where clientid=?";
     private final static String SQL_SELECT_ALL_CLIENTS_RIDES = "select * from ride where clientid=? order by rideid limit ?, ?";
     private final static String SQL_FIND_SIZE = "select count(*) from ride where clientid=? ";
-    @Override
-    public List<Ride> findAll() {
-        return null;
-    }
 
-    @Override
-    public Ride findById(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Ride entity) {
-        return false;
-    }
-
-    @Override
     public boolean create(Ride entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
@@ -64,11 +44,6 @@ public class RideDAO extends AbstractDAO<Ride> {
             LOGGER.error(e.getMessage());
             throw new DAOException(e.getMessage());
         }
-    }
-
-    @Override
-    public boolean update(Ride entity) {
-        return false;
     }
 
     public double getMoneySpentForClient(Client client) throws DAOException {
