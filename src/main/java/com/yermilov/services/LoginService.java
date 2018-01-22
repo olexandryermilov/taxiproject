@@ -8,6 +8,8 @@ import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.security.auth.login.LoginException;
+
 /**
  * Service for authorization
  * @see com.yermilov.command.LoginCommand
@@ -39,6 +41,9 @@ public class LoginService {
     public User getUser(String email, String password) throws DAOException {
         UserDAO userDAO = daoFactory.getUserDAO();
         User user = userDAO.findByEmail(email);
+        if(user==null){
+            return null;
+        }
         LOGGER.info("User "+email+" tried to login.");
         return (password.equals(user.getPassword()))?user:null;
     }

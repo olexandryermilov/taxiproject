@@ -38,6 +38,9 @@ public class LoginService {
     public Admin getAdmin(String email, String password) throws DAOException {
         AdminDAO adminDAO = daoFactory.getAdminDAO();
         Admin admin = adminDAO.findByEmail(email);
+        if(admin==null){
+            return null;
+        }
         LOGGER.info(email+" tried to login into admin.");
         return (password.equals(admin.getPassword()))?admin:null;
     }
