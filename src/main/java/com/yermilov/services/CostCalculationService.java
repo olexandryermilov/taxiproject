@@ -4,6 +4,7 @@ import com.yermilov.dao.*;
 import com.yermilov.domain.Client;
 import com.yermilov.domain.Taxi;
 import com.yermilov.domain.TaxiType;
+import com.yermilov.exceptions.CostCalculationException;
 import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,9 +54,9 @@ public class CostCalculationService {
      * @throws DAOException Re-throws DAOException from getFare method
      * @see #getFare(int)
      */
-    public double getDriveCost(Taxi taxi, double distance, int discount) throws DAOException {
+    public double getDriveCost(Taxi taxi, double distance, int discount) throws DAOException, CostCalculationException {
         double fare = getFare(taxi.getTaxiTypeId());
-        double driveCost = MIN_RIDE_COST+(fare*distance/100)*(100-discount);
+        double driveCost = ((MIN_RIDE_COST+(fare*distance))/100)*(100-discount);
         return new BigDecimal(driveCost).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
@@ -66,9 +67,12 @@ public class CostCalculationService {
      * @throws DAOException Re-throws DAOException from TaxiTypeDAO
      * @see TaxiTypeDAO#findById(int)
      */
-    public double getFare(int taxitypeid) throws DAOException {
+    public double getFare(int taxitypeid) throws DAOException, CostCalculationException {
         TaxiTypeDAO taxiTypeDAO = daoFactory.getTaxiTypeDAO();
         TaxiType taxiType = taxiTypeDAO.findById(taxitypeid);
+        if(taxiType==null){
+            throw new CostCalculationException("Can't get type of taxi");
+        }
         return taxiType.getFare();
     }
 }

@@ -241,6 +241,8 @@ public class TableCreator {
                 new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis())));
         rides.add(new Ride(3,2,4,38.0,17.0,
                 new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis())));
+        rides.add(new Ride(3,2,4,1005.0,170.0,
+                new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis())));
 
         for(Ride ride: rides){
             ps.setInt(1,ride.getDriverId());

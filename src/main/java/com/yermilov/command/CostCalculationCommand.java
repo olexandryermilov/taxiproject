@@ -4,6 +4,7 @@ import com.yermilov.domain.Client;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
 import com.yermilov.domain.User;
+import com.yermilov.exceptions.CostCalculationException;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.*;
 import org.slf4j.Logger;
@@ -44,6 +45,8 @@ public class CostCalculationCommand implements Command {
             request.setAttribute("arrivalTime",TimeCalculationService.getTimeCalculationService().getTime(from,to));
             request.getRequestDispatcher("ride.jsp").forward(request,response);
         } catch (DAOException e) {
+            LOGGER.error(e.getMessage());
+        } catch (CostCalculationException e) {
             LOGGER.error(e.getMessage());
         }
     }

@@ -37,7 +37,7 @@ public class RideDAOTest {
         allTaxiTypesList = TableCreator.initTaxiTypeTable();
         allTaxiesList = TableCreator.initTaxiTable();
         allRidesList = TableCreator.initRideTable();
-        firstClientRides = allRidesList.subList(0,allRidesList.size()-1);
+        firstClientRides = allRidesList.subList(0,allRidesList.size()-2);
         TransactionManager.setConnectionPool(H2ConnectionPool.getInstance());
     }
     @After
@@ -69,7 +69,7 @@ public class RideDAOTest {
     public void create_AddsRideToDatabase() throws DAOException {
         final Ride RIDE = new Ride(1,3,1,38.0,27.0,
                 new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
-        RIDE.setRideId(5);
+        RIDE.setRideId(allRidesList.size()+1);
         RideDAO rideDAO = DAOFactory.getInstance().getRideDAO();
         rideDAO.create(RIDE);
         List<Ride> rides = new ArrayList<>();

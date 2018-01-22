@@ -32,7 +32,7 @@ public class TimeCalculationService {
      * @return Time to go from start to finish
      */
     public double getTime(String from, String to) {
-        return new java.util.Random(new Date().getTime()).nextInt(7);
+        return new java.util.Random(new Date().getTime()).nextInt(7)+1;
     }
 
     /**
@@ -41,6 +41,6 @@ public class TimeCalculationService {
      * @return Time to cover this distance
      */
     public double getTime(double distance) {
-        return new java.util.Random(new Date().getTime()).nextInt(7);
+        return new java.util.Random(new Date().getTime()).nextInt(7)+1;
     }
 }
