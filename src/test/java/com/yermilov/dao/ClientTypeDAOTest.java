@@ -1,7 +1,7 @@
 package com.yermilov.dao;
 
 
-import com.yermilov.TableCreator;
+import com.yermilov.tableworkers.TableCreator;
 import com.yermilov.domain.ClientType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.H2ConnectionPool;
@@ -13,7 +13,6 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

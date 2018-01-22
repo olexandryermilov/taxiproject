@@ -2,6 +2,8 @@ package com.yermilov.dao;
 
 import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
+import com.yermilov.tableworkers.TableCleaner;
+import com.yermilov.tableworkers.TableCreator;
 import com.yermilov.transactions.H2ConnectionPool;
 import com.yermilov.transactions.TransactionManager;
 import org.junit.After;
@@ -22,44 +24,12 @@ public class UserDAOTest {
     private static List<User> allUsers;
     @Before
     public void initDatabase() throws SQLException {
-        Connection connection = H2ConnectionPool.getInstance().getConnection();
-        String SQL_CREATE_DATABASE = "CREATE TABLE `user` (\n" +
-                "  `userid` int(11) NOT NULL AUTO_INCREMENT,\n" +
-                "  `email` varchar(100) DEFAULT NULL,\n" +
-                "  `password` varchar(100) DEFAULT NULL,\n" +
-                "  `phone` varchar(12) DEFAULT NULL,\n" +
-                "  `name` varchar(45) DEFAULT NULL,\n" +
-                "  `surname` varchar(45) DEFAULT NULL,\n" +
-                "  PRIMARY KEY (`userid`),\n" +
-                "  UNIQUE KEY `idtaxies_UNIQUE` (`userid`),\n" +
-                "  UNIQUE KEY `email_UNIQUE` (`email`)\n" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-        PreparedStatement ps = connection.prepareStatement(SQL_CREATE_DATABASE);
-        ps.execute();
-        allUsers = new ArrayList<>();
-        allUsers.add(new User("alexivanov@gmail.com","qwerty","Alex","Ivanov"));
-        allUsers.add(new User("antonsidorov@gmail.com","qwertyuiop","Anton","Sidorov"));
-        allUsers.add(new User("yuriiomelyanenko@gmail.com","asmons","Yurii","Omelyanenko"));
-        allUsers.add(new User("andriikoval@gmail.com","cplusplus", "Andrii", "Koval"));
-        String SQL_INSERT = "insert into user(email,password,name,surname) values(?,?,?,?)";
-        int i = 1;
-        for(User user : allUsers){
-            user.setUserId(i++);
-            ps=connection.prepareStatement(SQL_INSERT);
-            ps.setString(1,user.getEmail());
-            ps.setString(2,user.getPassword());
-            ps.setString(3,user.getName());
-            ps.setString(4,user.getSurname());
-            ps.execute();
-        }
+        allUsers = TableCreator.initUserTable();
         TransactionManager.setConnectionPool(H2ConnectionPool.getInstance());
     }
     @After
     public void dropTable() throws SQLException {
-        Connection connection = H2ConnectionPool.getInstance().getConnection();
-        String SQL_DROP_DATABASE = "DROP TABLE `user`";
-        PreparedStatement ps = connection.prepareStatement(SQL_DROP_DATABASE);
-        ps.execute();
+        TableCleaner.cleanUserTable();
     }
     @Test
     public void findSize_ReturnsCorrectSize() throws DAOException {

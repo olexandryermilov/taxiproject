@@ -1,4 +1,4 @@
-package com.yermilov;
+package com.yermilov.tableworkers;
 
 import com.yermilov.domain.*;
 import com.yermilov.transactions.H2ConnectionPool;

@@ -5,6 +5,7 @@ import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
+import com.yermilov.exceptions.AddCarException;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.exceptions.TransactionException;
 import org.slf4j.Logger;
@@ -54,6 +55,10 @@ public class AddCarCommand implements Command {
             request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());
+        } catch (AddCarException e) {
+            LOGGER.error(e.getMessage());
+            request.setAttribute("errorMessage","There is already a car with such number");
+            request.getRequestDispatcher("controller?command=users&pageNumber=1").forward(request,response);
         }
     }
     @Override

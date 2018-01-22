@@ -6,6 +6,7 @@ import com.yermilov.dao.IDAOFactory;
 import com.yermilov.dao.TaxiDAO;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
+import com.yermilov.exceptions.AddCarException;
 import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @see com.yermilov.admin.command.AddCarCommand
  */
 public class AddCarService {
-    private final static Logger logger = LoggerFactory.getLogger(AddCarService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AddCarService.class);
     private final static AddCarService ADD_CAR_SERVICE = new AddCarService();
     private IDAOFactory daoFactory;
     private AddCarService(){
@@ -48,11 +49,17 @@ public class AddCarService {
      * @param taxi Taxi to add to database
      * @return true if created taxi successfully
      * @throws DAOException Re-throws DAOException from TaxiDAO method
+     * @throws AddCarException If there is already a car with such carNumber
      * @see TaxiDAO#create(Taxi)
      */
-    public boolean addCar(Taxi taxi)throws DAOException{
+    public boolean addCar(Taxi taxi) throws DAOException, AddCarException {
         TaxiDAO taxiDAO = daoFactory.getTaxiDAO();
-        taxiDAO.create(taxi);
+        if(taxiDAO.findByCarNumber(taxi.getCarNumber())==null){
+            taxiDAO.create(taxi);
+        }
+        else{
+            throw new AddCarException("There is already a car with such car number");
+        }
         return true;
     }
 

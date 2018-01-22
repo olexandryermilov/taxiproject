@@ -1,8 +1,6 @@
 package com.yermilov.dao;
 
-import com.yermilov.TableCreator;
-import com.yermilov.domain.ClientType;
-import com.yermilov.domain.Taxi;
+import com.yermilov.tableworkers.TableCreator;
 import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.H2ConnectionPool;

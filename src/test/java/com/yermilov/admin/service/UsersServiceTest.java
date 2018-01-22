@@ -1,12 +1,15 @@
-package com.yermilov.service;
+package com.yermilov.admin.service;
 
-import com.yermilov.admin.service.UsersService;
+import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.IDAOFactory;
 import com.yermilov.dao.UserDAO;
 import com.yermilov.domain.User;
 import com.yermilov.exceptions.DAOException;
+import com.yermilov.tableworkers.TableCleaner;
+import com.yermilov.tableworkers.TableCreator;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +45,30 @@ public class UsersServiceTest {
         UsersService usersService = UsersService.getUsersService();
         usersService.setDaoFactory(daoFactory);
         List<User> answer = usersService.getUsers(0,3);
+    }
+    @Test
+    public void findSize_ReturnsCorrectSize() throws DAOException, SQLException {
+        UsersService.getUsersService().setDaoFactory(DAOFactory.getInstance());
+        List<User> allUsers = TableCreator.initUserTable();
+        final int RIGHT_SIZE = 4;
+        assertEquals(RIGHT_SIZE,UsersService.getUsersService().getTableSize());
+        TableCleaner.cleanUserTable();
+    }
+    @Test
+    public void findLimitedAmount_ReturnsCorrectSize() throws DAOException, SQLException {
+        UsersService.getUsersService().setDaoFactory(DAOFactory.getInstance());
+        List<User> allUsers = TableCreator.initUserTable();
+        final int RIGHT_SIZE = 2;
+        assertEquals(RIGHT_SIZE,UsersService.getUsersService().getUsers(0,2).size());
+        TableCleaner.cleanUserTable();
+    }
+
+    @Test
+    public void findLimitedAmount_ReturnsRightUsers_WhenSkippingSomeUsers() throws DAOException, SQLException {
+        UsersService.getUsersService().setDaoFactory(DAOFactory.getInstance());
+        List<User> allUsers = TableCreator.initUserTable();
+        final int FROM=3, LIMIT = 1;
+        assertEquals(allUsers.get(3),UsersService.getUsersService().getUsers(FROM,LIMIT).get(0));
+        TableCleaner.cleanUserTable();
     }
 }
