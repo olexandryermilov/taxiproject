@@ -10,10 +10,13 @@ public class Authentication
 
     }
 
-    public static boolean isUserLoggedIn(HttpSession session) {
+    public static Authentication getInstance(){
+        return AUTHENTICATION;
+    }
+    public boolean isUserLoggedIn(HttpSession session) {
         return Objects.nonNull(session.getAttribute("currentUser"));
     }
-    public static boolean isAdminLoggedIn(HttpSession session) {
+    public boolean isAdminLoggedIn(HttpSession session) {
         return Objects.nonNull(session.getAttribute("admin"));
     }
 }

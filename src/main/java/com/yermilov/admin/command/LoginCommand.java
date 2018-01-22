@@ -18,14 +18,20 @@ public class LoginCommand implements Command {
     private final static Logger LOGGER = LoggerFactory.getLogger(com.yermilov.command.LoginCommand.class);
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(request.getSession().getAttribute("admin")!=null){
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            return;
+        }
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (email == null) {
-            request.getRequestDispatcher("error.jsp");
+            request.setAttribute("errorMessageLogin", "You should fill email");
+            request.getRequestDispatcher("login.jsp").forward(request,response);
             LOGGER.info("Empty email");
         }
         if (password == null) {
-            request.getRequestDispatcher("error.jsp");
+            request.setAttribute("errorMessageLogin", "You should fill password");
+            request.getRequestDispatcher("login.jsp").forward(request,response);
             LOGGER.info("Empty password");
         }
         LoginService loginService = LoginService.getLoginService();

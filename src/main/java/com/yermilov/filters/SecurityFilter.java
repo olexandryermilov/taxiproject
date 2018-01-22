@@ -49,7 +49,7 @@ public class SecurityFilter implements Filter {
             return;
         }
         if ("AUTH".equals(role)) {
-            if (Authentication.isUserLoggedIn(httpServletRequest.getSession())) {
+            if (Authentication.getInstance().isUserLoggedIn(httpServletRequest.getSession())) {
                 chain.doFilter(request, response);
                 return;
             } else {
@@ -58,7 +58,7 @@ public class SecurityFilter implements Filter {
             }
         }
         if("ADMIN".equals(role)){
-            if (Authentication.isAdminLoggedIn(httpServletRequest.getSession())) {
+            if (Authentication.getInstance().isAdminLoggedIn(httpServletRequest.getSession())) {
                 chain.doFilter(request, response);
                 return;
             } else {

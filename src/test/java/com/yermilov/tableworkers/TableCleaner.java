@@ -58,4 +58,23 @@ public class TableCleaner {
         PreparedStatement ps = connection.prepareStatement(SQL_DROP);
         ps.execute();
     }
+    /*
+        initUserTable();
+        initDriverTable();
+        initClientTable();
+        initClientTypeTable();
+        initTaxiTypeTable();
+        initTaxiTable();
+        initRideTable();
+        initAdminTable();
+
+        initAdminTable();
+        initRideTable();
+        initTaxiTable();
+        initTaxiTypeTable();
+        initClientTypeTable();
+        initClientTable();
+        initDriverTable();
+        initUserTable();
+     */
 }

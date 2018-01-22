@@ -16,9 +16,8 @@ public class LoginCommand implements Command {
     private final static Logger LOGGER = LoggerFactory.getLogger(LoginCommand.class);
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getSession().getAttribute("user")!=null){
-            request.setAttribute("errorMessageLogin", "User already logged in");
-            request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
+        if(request.getSession().getAttribute("currentUser")!=null){
+            request.getRequestDispatcher("index.jsp").forward(request, response);
             return;
         }
         String email = request.getParameter("email");
@@ -30,7 +29,7 @@ public class LoginCommand implements Command {
             return;
         }
         if (password == null) {
-            request.setAttribute("errorMessageLogin","You should fill email");
+            request.setAttribute("errorMessageLogin","You should fill password");
             LOGGER.info("Empty password");
             request.getRequestDispatcher(CommandFactory.LOGIN+".jsp").forward(request, response);
             return;
