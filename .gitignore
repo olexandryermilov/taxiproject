@@ -11,7 +11,7 @@ build/
 gradle
 
 *.class
-
+jacoco/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
