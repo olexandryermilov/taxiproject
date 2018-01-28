@@ -20,22 +20,27 @@ public class AdminDAO {
     public Admin findByEmail(String email) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_LOGIN);
+                statement = con.preparedStatement(SQL_SELECT_BY_LOGIN);
                 statement.setString(1, email);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     Admin admin = new Admin(email,
                             resultSet.getString("password"),resultSet.getString("name"),
                             resultSet.getString("surname"));
                     admin.setAdminId(resultSet.getInt("adminid"));
+
                     return admin;
                 }
             } catch (SQLException e){
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
             return null;

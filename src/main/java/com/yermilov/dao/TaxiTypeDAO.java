@@ -23,20 +23,27 @@ public class TaxiTypeDAO {
     public List<TaxiType> findAll() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_FIND_ALL);
+                statement = con.preparedStatement(SQL_FIND_ALL);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet rs = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 List<TaxiType> result = new ArrayList<>();
-                while(rs.next()){
-                    TaxiType taxiType = new TaxiType(rs.getDouble("fare"),rs.getString("taxitypename"));
-                    taxiType.setTaxiTypeId(rs.getInt("taxitypeid"));
+                while(resultSet.next()){
+                    TaxiType taxiType = new TaxiType(resultSet.getDouble("fare"),resultSet.getString("taxitypename"));
+                    taxiType.setTaxiTypeId(resultSet.getInt("taxitypeid"));
                     result.add(taxiType);
                 }
                 return result;
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
+            }
+            finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
+                con.close();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -47,11 +54,13 @@ public class TaxiTypeDAO {
     public TaxiType findById(int id) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_ID);
+                statement = con.preparedStatement(SQL_SELECT_BY_ID);
                 statement.setInt(1, id);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     TaxiType taxiType = new TaxiType(resultSet.getDouble("fare"),
                             resultSet.getString("taxitypename"));
@@ -62,6 +71,8 @@ public class TaxiTypeDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
@@ -75,8 +86,9 @@ public class TaxiTypeDAO {
     public boolean create(TaxiType entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_INSERT_TAXITYPE);
+                statement = con.preparedStatement(SQL_INSERT_TAXITYPE);
                 statement.setDouble(1, entity.getFare());
                 statement.setString(2, entity.getTaxiTypeName());
                 LOGGER.debug("Statement to execute {}", statement.toString());
@@ -85,6 +97,7 @@ public class TaxiTypeDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
@@ -98,8 +111,10 @@ public class TaxiTypeDAO {
     public boolean update(TaxiType entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_UPDATE_TAXITYPE);
+                statement = con.preparedStatement(SQL_UPDATE_TAXITYPE);
                 statement.setDouble(1, entity.getFare());
                 statement.setString(2, entity.getTaxiTypeName());
                 statement.setInt(3,entity.getTaxiTypeId());
@@ -110,6 +125,7 @@ public class TaxiTypeDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {

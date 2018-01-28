@@ -19,15 +19,16 @@ public class ClientTypeDAO {
     private final static String SQL_SELECT_DISCOUNT_BY_MONEY_SPENT = "select max(discount) from clienttype where moneyspent<=?";
     private final static String SQL_INSERT_CLIENTTYPE = "insert into clienttype(discount,name,moneyspent) values(?,?,?)";
     private final static String SQL_UPDATE_CLIENTTYPE = "update clienttype set moneyspent=?, name=?, discount=? where clienttypeid=?";
-    //private final static String SQL_FIND_BY_CLIENTTYPEID = "select * from clienttype where clienttypeid=?";
     public int findDiscountByMoneySpent(double moneySpent) throws DAOException{
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_DISCOUNT_BY_MONEY_SPENT);
+                statement = con.preparedStatement(SQL_SELECT_DISCOUNT_BY_MONEY_SPENT);
                 statement.setDouble(1, moneySpent);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if(resultSet.next()){
                     return resultSet.getInt("max(discount)");
                 }
@@ -37,6 +38,8 @@ public class ClientTypeDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
@@ -49,15 +52,17 @@ public class ClientTypeDAO {
     public List<ClientType> findAll() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_FIND_ALL);
+                statement = con.preparedStatement(SQL_FIND_ALL);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet rs = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 List<ClientType> result = new ArrayList<>();
-                while(rs.next()){
-                    ClientType clientType = new ClientType(rs.getInt("discount"),rs.getString("name"),
-                            rs.getDouble("moneyspent"));
-                    clientType.setClientTypeId(rs.getInt("clienttypeid"));
+                while(resultSet.next()){
+                    ClientType clientType = new ClientType(resultSet.getInt("discount"),resultSet.getString("name"),
+                            resultSet.getDouble("moneyspent"));
+                    clientType.setClientTypeId(resultSet.getInt("clienttypeid"));
                     if(clientType.getName().equals("nodiscount"))continue;
                     result.add(clientType);
                 }
@@ -65,6 +70,11 @@ public class ClientTypeDAO {
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
+            }
+            finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
+                con.close();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -75,8 +85,9 @@ public class ClientTypeDAO {
     public boolean create(ClientType entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_INSERT_CLIENTTYPE);
+                statement = con.preparedStatement(SQL_INSERT_CLIENTTYPE);
                 statement.setInt(1, entity.getDiscount());
                 statement.setString(2, entity.getName());
                 statement.setDouble(3, entity.getMoneySpent());
@@ -86,6 +97,7 @@ public class ClientTypeDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
@@ -99,8 +111,9 @@ public class ClientTypeDAO {
     public boolean update(ClientType entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_UPDATE_CLIENTTYPE);
+                statement = con.preparedStatement(SQL_UPDATE_CLIENTTYPE);
                 statement.setDouble(1, entity.getMoneySpent());
                 statement.setString(2, entity.getName());
                 statement.setInt(3,entity.getDiscount());
@@ -112,6 +125,7 @@ public class ClientTypeDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {

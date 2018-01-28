@@ -27,18 +27,25 @@ public class UserDAO {
     public int findSize() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_FIND_SIZE);
+                statement = con.preparedStatement(SQL_FIND_SIZE);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet rs = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 int size=0;
-                if(rs.next()) {
-                    size = rs.getInt(1);
+                if(resultSet.next()) {
+                    size = resultSet.getInt(1);
                 }
                 return size;
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
+            }
+            finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
+                con.close();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -49,24 +56,31 @@ public class UserDAO {
     public List<User> findLimitedAmount(int from, int limit) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_FIND_LIMITED_AMOUNT);
+                statement = con.preparedStatement(SQL_FIND_LIMITED_AMOUNT);
                 statement.setInt(1,from);
                 statement.setInt(2,limit);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet rs = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 List<User> result = new ArrayList<>();
-                while(rs.next()){
-                    User user = new User(rs.getString("email"),rs.getString("password"),
-                            rs.getString("name"),
-                            rs.getString("surname"));
-                    user.setUserId(rs.getInt("userid"));
+                while(resultSet.next()){
+                    User user = new User(resultSet.getString("email"),resultSet.getString("password"),
+                            resultSet.getString("name"),
+                            resultSet.getString("surname"));
+                    user.setUserId(resultSet.getInt("userid"));
                     result.add(user);
                 }
                 return result;
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
+            }
+            finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
+                con.close();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -77,14 +91,19 @@ public class UserDAO {
     public boolean delete(int id) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_DELETE_BY_ID);
+                statement = con.preparedStatement(SQL_DELETE_BY_ID);
                 statement.setInt(1,id);
                 LOGGER.debug("Statement to execute {}",statement.toString());
                 return statement.execute();
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
+            }
+            finally {
+                if(statement!=null)statement.close();
+                con.close();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -95,8 +114,10 @@ public class UserDAO {
     public boolean create(User entity)throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_INSERT);
+                statement = con.preparedStatement(SQL_INSERT);
                 statement.setString(1, entity.getEmail());
                 statement.setString(2, entity.getPassword());
                 statement.setString(3, entity.getName());
@@ -108,6 +129,10 @@ public class UserDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             }
+            finally {
+                if(statement!=null)statement.close();
+                con.close();
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DAOException(e.getMessage());
@@ -117,11 +142,13 @@ public class UserDAO {
     public User findByEmail(String email) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_LOGIN);
+                statement = con.preparedStatement(SQL_SELECT_BY_LOGIN);
                 statement.setString(1, email);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     User user = new User(email,
                             resultSet.getString("password"),resultSet.getString("name"),
@@ -133,6 +160,8 @@ public class UserDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
             return null;

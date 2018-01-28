@@ -25,8 +25,9 @@ public class RideDAO {
     public boolean create(Ride entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_INSERT);
+                statement = con.preparedStatement(SQL_INSERT);
                 statement.setInt(1,entity.getDriverId());
                 statement.setInt(2,entity.getClientId());
                 statement.setInt(3,entity.getTaxiId());
@@ -40,6 +41,10 @@ public class RideDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             }
+            finally {
+                if(statement!=null)statement.close();
+                con.close();
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DAOException(e.getMessage());
@@ -49,11 +54,13 @@ public class RideDAO {
     public double getMoneySpentForClient(Client client) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_GET_MONEY_FOR_CLIENT);
+                statement = con.preparedStatement(SQL_GET_MONEY_FOR_CLIENT);
                 statement.setInt(1, client.getClientId());
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     return resultSet.getDouble("sum(cost)");
                 }
@@ -61,6 +68,8 @@ public class RideDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
             return 0.0;
@@ -74,13 +83,15 @@ public class RideDAO {
     public List<Ride> findRidesForClient(Client client,int from, int limit) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_ALL_CLIENTS_RIDES);
+                statement = con.preparedStatement(SQL_SELECT_ALL_CLIENTS_RIDES);
                 statement.setInt(1, client.getClientId());
                 statement.setInt(2,from);
                 statement.setInt(3,limit);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 List<Ride> rides = new ArrayList<>();
                 while (resultSet.next()) {
                     Ride ride = new Ride(resultSet.getInt("driverid"), resultSet.getInt("clientId"),
@@ -95,6 +106,8 @@ public class RideDAO {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
@@ -107,19 +120,26 @@ public class RideDAO {
     public int findSize(Client client) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_FIND_SIZE);
+                statement = con.preparedStatement(SQL_FIND_SIZE);
                 statement.setInt(1, client.getClientId());
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet rs = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 int size=0;
-                if(rs.next()) {
-                    size = rs.getInt(1);
+                if(resultSet.next()) {
+                    size = resultSet.getInt(1);
                 }
                 return size;
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
+            }
+            finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
+                con.close();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());

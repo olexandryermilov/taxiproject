@@ -21,10 +21,12 @@ public class TaxiDAO{
     public int findSize() throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_COUNT_SIZE);
+                statement = con.preparedStatement(SQL_COUNT_SIZE);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     return resultSet.getInt(1);
                 }
@@ -32,6 +34,8 @@ public class TaxiDAO{
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
@@ -44,11 +48,13 @@ public class TaxiDAO{
     public Taxi findByCarNumber(String carNumber) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_CARNUMBER);
+                statement = con.preparedStatement(SQL_SELECT_BY_CARNUMBER);
                 statement.setString(1, carNumber);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     Taxi taxi = new Taxi(resultSet.getInt("driverid"),
                             resultSet.getInt("taxitypeid"),carNumber);
@@ -59,6 +65,8 @@ public class TaxiDAO{
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
             return null;
@@ -72,11 +80,13 @@ public class TaxiDAO{
     public Taxi findById(int id) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_SELECT_BY_TAXIID);
+                statement = con.preparedStatement(SQL_SELECT_BY_TAXIID);
                 statement.setInt(1, id);
                 LOGGER.debug("Statement to execute {}",statement.toString());
-                ResultSet resultSet = statement.executeQuery();
+                resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     Taxi taxi = new Taxi(resultSet.getInt("driverid"),
                             resultSet.getInt("taxitypeid"),resultSet.getString("carnumber"));
@@ -87,6 +97,8 @@ public class TaxiDAO{
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
                 con.close();
             }
             return null;
@@ -100,8 +112,9 @@ public class TaxiDAO{
     public boolean create(Taxi entity) throws DAOException {
         try {
             ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
             try {
-                PreparedStatement statement = con.preparedStatement(SQL_INSERT_TAXI);
+                statement = con.preparedStatement(SQL_INSERT_TAXI);
                 statement.setString(1, entity.getCarNumber());
                 statement.setInt(2, entity.getTaxiTypeId());
                 statement.setInt(3, entity.getDriverId());
@@ -111,6 +124,7 @@ public class TaxiDAO{
                 LOGGER.error(e.getMessage());
                 throw new DAOException(e.getMessage());
             } finally {
+                if(statement!=null)statement.close();
                 con.close();
             }
         } catch (SQLException e) {
