@@ -21,6 +21,7 @@ public class RegistrationCommand implements Command{
         String password = req.getParameter("password");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
+        LOGGER.info("User typed next values: email :{} {} {}",email,name,surname);
         if (email == null || password == null || name == null || surname == null) {
             LOGGER.info("Tried to register with empty fields.");
             req.setAttribute("errorMessage", "All fields must be filled");

@@ -29,6 +29,7 @@ public class SecurityFilter implements Filter {
         SecurityConfiguration securityConfiguration = SecurityConfiguration.getInstance();
         HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
         HttpServletResponse httpServletResponse = ((HttpServletResponse)response);
+        request.setCharacterEncoding("UTF-8");
         String command =httpServletRequest.getParameter("command");
         if(command==null){
             String uri = httpServletRequest.getRequestURI();
