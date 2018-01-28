@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 public class AddTaxiTypeCommand implements Command {
@@ -23,10 +24,15 @@ public class AddTaxiTypeCommand implements Command {
         String taxiTypeName = request.getParameter("name");
         double fare;
         try{
-            fare=Double.parseDouble(request.getParameter("fare"));;
+            fare=Double.parseDouble(request.getParameter("fare"));
         }
         catch (NumberFormatException e){
             request.setAttribute("errorMessage","Fare should be a number");
+            request.getRequestDispatcher(CommandFactory.ADD_TAXITYPE+".jsp").forward(request, response);
+            return;
+        }
+        if(fare<0.0){
+            request.setAttribute("errorMessage","Fare should be a positive number");
             request.getRequestDispatcher(CommandFactory.ADD_TAXITYPE+".jsp").forward(request, response);
             return;
         }

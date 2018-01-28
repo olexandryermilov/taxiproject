@@ -1,10 +1,12 @@
 package com.yermilov.dao;
 
+import com.yermilov.tableworkers.TableCleaner;
 import com.yermilov.tableworkers.TableCreator;
 import com.yermilov.domain.*;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.transactions.H2ConnectionPool;
 import com.yermilov.transactions.TransactionManager;
+import javafx.scene.control.Tab;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,27 +44,12 @@ public class RideDAOTest {
     }
     @After
     public void dropTable() throws SQLException {
-        Connection connection = H2ConnectionPool.getInstance().getConnection();
-
-        String SQL_DROP = "DROP TABLE `ride`";
-        PreparedStatement ps = connection.prepareStatement(SQL_DROP);
-        ps.execute();
-        SQL_DROP = "DROP TABLE `taxi`";
-        ps = connection.prepareStatement(SQL_DROP);
-        ps.execute();
-        SQL_DROP = "DROP TABLE `taxitype`";
-        ps = connection.prepareStatement(SQL_DROP);
-        ps.execute();
-        String SQL_DROP_USER = "DROP TABLE `user`";
-        ps = connection.prepareStatement(SQL_DROP_USER);
-        ps.execute();
-        SQL_DROP = "DROP TABLE `driver`";
-        ps = connection.prepareStatement(SQL_DROP);
-        ps.execute();
-        SQL_DROP = "DROP TABLE `client`";
-        ps = connection.prepareStatement(SQL_DROP);
-        ps.execute();
-
+        TableCleaner.cleanRideTable();
+        TableCleaner.cleanTaxiTable();
+        TableCleaner.cleanTaxiTypeTable();
+        TableCleaner.cleanDriverTable();
+        TableCleaner.cleanClientTable();
+        TableCleaner.cleanUserTable();
     }
 
     @Test

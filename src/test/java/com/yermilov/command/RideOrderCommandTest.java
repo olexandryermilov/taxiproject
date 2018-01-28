@@ -1,7 +1,6 @@
-package com.yermilov.admin.command;
+package com.yermilov.command;
 
-import com.yermilov.command.Command;
-import com.yermilov.command.CommandFactory;
+import com.yermilov.domain.ClientType;
 import com.yermilov.domain.TaxiType;
 import com.yermilov.tableworkers.TableCleaner;
 import com.yermilov.tableworkers.TableCreator;
@@ -19,9 +18,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class TaxiTypesCommandTest {
+public class RideOrderCommandTest {
     private static List<TaxiType> taxiTypeList;
     @BeforeClass
     public static void changeDatabaseConnector(){
@@ -33,14 +35,14 @@ public class TaxiTypesCommandTest {
     }
 
     @Test
-    public void execute_GivesAllClientTypes() throws ServletException, IOException {
+    public void execute_GivesAllTaxiTypes() throws ServletException, IOException {
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
         HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
 
         RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
-        when(httpServletRequest.getRequestDispatcher(CommandFactory.TAXITYPES+".jsp")).thenReturn(requestDispatcher);
-        Command taxiTypesCommand = CommandFactory.getInstance().getCommand(CommandFactory.TAXITYPES);
-        taxiTypesCommand.execute(httpServletRequest,httpServletResponse);
+        when(httpServletRequest.getRequestDispatcher(CommandFactory.RIDE+".jsp")).thenReturn(requestDispatcher);
+        Command rideOrderCommand = CommandFactory.getInstance().getCommand(CommandFactory.RIDE_ORDER);
+        rideOrderCommand.execute(httpServletRequest,httpServletResponse);
         verify(httpServletRequest).setAttribute("taxitypes", taxiTypeList);
     }
     @AfterClass

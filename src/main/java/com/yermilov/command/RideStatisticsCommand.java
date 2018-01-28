@@ -29,11 +29,12 @@ public class RideStatisticsCommand implements Command {
             if(pageNumberParam==null){
                 pageNumberParam="1";
             }
-            if(pageSizeParam==null)pageSizeParam="2";
+            if(pageSizeParam==null)pageSizeParam="5";
             int pageNum = Integer.parseInt(pageNumberParam);
             int pageSize = Integer.parseInt(pageSizeParam);
 
-            Client client = CostCalculationService.getCostCalculationService().getClient(((User)request.getSession().getAttribute("currentUser")).getUserId());
+            Client client = CostCalculationService.getCostCalculationService().
+                    getClient(((User)request.getSession().getAttribute("currentUser")).getUserId());
             List<Ride> rideList;
             rideList=rideStatisticsService.getClientsRides(client,(pageNum-1)*pageSize,pageSize);
             List<String>carNumberList = new ArrayList<>();
@@ -43,7 +44,7 @@ public class RideStatisticsCommand implements Command {
             }
             request.setAttribute("rides",rideList);
             request.setAttribute("carNumbers",carNumberList);
-            request.setAttribute("pageAmount",rideStatisticsService.getTableSize(client)/pageSize);
+            request.setAttribute("pageAmount",Math.max((rideStatisticsService.getTableSize(client)+pageSize-1)/pageSize,1));
             request.getRequestDispatcher("ridesStatistics.jsp").forward(request,response);
         } catch (DAOException e) {
             LOGGER.error(e.getMessage());

@@ -34,6 +34,16 @@ public class AddClientTypeCommand implements Command {
             request.getRequestDispatcher(CommandFactory.ADD_CLIENTTYPE+".jsp").forward(request, response);
             return;
         }
+        if(discount>100){
+            request.setAttribute("errorMessage","Discount should be smaller than 100");
+            request.getRequestDispatcher(CommandFactory.ADD_CLIENTTYPE+".jsp").forward(request, response);
+            return;
+        }
+        if(discount<0||moneyspent<0){
+            request.setAttribute("errorMessage","Discount and money spent should be positive");
+            request.getRequestDispatcher(CommandFactory.ADD_CLIENTTYPE+".jsp").forward(request, response);
+            return;
+        }
         if(name==null){
             request.setAttribute("errorMessage","You should fill all the fields");
             request.getRequestDispatcher(CommandFactory.ADD_CLIENTTYPE+".jsp").forward(request, response);

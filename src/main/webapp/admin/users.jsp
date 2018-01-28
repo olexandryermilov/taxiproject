@@ -44,7 +44,9 @@
         <c:if test="${param.pageNumber<pageAmount}"><a href="controller?command=users&pageNumber=${param.pageNumber+1}">Next page</a></c:if>
         <label class="w3-text-red">${errorMessage}</label>
         </form>
-
+        <div class="w3-container w3-opacity w3-right-align w3-padding">
+            <button class="w3-btn w3-green w3-round-large w3-border" onclick="location.href='/taxiproject/admin'">Back to main</button>
+        </div>
         <br><br>
         <!--{users}></!-->
     </div>

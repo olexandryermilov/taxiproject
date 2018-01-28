@@ -1,13 +1,9 @@
 package com.yermilov.configuration;
 
-import com.yermilov.admin.command.AddTaxiTypeCommand;
-import com.yermilov.admin.command.TaxiTypesCommand;
-import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class SecurityConfiguration {
     private Map<String,String> grant = new HashMap<>();
@@ -35,6 +31,7 @@ public class SecurityConfiguration {
         grant.put(CommandFactory.ADD_CLIENTTYPE,ADMIN);
         grant.put(CommandFactory.UPDATE_CLIENTTYPE,ADMIN);
         grant.put(CommandFactory.RIDE_ORDER,AUTH);
+        grant.put(CommandFactory.ADMIN_LOGOUT,ALL);
         grant.put("/",ALL);
         grant.put("registration.jsp",ALL);
         grant.put("login.jsp",ALL);

@@ -24,12 +24,12 @@ public class UsersCommand implements Command {
             if(pageNumberParam==null){
                 pageNumberParam="1";
             }
-            if(pageSizeParam==null)pageSizeParam="2";
+            if(pageSizeParam==null)pageSizeParam="5";
             int pageNum = Integer.parseInt(pageNumberParam);
             int pageSize = Integer.parseInt(pageSizeParam);
 
-            List<User> allUsers = usersService.getUsers((pageNum-1)*pageSize+1,pageSize);
-            req.setAttribute("pageAmount",usersService.getTableSize()/pageSize);
+            List<User> allUsers = usersService.getUsers((pageNum-1)*pageSize,pageSize);
+            req.setAttribute("pageAmount",((usersService.getTableSize()+pageSize-1)/pageSize));
             req.setAttribute("users",allUsers);
             req.getRequestDispatcher("users.jsp").forward(req,resp);
         } catch (DAOException e) {
