@@ -31,7 +31,7 @@ public class SecurityFilter implements Filter {
         HttpServletResponse httpServletResponse = ((HttpServletResponse)response);
         String command =httpServletRequest.getParameter("command");
         if(command==null){
-            String uri = ((HttpServletRequest) request).getRequestURI();
+            String uri = httpServletRequest.getRequestURI();
             if(uri.endsWith("/"))uri=uri.substring(0,uri.length()-1);
             String page = uri.substring(uri.lastIndexOf("/")+1);
             command=page;
@@ -39,16 +39,16 @@ public class SecurityFilter implements Filter {
 
         String role=securityConfiguration.security(command);
         LOGGER.debug("Command is {}, role is {}",command,role);
-        if("NO_ACCESS".equals(role)){
+        if(SecurityConfiguration.NO_ACCESS.equals(role)){
             chain.doFilter(request,response);
             httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
-        if ("ALL".equals(role)) {
+        if (SecurityConfiguration.ALL.equals(role)) {
             chain.doFilter(request, response);
             return;
         }
-        if ("AUTH".equals(role)) {
+        if (SecurityConfiguration.AUTH.equals(role)) {
             if (Authentication.getInstance().isUserLoggedIn(httpServletRequest.getSession())) {
                 chain.doFilter(request, response);
                 return;
@@ -57,7 +57,7 @@ public class SecurityFilter implements Filter {
                 return;
             }
         }
-        if("ADMIN".equals(role)){
+        if(SecurityConfiguration.ADMIN.equals(role)){
             if (Authentication.getInstance().isAdminLoggedIn(httpServletRequest.getSession())) {
                 chain.doFilter(request, response);
                 return;
@@ -72,13 +72,5 @@ public class SecurityFilter implements Filter {
     @Override
     public void destroy() {
 
-    }
-    private String getStringCommand(String URI, Set<String> endpoints){
-        for(String endpoint:endpoints){
-            if(URI.contains(endpoint)){
-                return endpoint;
-            }
-        }
-        return null;
     }
 }

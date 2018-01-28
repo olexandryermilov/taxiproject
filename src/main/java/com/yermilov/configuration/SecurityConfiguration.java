@@ -15,17 +15,17 @@ public class SecurityConfiguration {
     public Set<String> getEndpoints(){
         return grant.keySet();
     }
-    private final static String ALL = "ALL";
-    private final static String AUTH = "AUTH";
-    private final static String ADMIN = "ADMIN";
-    private final static String NO_ACCESS = "NO_ACCESS";
+    public final static String ALL = "ALL";
+    public final static String AUTH = "AUTH";
+    public final static String ADMIN = "ADMIN";
+    public final static String NO_ACCESS = "NO_ACCESS";
     private SecurityConfiguration(){
         grant.put(CommandFactory.LOGIN,ALL);
         grant.put(CommandFactory.REGISTRATION,ALL);
         grant.put(CommandFactory.LOGOUT,AUTH);
-        grant.put(CommandFactory.USERS,"ADMIN");
-        grant.put(CommandFactory.ADD_CAR,"ADMIN");
-        grant.put(CommandFactory.REGISTER_DRIVER,"ADMIN");
+        grant.put(CommandFactory.USERS,ADMIN);
+        grant.put(CommandFactory.ADD_CAR,ADMIN);
+        grant.put(CommandFactory.REGISTER_DRIVER,ADMIN);
         grant.put(CommandFactory.RIDE,AUTH);
         grant.put(CommandFactory.CALCULATE_COST,AUTH);
         grant.put(CommandFactory.DELETE,ADMIN);
