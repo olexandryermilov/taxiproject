@@ -1,9 +1,6 @@
 package com.yermilov.command;
 
-import com.yermilov.domain.Client;
-import com.yermilov.domain.Driver;
-import com.yermilov.domain.Taxi;
-import com.yermilov.domain.User;
+import com.yermilov.domain.*;
 import com.yermilov.exceptions.CostCalculationException;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.*;
@@ -29,18 +26,22 @@ public class CostCalculationCommand implements Command {
         DistanceCalculationService distanceCalculationService = DistanceCalculationService.getDistanceCalculationService();
         int userId=((User)(request.getSession().getAttribute("currentUser"))).getUserId();
         CostCalculationService costCalculationService = CostCalculationService.getCostCalculationService();
+        TaxiIdentifierService taxiIdentifierService = TaxiIdentifierService.getTaxiIdentifierService();
+
+        String taxiTypeName = request.getParameter("taxitype");
         try {
             double distance = distanceCalculationService.getDistance(from,to);
             Client client =costCalculationService.getClient(userId);
             int discount = ClientTypeCalculationService.getCostCalculationService().getClientsDiscount(client);
-            Taxi taxi = GetCarService.getGetCarService().getCar();
+            TaxiType taxiType = taxiIdentifierService.getTaxiTypeByName(taxiTypeName);
+            Taxi taxi = GetCarService.getGetCarService().getCar(taxiType);
             double cost = costCalculationService.getDriveCost(taxi,distance,discount);
             request.setAttribute("cost",cost);
             request.getSession().setAttribute("client",client);
             request.setAttribute("distance",distance);
             request.setAttribute("discount",discount);
             request.setAttribute("taxi",taxi);
-            Driver driver = TaxiIdentifierService.getTaxiIdentifierService().getDriver(taxi);
+            Driver driver = taxiIdentifierService.getDriver(taxi);
             request.setAttribute("driver",driver);
             request.setAttribute("arrivalTime",TimeCalculationService.getTimeCalculationService().getTime(from,to));
             request.getRequestDispatcher("ride.jsp").forward(request,response);

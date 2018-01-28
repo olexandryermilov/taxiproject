@@ -58,9 +58,12 @@ public class TaxiDAOTest {
     //create
     @Test
     public void findSize_ReturnsCorrectSize() throws DAOException {
-        final int RIGHT_SIZE = allTaxies.size();
-        TaxiDAO taxiDAO = DAOFactory.getInstance().getTaxiDAO();
-        assertEquals(RIGHT_SIZE,taxiDAO.findSize());
+        for(int i=1;i<=allTaxiTypes.size();i++) {
+            final int taxitypeid = i;
+            long RIGHT_SIZE = allTaxies.stream().filter(taxi -> taxi.getTaxiTypeId()>=taxitypeid).count();
+            TaxiDAO taxiDAO = DAOFactory.getInstance().getTaxiDAO();
+            assertEquals(RIGHT_SIZE, taxiDAO.findNumberOfSpecifiedTaxiType(allTaxiTypes.get(taxitypeid-1)));
+        }
     }
 
     @Test

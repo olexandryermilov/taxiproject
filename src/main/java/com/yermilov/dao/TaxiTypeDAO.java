@@ -17,6 +17,7 @@ public class TaxiTypeDAO {
     private final static Logger LOGGER = LoggerFactory.getLogger(TaxiTypeDAO.class);
     private final static String SQL_FIND_ALL = "select * from taxitype";
     private final static String SQL_SELECT_BY_ID = "select * from taxitype where taxitypeid=?";
+    private final static String SQL_SELECT_BY_NAME = "select * from taxitype where taxitypename=?";
     private final static String SQL_INSERT_TAXITYPE = "insert into taxitype(fare,taxitypename) values (?,?)";
     private final static String SQL_UPDATE_TAXITYPE = "update taxitype set fare=?, taxitypename=? where taxitypeid=?";
 
@@ -65,6 +66,38 @@ public class TaxiTypeDAO {
                     TaxiType taxiType = new TaxiType(resultSet.getDouble("fare"),
                             resultSet.getString("taxitypename"));
                     taxiType.setTaxiTypeId(id);
+                    return taxiType;
+                }
+            } catch (SQLException e){
+                LOGGER.error(e.getMessage());
+                throw new DAOException(e.getMessage());
+            } finally {
+                if(resultSet!=null)resultSet.close();
+                if(statement!=null)statement.close();
+                con.close();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException(e.getMessage());
+        } finally {
+        }
+        return null;
+    }
+
+    public TaxiType findByName(String name) throws DAOException {
+        try {
+            ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement=null;
+            ResultSet resultSet=null;
+            try {
+                statement = con.preparedStatement(SQL_SELECT_BY_NAME);
+                statement.setString(1, name);
+                LOGGER.debug("Statement to execute {}",statement.toString());
+                resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    TaxiType taxiType = new TaxiType(resultSet.getDouble("fare"),
+                            name);
+                    taxiType.setTaxiTypeId(resultSet.getInt("taxitypeid"));
                     return taxiType;
                 }
             } catch (SQLException e){

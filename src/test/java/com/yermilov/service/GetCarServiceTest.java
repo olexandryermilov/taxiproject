@@ -1,6 +1,7 @@
 package com.yermilov.service;
 
 import com.yermilov.domain.Taxi;
+import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.GetCarService;
 import com.yermilov.tableworkers.TableCleaner;
@@ -23,12 +24,14 @@ public class GetCarServiceTest {
     }
 
     @Test
-    public void getCar_ReturnsTaxiObject() throws SQLException, DAOException {
+    public void getCar_ReturnsTaxiObject_WithSpecifiedTaxitype() throws SQLException, DAOException {
         TableCreator.initUserTable();
         TableCreator.initDriverTable();
-        TableCreator.initTaxiTypeTable();
+        List<TaxiType> taxiTypes = TableCreator.initTaxiTypeTable();
         List<Taxi> taxies = TableCreator.initTaxiTable();
-        assertTrue(taxies.contains(GetCarService.getGetCarService().getCar()));
+        Taxi taxi= GetCarService.getGetCarService().getCar(taxiTypes.get(0));
+        assertTrue(taxies.contains(taxi));
+        assertTrue(taxi.getTaxiTypeId()>=taxiTypes.get(0).getTaxiTypeId());
         TableCleaner.cleanTaxiTable();
         TableCleaner.cleanTaxiTypeTable();
         TableCleaner.cleanDriverTable();

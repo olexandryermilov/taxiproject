@@ -4,6 +4,7 @@ import com.yermilov.dao.DAOFactory;
 import com.yermilov.dao.IDAOFactory;
 import com.yermilov.dao.TaxiDAO;
 import com.yermilov.domain.Taxi;
+import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,15 +33,16 @@ public class GetCarService {
 
     /**
      * Not implemented now, returns one of all of cars in database
+     * @param taxiType Type of taxi to get
      * @return Taxi record
      * @throws DAOException Re-throws DAOException from TaxiDAO
      * @see TaxiDAO#findById(int)
      */
-    public Taxi getCar()throws DAOException{
+    public Taxi getCar(TaxiType taxiType)throws DAOException{
         TaxiDAO taxiDAO =daoFactory.getTaxiDAO();
-        int carNumber = taxiDAO.findSize();
-        int id = new Random(new Date().getTime()).nextInt(carNumber)+1;
-        Taxi taxi = taxiDAO.findById(id);
+        int carNumber = taxiDAO.findNumberOfSpecifiedTaxiType(taxiType);
+        int toSkip = new Random(new Date().getTime()).nextInt(carNumber);
+        Taxi taxi = taxiDAO.findNthCar(toSkip,taxiType);
         return taxi;
     }
     public void setDaoFactory(IDAOFactory daoFactory){

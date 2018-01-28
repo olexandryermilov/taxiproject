@@ -3,6 +3,7 @@ package com.yermilov.command;
 import com.yermilov.domain.Client;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
+import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.RideStatisticsService;
 import com.yermilov.services.TaxiIdentifierService;

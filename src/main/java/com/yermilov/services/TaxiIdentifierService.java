@@ -3,6 +3,7 @@ package com.yermilov.services;
 import com.yermilov.dao.*;
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
+import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,5 +63,9 @@ public class TaxiIdentifierService {
     public Taxi getTaxi(int taxiId) throws DAOException{
         TaxiDAO taxiDAO=daoFactory.getTaxiDAO();
         return taxiDAO.findById(taxiId);
+    }
+    public TaxiType getTaxiTypeByName(String name) throws DAOException{
+        TaxiTypeDAO taxiTypeDAO = daoFactory.getTaxiTypeDAO();
+        return taxiTypeDAO.findByName(name);
     }
 }
