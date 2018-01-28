@@ -41,7 +41,7 @@ public class GetCarService {
     public Taxi getCar(TaxiType taxiType)throws DAOException{
         TaxiDAO taxiDAO =daoFactory.getTaxiDAO();
         int carNumber = taxiDAO.findNumberOfSpecifiedTaxiType(taxiType);
-        int toSkip = new Random(new Date().getTime()).nextInt(carNumber);
+        int toSkip = new Random(new Date().getTime()).nextInt(carNumber-1);
         Taxi taxi = taxiDAO.findNthCar(toSkip,taxiType);
         return taxi;
     }

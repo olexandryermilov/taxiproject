@@ -1,11 +1,9 @@
 package com.yermilov.admin.command;
 
 import com.yermilov.admin.service.UpdateClientTypeService;
-import com.yermilov.admin.service.UpdateTaxiTypeService;
 import com.yermilov.command.Command;
 import com.yermilov.command.CommandFactory;
 import com.yermilov.domain.ClientType;
-import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,48 +1,32 @@
-CREATE TABLE IF NOT EXISTS `taxisystemdb`.`ride` (
-  `rideid` INT NOT NULL AUTO_INCREMENT,
-  `driverid` INT NULL,
-  `clientid` INT NULL,
-  `distance` DECIMAL(10) NULL,
-  `ridestart` DATETIME NULL,
-  `ridefinish` DATETIME NULL,
-  `cost` DECIMAL(10) NULL,
-  `taxiid` INT NULL,
-  PRIMARY KEY (`rideid`),
-  INDEX `clientid_idx` (`clientid` ASC),
-  INDEX `driverid_idx` (`driverid` ASC),
-  INDEX `taxiid_idx` (`taxiid` ASC),
-  CONSTRAINT `clientsid`
-    FOREIGN KEY (`clientid`)
-    REFERENCES `taxisystemdb`.`client` (`clientid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `driversid`
-    FOREIGN KEY (`driverid`)
-    REFERENCES `taxisystemdb`.`driver` (`driverid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `taxisid`
-    FOREIGN KEY (`taxiid`)
-    REFERENCES `taxisystemdb`.`taxi` (`taxiid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+CREATE TABLE `user` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `surname` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`userid`),
+  UNIQUE KEY `idtaxies_UNIQUE` (`userid`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `clienttype` (
+  `clienttypeid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discount` int(11) DEFAULT NULL,
+  `moneyspent` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`clienttypeid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 CREATE TABLE `client` (
   `clientid` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) NOT NULL,
   PRIMARY KEY (`clientid`),
   UNIQUE KEY `clientid_UNIQUE` (`clientid`),
   UNIQUE KEY `userid_UNIQUE` (`userid`),
-  CONSTRAINT `usersid` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `clienttype` (
-  `clienttypeid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `discount` int(11) DEFAULT NULL,
-  `moneyspent` decimal(10,0) DEFAULT NULL,
-  PRIMARY KEY (`clienttypeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `usersid` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `driver` (
   `driverid` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,7 +35,27 @@ CREATE TABLE `driver` (
   UNIQUE KEY `driverid_UNIQUE` (`driverid`),
   UNIQUE KEY `userid_UNIQUE` (`userid`),
   CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `taxitype` (
+  `taxitypeid` int(11) NOT NULL AUTO_INCREMENT,
+  `taxitypename` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fare` decimal(11,0) DEFAULT NULL,
+  PRIMARY KEY (`taxitypeid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `taxi` (
+  `taxiid` int(11) NOT NULL AUTO_INCREMENT,
+  `taxitypeid` int(11) DEFAULT NULL,
+  `carnumber` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `driverid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`taxiid`),
+  UNIQUE KEY `taxiid_UNIQUE` (`taxiid`),
+  KEY `taxitypeid_idx` (`taxitypeid`),
+  KEY `driverid_idx` (`driverid`),
+  CONSTRAINT `driverid` FOREIGN KEY (`driverid`) REFERENCES `driver` (`driverid`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `taxitypeid` FOREIGN KEY (`taxitypeid`) REFERENCES `taxitype` (`taxitypeid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `ride` (
   `rideid` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,44 +73,17 @@ CREATE TABLE `ride` (
   CONSTRAINT `clientsid` FOREIGN KEY (`clientid`) REFERENCES `client` (`clientid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `driversid` FOREIGN KEY (`driverid`) REFERENCES `driver` (`driverid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `taxisid` FOREIGN KEY (`taxiid`) REFERENCES `taxi` (`taxiid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `taxi` (
-  `taxiid` int(11) NOT NULL AUTO_INCREMENT,
-  `taxitypeid` int(11) DEFAULT NULL,
-  `carname` varchar(45) DEFAULT NULL,
-  `driverid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`taxiid`),
-  UNIQUE KEY `taxiid_UNIQUE` (`taxiid`),
-  KEY `taxitypeid_idx` (`taxitypeid`),
-  KEY `driverid_idx` (`driverid`),
-  CONSTRAINT `driverid` FOREIGN KEY (`driverid`) REFERENCES `driver` (`driverid`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `taxitypeid` FOREIGN KEY (`taxitypeid`) REFERENCES `taxitype` (`taxitypeid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `taxitype` (
-  `taxitypeid` int(11) NOT NULL AUTO_INCREMENT,
-  `taxitypename` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`taxitypeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `user` (
-  `userid` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `phone` varchar(12) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `surname` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`userid`),
-  UNIQUE KEY `idtaxies_UNIQUE` (`userid`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE `taxisystemdb`.`admin` (
-  `adminid` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
-  `name` VARCHAR(45) NULL,
-  `surname` VARCHAR(45) NULL,
+CREATE TABLE `admin` (
+  `adminid` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `surname` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`adminid`),
-  UNIQUE INDEX `adminid_UNIQUE` (`adminid` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
+  UNIQUE KEY `adminid_UNIQUE` (`adminid`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+

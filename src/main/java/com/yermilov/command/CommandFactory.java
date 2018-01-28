@@ -12,6 +12,7 @@ public class CommandFactory {
     public final static String LOGOUT = "logout";
     public final static String USERS = "users";
     public final static String ADMIN_LOGIN="adminLogin";
+    public final static String ADMIN_LOGOUT="adminLogout";
     public final static String DELETE = "delete";
     public final static String RIDE = "ride";
     public final static String CALCULATE_COST = "calculateCost";
@@ -45,6 +46,7 @@ public class CommandFactory {
         commandMap.put(ADD_CLIENTTYPE, new AddClientTypeCommand());
         commandMap.put(UPDATE_CLIENTTYPE, new UpdateClientTypeCommand());
         commandMap.put(RIDE_ORDER, new RideOrderCommand());
+        commandMap.put(ADMIN_LOGOUT,new com.yermilov.admin.command.LogoutCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

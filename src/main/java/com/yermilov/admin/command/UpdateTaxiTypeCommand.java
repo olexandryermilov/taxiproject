@@ -24,7 +24,7 @@ public class UpdateTaxiTypeCommand implements Command {
         String taxiTypeName = request.getParameter("name");
         double fare;
         try{
-            fare=Double.parseDouble(request.getParameter("fare"));;
+            fare=Double.parseDouble(request.getParameter("fare"));
         }
         catch (NumberFormatException e){
             request.setAttribute("errorMessage","Fare should be a number");

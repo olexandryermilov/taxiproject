@@ -18,7 +18,7 @@ public class TaxiDAO{
     private final static String SQL_SELECT_BY_CARNUMBER = "select * from taxi where carnumber=?";
     private final static String SQL_COUNT_SIZE = "select count(*) from taxi where taxitypeid >=?";
     private final static String SQL_SELECT_BY_TAXIID = "select * from taxi where taxiid=?";
-    private final static String SQL_SELECT_BY_TAXITYPEID_SKIPPING= "select * from taxi where taxitypeid=? order by taxiid limit ?,1";
+    private final static String SQL_SELECT_BY_TAXITYPEID_SKIPPING= "select * from taxi where taxitypeid>=? order by taxiid limit ?,1";
     private final static String SQL_INSERT_TAXI = "insert into taxi(carnumber,taxitypeid,driverid) values(?,?,?)";
     public int findNumberOfSpecifiedTaxiType(TaxiType taxiType) throws DAOException {
         try {
