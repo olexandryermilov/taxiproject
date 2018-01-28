@@ -2,6 +2,7 @@ package com.yermilov.service;
 
 import com.yermilov.domain.Driver;
 import com.yermilov.domain.Taxi;
+import com.yermilov.domain.TaxiType;
 import com.yermilov.exceptions.DAOException;
 import com.yermilov.services.TaxiIdentifierService;
 import com.yermilov.tableworkers.TableCleaner;
@@ -48,11 +49,6 @@ public class TaxiIdentifierServiceTest {
         assertNull(TaxiIdentifierService.getTaxiIdentifierService().getTaxi(taxiList.get(0).getCarNumber()+"1"));
     }
 
-    /*public Driver getDriver(Taxi taxi) throws DAOException{
-        DriverDAO driverDAO = daoFactory.getDriverDAO();
-        return driverDAO.findById(taxi.getDriverId());
-    }
-    */
     @Test
     public void getDriver_ReturnsDriver_WhenRightTaxi() throws SQLException, DAOException {
         TableCreator.initUserTable();
@@ -76,5 +72,16 @@ public class TaxiIdentifierServiceTest {
         TableCreator.initTaxiTypeTable();
         List<Taxi> taxiList = TableCreator.initTaxiTable();
         assertNull(TaxiIdentifierService.getTaxiIdentifierService().getTaxi(taxiList.get(0).getTaxiId()+10));
+    }
+
+    @Test
+    public void getTaxiTypeByName_ReturnsTaxiType_WhenRightName() throws SQLException,DAOException{
+        TableCreator.initUserTable();
+        TableCreator.initDriverTable();
+        List<TaxiType> taxiTypes = TableCreator.initTaxiTypeTable();
+        TableCreator.initTaxiTable();
+        for(TaxiType taxiType:taxiTypes){
+            assertEquals(taxiType,TaxiIdentifierService.getTaxiIdentifierService().getTaxiTypeByName(taxiType.getTaxiTypeName()));
+        }
     }
 }
