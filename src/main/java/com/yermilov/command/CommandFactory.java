@@ -24,6 +24,7 @@ public class CommandFactory {
     public final static String CLIENTTYPES = "clienttypes";
     public final static String ADD_CLIENTTYPE = "addClientType";
     public final static String UPDATE_CLIENTTYPE = "updateClientType";
+    public final static String RIDE_ORDER = "rideOrder";
     private Map<String,Command> commandMap = new HashMap<>();
     private CommandFactory(){
         commandMap.put(LOGIN,new com.yermilov.command.LoginCommand());
@@ -43,6 +44,7 @@ public class CommandFactory {
         commandMap.put(CLIENTTYPES,new ClientTypesCommand());
         commandMap.put(ADD_CLIENTTYPE, new AddClientTypeCommand());
         commandMap.put(UPDATE_CLIENTTYPE, new UpdateClientTypeCommand());
+        commandMap.put(RIDE_ORDER, new RideOrderCommand());
     }
     public static CommandFactory getInstance() {
         return factory;

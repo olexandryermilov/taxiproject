@@ -12,9 +12,6 @@ import java.util.Set;
 public class SecurityConfiguration {
     private Map<String,String> grant = new HashMap<>();
     private final static SecurityConfiguration configuration = new SecurityConfiguration();
-    public Set<String> getEndpoints(){
-        return grant.keySet();
-    }
     public final static String ALL = "ALL";
     public final static String AUTH = "AUTH";
     public final static String ADMIN = "ADMIN";
@@ -37,6 +34,7 @@ public class SecurityConfiguration {
         grant.put(CommandFactory.CLIENTTYPES,ADMIN);
         grant.put(CommandFactory.ADD_CLIENTTYPE,ADMIN);
         grant.put(CommandFactory.UPDATE_CLIENTTYPE,ADMIN);
+        grant.put(CommandFactory.RIDE_ORDER,AUTH);
         grant.put("/",ALL);
         grant.put("registration.jsp",ALL);
         grant.put("login.jsp",ALL);
